@@ -10,7 +10,7 @@ Status values: `todo`, `in-progress`, `done`, `blocked`. Update the status line 
 ---
 
 ### TASK-01: Scaffold
-Status: todo
+Status: done
 - Create the Astro project (static output, TypeScript strict, Vitest).
 - Add the npm scripts listed in `CLAUDE.md` section 2 and the folder layout in section 3.
 - Add `src/config.ts` with site name, domain, email, `ADS_ENABLED=false`, analytics setting.

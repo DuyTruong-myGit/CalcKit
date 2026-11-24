@@ -1,0 +1,23 @@
+{
+  "name": "calc-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/astro.js dev",
+    "start": "node scripts/astro.js dev",
+    "build": "node scripts/astro.js build",
+    "preview": "node scripts/astro.js preview",
+    "test": "vitest run",
+    "check": "node scripts/astro.js check && tsc --noEmit",
+    "validate:data": "node -e \"console.log('Data validator will be implemented in TASK-02')\""
+  },
+  "dependencies": {
+    "astro": "^5.4.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.7"
+  }
+}
