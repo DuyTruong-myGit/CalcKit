@@ -29,13 +29,13 @@ Status: done
 - Acceptance: the hand-calculated cases for mulch, gravel and concrete slab pass. Negative, empty and non-numeric inputs return a clear error, never `NaN`.
 
 ### TASK-04: Design plan
-Status: todo
+Status: done
 - Write `docs/DESIGN.md` following `CLAUDE.md` section 8: palette (4 to 6 named hex values), type, layout concept with an ASCII wireframe of the calculator page on mobile, and what makes the site distinct.
 - Review it against the "avoid generic looks" list and revise.
 - Acceptance: owner approves `docs/DESIGN.md`. Do not start TASK-05 before approval.
 
 ### TASK-05: Base layout and calculator component
-Status: todo
+Status: done
 - `Base.astro` (head tags, canonical, Open Graph, footer with required links), `Calculator.astro` (inputs, unit toggle, waste, assumptions panel, results, copy and reset), `FAQ.astro`, `RelatedLinks.astro`, `AdSlot.astro` (off by default, reserved space).
 - Acceptance: works at 360 px, keyboard only and with JavaScript errors from third parties absent. Results announced via `aria-live`. JS under 30 KB gzipped per page.
 

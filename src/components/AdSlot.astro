@@ -1,0 +1,65 @@
+---
+/**
+ * AdSlot.astro
+ * Display advertisement slot placeholder.
+ * Controlled by ADS_ENABLED flag in src/config.ts.
+ *
+ * Rules (CLAUDE.md §7):
+ * - Switched off by default (ADS_ENABLED=false).
+ * - Slots reserve space to avoid Cumulative Layout Shift (CLS).
+ * - Never placed above calculator, between inputs, or near results.
+ * - Max 2 slots per page on mobile.
+ */
+import { SITE_CONFIG } from '../config';
+
+interface Props {
+  slotId?: string;
+  position: 'below-calculator' | 'mid-content';
+}
+
+const { slotId = 'default', position } = Astro.props;
+const isEnabled = SITE_CONFIG.adsEnabled;
+---
+
+{isEnabled && (
+  <div class={`ad-container ad-pos-${position}`} aria-label="Advertisement" role="complementary">
+    <span class="ad-label">Advertisement</span>
+    <div class="ad-slot" data-ad-slot={slotId}>
+      <!-- AdSense snippet will be mounted here once approved -->
+    </div>
+  </div>
+)}
+
+<style>
+  .ad-container {
+    margin: var(--space-8) auto;
+    text-align: center;
+    max-width: 100%;
+    /* Reserve height to eliminate Cumulative Layout Shift (CLS) */
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px dashed var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .ad-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: var(--space-1);
+  }
+
+  .ad-slot {
+    width: 100%;
+    max-width: 336px;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,710 @@
+---
+/**
+ * Calculator.astro
+ * Renders an interactive calculator from a CalculatorDef.
+ *
+ * Rules enforced (CLAUDE.md §4, §8):
+ * - Inputs have visible labels above each field.
+ * - Number inputs use inputmode="decimal".
+ * - Tap targets ≥ 44 px.
+ * - Results in aria-live="polite" region.
+ * - Copy and Reset buttons with exact UI copy.
+ * - US units by default; metric toggle changes labels + converts before calc.
+ * - Validation errors explain the fix; never show NaN or Infinity.
+ * - No DOM mutations outside this component.
+ */
+
+import type { CalculatorDef } from '../lib/schema/types';
+
+interface Props {
+  def: CalculatorDef;
+}
+
+const { def } = Astro.props;
+
+// Slim config: only what the client script needs (content fields excluded)
+const clientConfig = {
+  slug:      def.slug,
+  formulaId: def.formulaId,
+  inputs:    def.inputs,
+  constants: def.constants,
+  outputs:   def.outputs,
+};
+
+const configId  = `calc-cfg-${def.slug}`;
+const formId    = `calc-form-${def.slug}`;
+const resultId  = `calc-result-${def.slug}`;
+
+// Which input units have a metric equivalent
+const METRIC_LABELS: Record<string, string> = {
+  ft: 'm', in: 'cm', yd: 'm', ft2: 'm²', lb: 'kg',
+};
+---
+
+<!-- Calculator: embeds client config + renders form structure -->
+<section class="calculator" data-config-id={configId} data-result-id={resultId}
+  aria-label={`${def.title} calculator`}>
+
+  <!-- Config JSON (not rendered, read by client script) -->
+  <script type="application/json" id={configId} set:html={JSON.stringify(clientConfig)} />
+
+  <!-- Unit system toggle -->
+  <div class="unit-toggle" role="group" aria-label="Unit system">
+    <button class="unit-btn active" data-unit="us"     aria-pressed="true">US (ft / in)</button>
+    <button class="unit-btn"        data-unit="metric" aria-pressed="false">Metric (m / cm)</button>
+  </div>
+
+  <!-- Calculator form -->
+  <form id={formId} class="calc-form" novalidate aria-label="Calculator inputs">
+
+    <!-- Inputs -->
+    <div class="fields">
+      {def.inputs.map((inp) => (
+        <div class="field" data-field-id={inp.id}>
+          <label for={`inp-${inp.id}`}>
+            {inp.label}
+            <span class="field-unit" data-us-unit={inp.unit}
+              data-metric-unit={METRIC_LABELS[inp.unit] ?? inp.unit}>
+              ({inp.unit})
+            </span>
+          </label>
+          {inp.help && <span class="field-help">{inp.help}</span>}
+
+          {inp.type === 'select' ? (
+            <select id={`inp-${inp.id}`} name={inp.id} class="field-select">
+              {(inp.options ?? []).map((opt) => (
+                <option value={String(opt.value)}
+                  selected={String(opt.value) === String(inp.default)}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <div class="input-row">
+              <input
+                id={`inp-${inp.id}`}
+                name={inp.id}
+                type="number"
+                inputmode="decimal"
+                step="any"
+                value={inp.default !== undefined ? String(inp.default) : ''}
+                min={inp.min !== undefined ? String(inp.min) : undefined}
+                max={inp.max !== undefined ? String(inp.max) : undefined}
+                autocomplete="off"
+                class="field-input"
+              />
+              <span class="input-unit" aria-hidden="true"
+                data-us-unit={inp.unit}
+                data-metric-unit={METRIC_LABELS[inp.unit] ?? inp.unit}>
+                {inp.unit}
+              </span>
+            </div>
+          )}
+
+          <span class="field-error" role="alert" data-error-for={inp.id}></span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Adjust assumptions (editable constants) -->
+    {def.constants.length > 0 && (
+      <details class="assumptions">
+        <summary class="assumptions-toggle">Adjust assumptions</summary>
+        <div class="assumptions-fields">
+          {def.constants.map((c) => (
+            <div class="field" data-field-id={c.id}>
+              <label for={`const-${c.id}`}>{c.label}</label>
+              <span class="field-help">{c.note}</span>
+              <input
+                id={`const-${c.id}`}
+                name={`const-${c.id}`}
+                type="number"
+                inputmode="decimal"
+                step="any"
+                value={String(c.default)}
+                autocomplete="off"
+                class="field-input"
+              />
+              <span class="field-error" role="alert" data-error-for={c.id}></span>
+            </div>
+          ))}
+        </div>
+      </details>
+    )}
+
+    <button type="submit" class="btn-calculate">Calculate</button>
+  </form>
+
+  <!-- Results (aria-live announced to screen readers) -->
+  <div id={resultId} class="calc-results" role="region"
+    aria-label="Calculation results" aria-live="polite" aria-atomic="true">
+    <!-- Populated by client script after first calculation -->
+  </div>
+
+  <!-- Action buttons — hidden until a result is available -->
+  <div class="result-actions" hidden>
+    <button class="btn-copy" type="button">Copy result</button>
+    <button class="btn-reset" type="button">Reset values</button>
+  </div>
+</section>
+
+<!-- ── Client-side script ─────────────────────────────────────────────────── -->
+<script>
+import { calculate } from '../lib/calc/engine.js';
+
+// Metric conversion: US value = metric_input * toUSFactor
+const TO_US: Record<string, number> = {
+  ft:  3.28084,   // m → ft
+  in:  0.393701,  // cm → in
+  yd:  1.09361,   // m → yd
+  ft2: 10.7639,   // m² → ft²
+  lb:  2.20462,   // kg → lb
+};
+// US value → metric display: metric = us / toUSFactor
+const FROM_US: Record<string, number> = {
+  ft:  0.3048,
+  in:  2.54,
+  yd:  0.9144,
+  ft2: 0.092903,
+  lb:  0.453592,
+};
+
+// Initialise every .calculator on the page (usually only one)
+for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
+  const configId  = section.dataset.configId!;
+  const resultId  = section.dataset.resultId!;
+  const configEl  = document.getElementById(configId);
+  if (!configEl) continue;
+
+  const config    = JSON.parse(configEl.textContent ?? '{}');
+  const form      = section.querySelector<HTMLFormElement>('.calc-form')!;
+  const resultsEl = document.getElementById(resultId)!;
+  const actionsEl = section.querySelector<HTMLElement>('.result-actions')!;
+  const copyBtn   = section.querySelector<HTMLButtonElement>('.btn-copy')!;
+  const resetBtn  = section.querySelector<HTMLButtonElement>('.btn-reset')!;
+  const unitBtns  = section.querySelectorAll<HTMLButtonElement>('.unit-btn');
+
+  let isMetric = false;
+  let lastResult: ReturnType<typeof calculate> | null = null;
+  let copyTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+
+  function getInputEl(id: string): HTMLInputElement | HTMLSelectElement | null {
+    return form.querySelector<HTMLInputElement | HTMLSelectElement>(`[name="${id}"]`);
+  }
+
+  function getConstEl(id: string): HTMLInputElement | null {
+    return form.querySelector<HTMLInputElement>(`[name="const-${id}"]`);
+  }
+
+  function clearErrors(): void {
+    for (const el of section.querySelectorAll<HTMLElement>('.field-error')) {
+      el.textContent = '';
+    }
+    for (const el of section.querySelectorAll<HTMLElement>('.field.has-error')) {
+      el.classList.remove('has-error');
+    }
+  }
+
+  function showError(fieldId: string, msg: string): void {
+    const errSpan = section.querySelector<HTMLElement>(`[data-error-for="${fieldId}"]`);
+    if (errSpan) {
+      errSpan.textContent = msg;
+      errSpan.closest<HTMLElement>('.field')?.classList.add('has-error');
+    }
+  }
+
+  // ── Unit toggle ───────────────────────────────────────────────────────────
+
+  function applyUnitMode(): void {
+    // Update toggle button states
+    for (const btn of unitBtns) {
+      const active = (btn.dataset.unit === 'us') === !isMetric;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    }
+
+    // Update all unit labels in the form
+    for (const el of section.querySelectorAll<HTMLElement>('[data-us-unit]')) {
+      const usUnit = el.dataset.usUnit ?? '';
+      el.textContent = isMetric
+        ? (el.dataset.metricUnit ?? usUnit)
+        : usUnit;
+    }
+  }
+
+  function switchUnitSystem(toMetric: boolean): void {
+    if (toMetric === isMetric) return;
+
+    // Convert currently entered input values
+    for (const inp of config.inputs) {
+      const el = getInputEl(inp.id) as HTMLInputElement | null;
+      if (!el || el.tagName === 'SELECT') continue;
+      const val = parseFloat(el.value);
+      if (!Number.isFinite(val)) continue;
+
+      if (toMetric) {
+        const factor = FROM_US[inp.unit];
+        if (factor) el.value = String(parseFloat((val * factor).toPrecision(6)));
+      } else {
+        const factor = TO_US[inp.unit];
+        if (factor) el.value = String(parseFloat((val / factor).toPrecision(6)));
+      }
+    }
+
+    isMetric = toMetric;
+    applyUnitMode();
+    runCalc();
+  }
+
+  for (const btn of unitBtns) {
+    btn.addEventListener('click', () => switchUnitSystem(btn.dataset.unit === 'metric'));
+  }
+
+  // ── Calculation ───────────────────────────────────────────────────────────
+
+  function runCalc(): void {
+    const rawInputs: Record<string, unknown>  = {};
+    const rawConstants: Record<string, unknown> = {};
+
+    for (const inp of config.inputs) {
+      const el = getInputEl(inp.id);
+      if (!el) continue;
+      let val: unknown = el.value;
+
+      // Convert metric → US before passing to engine
+      if (isMetric && el.tagName !== 'SELECT') {
+        const num = parseFloat(el.value);
+        if (Number.isFinite(num)) {
+          const factor = TO_US[inp.unit as string];
+          val = factor ? String(num * factor) : el.value;
+        }
+      }
+      rawInputs[inp.id] = val;
+    }
+
+    for (const c of config.constants) {
+      const el = getConstEl(c.id);
+      rawConstants[c.id] = el ? el.value : c.default;
+    }
+
+    const result = calculate(config, rawInputs, rawConstants);
+    lastResult = result;
+
+    if (!result.ok) {
+      clearErrors();
+      for (const [id, msg] of Object.entries(result.errors)) {
+        showError(id, msg);
+      }
+      resultsEl.innerHTML = '';
+      actionsEl.hidden = true;
+      return;
+    }
+
+    clearErrors();
+    renderResult(result);
+    actionsEl.hidden = false;
+  }
+
+  function renderResult(result: Extract<ReturnType<typeof calculate>, { ok: true }>): void {
+    const primary = config.outputs.find((o: { primary?: boolean }) => o.primary);
+
+    let html = '<div class="result-panel">';
+
+    // Primary output: large, signal-accented
+    if (primary) {
+      const metricNote = isMetric
+        ? formatMetricOutput(primary, parseFloat(result.formatted[primary.id]))
+        : '';
+      html += `
+        <div class="result-primary">
+          <span class="result-value">${result.formatted[primary.id]}</span>
+          <span class="result-unit">${primary.unit}</span>
+          ${metricNote ? `<span class="result-metric">(${metricNote})</span>` : ''}
+        </div>`;
+    }
+
+    // Secondary outputs
+    const secondaries = config.outputs.filter((o: { primary?: boolean }) => !o.primary);
+    if (secondaries.length > 0) {
+      html += '<ul class="result-secondary">';
+      for (const out of secondaries) {
+        const metricNote = isMetric
+          ? formatMetricOutput(out, parseFloat(result.formatted[out.id]))
+          : '';
+        html += `<li>
+          <span class="result-label">${out.label}:</span>
+          <strong>${result.formatted[out.id]}&thinsp;${out.unit}</strong>
+          ${metricNote ? `<span class="result-metric">(${metricNote})</span>` : ''}
+        </li>`;
+      }
+      html += '</ul>';
+    }
+
+    html += '</div>';
+    resultsEl.innerHTML = html;
+  }
+
+  // ── Metric display helpers ────────────────────────────────────────────────
+
+  const OUTPUT_METRIC: Record<string, { factor: number; unit: string }> = {
+    'yd³':   { factor: 0.764555, unit: 'm³'  },
+    'ft³':   { factor: 0.028317, unit: 'm³'  },
+    'ft²':   { factor: 0.092903, unit: 'm²'  },
+    'ft':    { factor: 0.3048,   unit: 'm'   },
+    'tons':  { factor: 0.907185, unit: 't'   },
+    'bags':  { factor: 1,        unit: 'bags'},
+  };
+
+  function formatMetricOutput(out: { unit: string }, usValue: number): string {
+    const conv = OUTPUT_METRIC[out.unit];
+    if (!conv || conv.factor === 1) return '';
+    const metric = usValue * conv.factor;
+    return `${parseFloat(metric.toPrecision(4))}\u202f${conv.unit}`;
+  }
+
+  // ── Copy result ───────────────────────────────────────────────────────────
+
+  copyBtn.addEventListener('click', () => {
+    if (!lastResult || !lastResult.ok) return;
+    const res = lastResult;
+    const lines = config.outputs
+      .map((o: { label: string; id: string; unit: string }) =>
+        `${o.label}: ${res.formatted[o.id]} ${o.unit}`)
+      .join('\n');
+    navigator.clipboard.writeText(lines).then(() => {
+      copyBtn.textContent = 'Copied!';
+      if (copyTimer) clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => { copyBtn.textContent = 'Copy result'; }, 2000);
+    }).catch(() => {
+      copyBtn.textContent = 'Copy result';
+    });
+  });
+
+  // ── Reset ─────────────────────────────────────────────────────────────────
+
+  resetBtn.addEventListener('click', () => {
+    // Reset to US mode first so form.reset() restores US defaults
+    if (isMetric) {
+      isMetric = false;
+      applyUnitMode();
+    }
+    form.reset();
+    clearErrors();
+    resultsEl.innerHTML = '';
+    actionsEl.hidden = true;
+    lastResult = null;
+    // Re-run with defaults so the user sees an immediate answer
+    runCalc();
+  });
+
+  // ── Live calculation on input ─────────────────────────────────────────────
+
+  form.addEventListener('input', runCalc);
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    runCalc();
+  });
+
+  // ── Initial run with default values ──────────────────────────────────────
+  runCalc();
+}
+</script>
+
+<style>
+  /* ── Calculator container ────────────────────────────────────────────────── */
+  .calculator {
+    margin-bottom: var(--space-8);
+  }
+
+  /* ── Unit toggle ─────────────────────────────────────────────────────────── */
+  .unit-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: var(--space-6);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    width: fit-content;
+  }
+
+  .unit-btn {
+    padding: var(--space-2) var(--space-4);
+    background: var(--page);
+    border: none;
+    border-right: 1px solid var(--rule);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: var(--muted);
+    min-height: 44px;
+    white-space: nowrap;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .unit-btn:last-child { border-right: none; }
+  .unit-btn:hover { background: #f0f4ff; color: var(--ink); }
+
+  .unit-btn.active {
+    background: var(--action);
+    color: var(--page);
+  }
+
+  /* ── Form / Fields ───────────────────────────────────────────────────────── */
+  .calc-form { display: flex; flex-direction: column; gap: var(--space-6); }
+
+  .fields { display: flex; flex-direction: column; gap: var(--space-5); }
+
+  .field { display: flex; flex-direction: column; gap: var(--space-1); }
+
+  .field label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .field-unit {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .field-help {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    margin-top: calc(-1 * var(--space-1));
+  }
+
+  .input-row {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .field-input {
+    flex: 1;
+    height: 48px;
+    padding: 0 var(--space-3);
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--page);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius) 0 0 var(--radius);
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+  .field-input::-webkit-inner-spin-button,
+  .field-input::-webkit-outer-spin-button { appearance: none; }
+
+  /* When no .input-unit suffix */
+  .field-input:only-child {
+    border-radius: var(--radius);
+  }
+
+  .field-input:focus {
+    outline: 2px solid var(--action);
+    outline-offset: -1px;
+    border-color: var(--action);
+  }
+
+  .has-error .field-input { border-color: var(--error); }
+
+  .input-unit {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-3);
+    background: #f0f4f8;
+    border: 1px solid var(--rule);
+    border-left: none;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 0.875rem;
+    color: var(--muted);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .field-select {
+    height: 48px;
+    padding: 0 var(--space-3);
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--page);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .field-error {
+    font-size: 0.8125rem;
+    color: var(--error);
+    min-height: 1.2em;
+    font-weight: 500;
+  }
+
+  /* ── Adjust assumptions ──────────────────────────────────────────────────── */
+  .assumptions {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0;
+  }
+
+  .assumptions-toggle {
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--action);
+    list-style: none;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+  }
+  .assumptions-toggle::-webkit-details-marker { display: none; }
+  .assumptions-toggle::before {
+    content: '▸';
+    display: inline-block;
+    margin-right: var(--space-2);
+    transition: transform 0.15s;
+  }
+  .assumptions[open] .assumptions-toggle::before { transform: rotate(90deg); }
+
+  .assumptions-fields {
+    padding: var(--space-4);
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    border-top: 1px solid var(--rule);
+    margin-top: 0;
+  }
+
+  /* Override border-radius for inputs inside assumptions */
+  .assumptions-fields .field-input {
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+  .assumptions-fields .field-input:only-child {
+    border-radius: var(--radius);
+  }
+
+  /* ── Calculate button ────────────────────────────────────────────────────── */
+  .btn-calculate {
+    width: 100%;
+    height: 48px;
+    padding: 0 var(--space-6);
+    background: var(--action);
+    color: var(--page);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: filter 0.1s;
+  }
+
+  .btn-calculate:hover  { filter: brightness(1.1); }
+  .btn-calculate:active { filter: brightness(0.95); }
+  .btn-calculate:disabled { opacity: 0.5; cursor: default; }
+
+  /* ── Results panel ───────────────────────────────────────────────────────── */
+  .calc-results { margin-top: var(--space-6); }
+
+  .result-panel {
+    border-left: 4px solid var(--signal);
+    background: #fafcff;
+    padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) - 4px);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .result-primary {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-3);
+  }
+
+  .result-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .result-unit {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .result-metric {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .result-secondary {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    border-top: 1px solid var(--rule);
+    padding-top: var(--space-3);
+    font-size: 1rem;
+  }
+
+  .result-secondary li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .result-label {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .result-secondary strong {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Result action buttons ───────────────────────────────────────────────── */
+  .result-actions {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .btn-copy,
+  .btn-reset {
+    padding: 0 var(--space-5);
+    height: 44px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .btn-copy {
+    background: var(--page);
+    color: var(--action);
+    border: 1.5px solid var(--action);
+  }
+  .btn-copy:hover { background: #edf2ff; }
+
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--rule);
+  }
+  .btn-reset:hover { background: #f7f8f9; color: var(--ink); }
+</style>

@@ -1,0 +1,99 @@
+---
+/**
+ * FAQ.astro
+ * Renders a list of frequently asked questions using accessible semantic details/summary.
+ */
+interface FAQItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: FAQItem[];
+  title?: string;
+}
+
+const { items, title = 'Frequently asked questions' } = Astro.props;
+---
+
+<section class="faq-section" aria-labelledby="faq-heading">
+  <h2 id="faq-heading">{title}</h2>
+  <div class="faq-list">
+    {items.map((item) => (
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>{item.q}</span>
+        </summary>
+        <div class="faq-answer">
+          <p>{item.a}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    margin: var(--space-8) 0;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .faq-item {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--page);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    min-height: 48px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::after {
+    content: '+';
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: var(--space-2);
+    transition: transform 0.2s;
+  }
+
+  .faq-item[open] .faq-question::after {
+    content: '−';
+  }
+
+  .faq-question:hover {
+    background: #f8fafc;
+  }
+
+  .faq-answer {
+    padding: 0 var(--space-4) var(--space-4);
+    color: var(--ink);
+    line-height: 1.6;
+    border-top: 1px solid var(--rule);
+    padding-top: var(--space-3);
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+</style>

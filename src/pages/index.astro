@@ -1,18 +1,46 @@
 ---
-import { SITE_CONFIG } from '../config';
+import Base from '../layouts/Base.astro';
+import Calculator from '../components/Calculator.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import AdSlot from '../components/AdSlot.astro';
+import mulchDef from '../../tests/fixtures/valid/mulch-calculator.json';
+import type { CalculatorDef } from '../lib/schema/types';
+
+const calculator = mulchDef as CalculatorDef;
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{SITE_CONFIG.siteName} - Material Calculators for Home & Garden</title>
-  </head>
-  <body>
-    <main>
-      <h1>{SITE_CONFIG.siteName}</h1>
-      <p>Free, accurate material calculators for home and garden projects.</p>
-    </main>
-  </body>
-</html>
+<Base
+  metaTitle="Free Material Calculators for Home & Garden"
+  metaDescription="Accurate, free material calculators for home and garden DIY projects: mulch, gravel, concrete, paint, flooring, and more."
+>
+  <h1>{calculator.title}</h1>
+  <p>{calculator.content.intro}</p>
+
+  <Calculator def={calculator} />
+
+  <AdSlot position="below-calculator" />
+
+  <hr class="section-divider" />
+
+  <section>
+    <h2>How it works</h2>
+    <p>{calculator.content.howItWorks}</p>
+  </section>
+
+  {calculator.content.examples.length > 0 && (
+    <section>
+      <h2>Worked examples</h2>
+      {calculator.content.examples.map((ex) => (
+        <div>
+          <h3>{ex.title}</h3>
+          <p>{ex.text}</p>
+        </div>
+      ))}
+    </section>
+  )}
+
+  <FAQ items={calculator.content.faq} />
+
+  <RelatedLinks slugs={calculator.related} />
+</Base>

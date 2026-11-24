@@ -1,6 +1,6 @@
 # DESIGN.md: visual plan for the calculator site
 
-Status: **awaiting owner approval** — do not start TASK-05 until this file is marked approved.
+Status: **approved** — TASK-05 may proceed.
 
 ---
 

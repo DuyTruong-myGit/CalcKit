@@ -1,0 +1,93 @@
+---
+/**
+ * RelatedLinks.astro
+ * Renders links to 3 or 4 related calculators.
+ * URL pattern: /<name>-calculator/
+ */
+interface RelatedItem {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  items?: RelatedItem[];
+  slugs?: string[];
+  title?: string;
+}
+
+const { items: propItems, slugs, title = 'Related calculators' } = Astro.props;
+
+// Helper to format slug into title if title is not provided
+function slugToTitle(slug: string): string {
+  return slug
+    .replace(/-calculator$/, '')
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ') + ' Calculator';
+}
+
+const relatedItems: RelatedItem[] = propItems ?? (slugs ?? []).map((s) => ({
+  slug: s,
+  title: slugToTitle(s),
+}));
+---
+
+{relatedItems.length > 0 && (
+  <section class="related-section" aria-labelledby="related-heading">
+    <h2 id="related-heading">{title}</h2>
+    <ul class="related-list">
+      {relatedItems.map((item) => (
+        <li class="related-item">
+          <a href={`/${item.slug}/`} class="related-link">
+            <span class="related-title">{item.title}</span>
+            <span class="related-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .related-section {
+    margin: var(--space-8) 0;
+  }
+
+  .related-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .related-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    min-height: 44px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 500;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .related-link:hover {
+    background: #f8fafc;
+    border-color: var(--action);
+    text-decoration: none;
+  }
+
+  .related-title {
+    color: var(--action);
+  }
+
+  .related-arrow {
+    color: var(--muted);
+    font-size: 1.125rem;
+  }
+</style>
