@@ -8,7 +8,7 @@
   --ink:    #1a2332;   /* body text, headings */
   --page:   #ffffff;   /* page background, inputs */
   --rule:   #dde3ec;   /* borders, dividers */
-  --muted:  #64748b;   /* help text, placeholders, secondary labels */
+  --muted:  #475569;   /* help text, placeholders, secondary labels (contrast 6.4:1) */
   --action: #1d53c4;   /* primary button, links, focus rings */
   --signal: #f59e0b;   /* result accent — only place visual boldness is spent */
 

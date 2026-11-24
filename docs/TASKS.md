@@ -52,7 +52,7 @@ Status: done
 - Acceptance: all pages build, footer links work, sitemap lists only reviewed pages.
 
 ### TASK-08: Performance and accessibility pass
-Status: todo
+Status: done
 - Check Lighthouse (mobile) on the three pages and fix issues. Check color contrast, focus order, reduced motion.
 - Acceptance: performance, accessibility and SEO scores at 90 or above, CLS under 0.1. Report the actual numbers.
 
