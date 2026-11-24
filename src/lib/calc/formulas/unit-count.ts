@@ -3,25 +3,27 @@
  * Used by: paver, retaining wall block, flooring, tile, drywall, sod
  *
  * Inputs:
- *   length     – ft
- *   width      – ft (or wall height)
- *   waste      – pct (default 10)
+ *   length      – ft
+ *   width       – ft (or wall height)
+ *   waste       – pct (default 10)
  *
  * Constants:
- *   unitLength – in (e.g. 8 for 4x8 paver, 16 for wall block)
- *   unitWidth  – in (e.g. 4 for 4x8 paver, 6 for wall block height)
- *   areaPerUnit – sq ft (optional direct override)
+ *   unitLength  – in (e.g. 8 for 4x8 paver, 16 for wall block)
+ *   unitWidth   – in (e.g. 4 for 4x8 paver, 6 for wall block height)
+ *   areaPerUnit – sq ft (optional direct override, e.g. 10 for sod roll)
+ *   areaPerBox  – sq ft (optional, for flooring boxes)
+ *   boxSize     – count of units per box (optional, for tile)
  *
  * Outputs:
- *   area       – sq ft
- *   units      – count (rounded up)
- *   pavers     – alias for units
- *   blocks     – alias for units
- *   capBlocks  – linear count along top of wall (rounded up)
- *
- * Source: docs/FORMULAS.md lines 29-32
- * area = L × W
- * units = ceil(area × (1 + waste/100) / unitArea)
+ *   area        – sq ft
+ *   units       – count (rounded up)
+ *   pavers      – alias for units
+ *   blocks      – alias for units
+ *   capBlocks   – linear count along top of wall (rounded up)
+ *   rolls       – alias for units (sod)
+ *   tiles       – alias for units (tile)
+ *   boxes       – box count (flooring or tile)
+ *   sheets      – alias for units (drywall)
  */
 
 import { pctToFactor, ceilWhole } from '../units.js';
@@ -35,7 +37,9 @@ export interface UnitCountInputs {
 export interface UnitCountConstants {
   unitLength?: number;  // inches
   unitWidth?: number;   // inches
-  areaPerUnit?: number; // sq ft (if supplied directly)
+  areaPerUnit?: number; // sq ft (if supplied directly, e.g. sod roll)
+  areaPerBox?: number;  // sq ft per box (for flooring)
+  boxSize?: number;     // units per box (for tile)
 }
 
 export interface UnitCountOutputs {
@@ -44,6 +48,10 @@ export interface UnitCountOutputs {
   pavers: number;
   blocks: number;
   capBlocks: number;
+  rolls: number;
+  tiles: number;
+  boxes: number;
+  sheets: number;
 }
 
 export function unitCount(
@@ -71,11 +79,27 @@ export function unitCount(
     capBlocks = ceilWhole(inputs.length / blockLengthFt);
   }
 
+  // Boxes calculation:
+  // If areaPerBox is provided directly (e.g. 20 sq ft per box of flooring)
+  let boxes = 0;
+  if (constants.areaPerBox && constants.areaPerBox > 0) {
+    boxes = ceilWhole((area * wasteFactor) / constants.areaPerBox);
+  } else if (constants.boxSize && constants.boxSize > 0) {
+    // If boxSize is units per box (e.g. 10 tiles per box)
+    boxes = ceilWhole(units / constants.boxSize);
+  } else {
+    boxes = units;
+  }
+
   return {
     area,
     units,
     pavers: units,
     blocks: units,
     capBlocks,
+    rolls: units,
+    tiles: units,
+    boxes,
+    sheets: units,
   };
 }

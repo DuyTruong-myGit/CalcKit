@@ -1,0 +1,103 @@
+{
+  "slug": "flooring-calculator",
+  "status": "draft",
+  "category": "painting-flooring",
+  "formulaId": "unit-count",
+  "title": "Flooring Calculator",
+  "metaTitle": "Flooring Calculator: Boxes of Hardwood and Vinyl Plank",
+  "metaDescription": "Calculate how many boxes of laminate, hardwood, or vinyl plank flooring you need. Includes room area and cut-waste allowance.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Room length", "unit": "ft", "type": "number", "default": 15, "min": 0 },
+    { "id": "width", "label": "Room width", "unit": "ft", "type": "number", "default": 12, "min": 0 },
+    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for straight layouts; use 15% for diagonal or herringbone patterns." }
+  ],
+  "constants": [
+    {
+      "id": "areaPerBox",
+      "label": "Coverage per box (sq ft)",
+      "default": 20,
+      "note": "Most flooring cartons cover between 18 and 25 square feet. Check the label on your specific flooring box before ordering."
+    }
+  ],
+  "outputs": [
+    { "id": "boxes", "label": "Boxes needed", "unit": "boxes", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "area", "label": "Total room area", "unit": "sq ft", "decimals": 1 }
+  ],
+  "testCases": [
+    {
+      "name": "15 × 12 ft room, 0% waste, 20 sq ft per box",
+      "inputs": { "length": 15, "width": 12, "waste": 0 },
+      "constants": { "areaPerBox": 20 },
+      "expected": { "area": 180, "boxes": 9 }
+    },
+    {
+      "name": "15 × 12 ft room, 10% waste, 20 sq ft per box",
+      "inputs": { "length": 15, "width": 12, "waste": 10 },
+      "constants": { "areaPerBox": 20 },
+      "expected": { "area": 180, "boxes": 10 }
+    },
+    {
+      "name": "20 × 15 ft room, 15% waste, 22 sq ft per box",
+      "inputs": { "length": 20, "width": 15, "waste": 15 },
+      "constants": { "areaPerBox": 22 },
+      "expected": { "area": 300, "boxes": 16 }
+    }
+  ],
+  "content": {
+    "intro": "Installing new hardwood, laminate, luxury vinyl plank, or engineered wood transforms any living space with clean aesthetics and durable performance. Flooring is packaged and sold by the carton, meaning accurate square footage estimation and cut-waste allowances are essential to ensure you purchase sufficient whole boxes from the same manufacturing dye lot. This free calculator converts room length and width into total square footage and calculates the exact box count needed for your project. Enter your room dimensions below to plan your flooring order, adjust for waste percentages, and ensure a continuous installation without delays.",
+    "howItWorks": "Total floor area is calculated by multiplying room length in feet by room width in feet. Because planks must be cut at room perimeters, doorways, and closet transitions, an extra 10% waste allowance is added (or 15% for complex diagonal or herringbone patterns). The gross square footage is then divided by the coverage provided by a single flooring box (typically 20 to 24 square feet per box). The calculated quantity is always rounded up to the nearest whole box because flooring retailers do not sell partial cartons.",
+    "examples": [
+      {
+        "title": "A 15 by 12 foot living room with 20 sq ft boxes",
+        "text": "For a room measuring 15 feet long by 12 feet wide, the base floor area is 15 × 12 = 180 square feet. Adding a standard 10% waste factor for end cuts and staggered plank rows: 180 × 1.10 = 198 square feet. Dividing 198 by 20 sq ft per box yields 9.9, which rounds up to 10 boxes."
+      },
+      {
+        "title": "A 20 by 15 foot master bedroom with 22 sq ft boxes",
+        "text": "For a room measuring 20 × 15 ft (300 sq ft) with a 15% allowance for complex diagonal installation: 300 × 1.15 = 345 sq ft. Dividing 345 by 22 sq ft per carton equals 15.68, rounding up to 16 boxes."
+      }
+    ],
+    "quickReference": {
+      "caption": "Flooring box estimates (20 sq ft per box with 10% waste)",
+      "headers": ["Room Dimensions", "Room Area", "Area with 10% Waste", "Boxes Needed"],
+      "rows": [
+        ["10 × 10 ft", "100 sq ft", "110 sq ft", "6 boxes"],
+        ["12 × 12 ft", "144 sq ft", "158.4 sq ft", "8 boxes"],
+        ["15 × 12 ft", "180 sq ft", "198 sq ft", "10 boxes"],
+        ["16 × 14 ft", "224 sq ft", "246.4 sq ft", "13 boxes"],
+        ["20 × 15 ft", "300 sq ft", "330 sq ft", "17 boxes"],
+        ["24 × 18 ft", "432 sq ft", "475.2 sq ft", "24 boxes"]
+      ]
+    },
+    "commonMistakes": [
+      "Ordering without an extra 10% to 15% cutting buffer, running short on the final row with no matching lot available.",
+      "Failing to acclimate wood or laminate flooring in the home for 48 hours prior to installation.",
+      "Forgetting to measure closets, hallway nooks, and door alcoves when calculating total square footage.",
+      "Not checking subfloor flatness with a straightedge before laying luxury vinyl or laminate planks."
+    ],
+    "faq": [
+      {
+        "q": "Why do I need a 10% waste factor when ordering flooring?",
+        "a": "Planks must be trimmed to fit the beginning and end of each row and cut around door jambs and corners. End cuts under 8 to 12 inches cannot be reused, resulting in natural material loss. Diagonal layouts require 15% waste due to angled perimeter cuts."
+      },
+      {
+        "q": "How many square feet are in a box of flooring?",
+        "a": "Carton coverage varies by flooring type and manufacturer: luxury vinyl plank (LVP) typically covers 18 to 24 sq ft per box, laminate covers 16 to 22 sq ft, and solid hardwood covers 20 to 25 sq ft. Always check the product label."
+      },
+      {
+        "q": "Why is ordering from the same manufacturing lot important?",
+        "a": "Flooring manufactured in different production runs (dye lots) often exhibits slight variations in color tone, plank thickness, or tongue-and-groove milling tolerances. Ordering all boxes together ensures visual and mechanical consistency."
+      },
+      {
+        "q": "Should I keep extra flooring boxes after installation?",
+        "a": "Yes, always keep at least one unopened carton of matching planks in your attic or closet. If a board is scratched, dented, or damaged by a plumbing leak years later, you can replace individual planks seamlessly without redoing the entire room."
+      }
+    ]
+  },
+  "related": [
+    "tile-calculator",
+    "paint-calculator",
+    "drywall-calculator",
+    "square-footage-calculator"
+  ]
+}

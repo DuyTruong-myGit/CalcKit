@@ -1,0 +1,103 @@
+{
+  "slug": "sod-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "unit-count",
+  "title": "Sod Calculator",
+  "metaTitle": "Sod Calculator: Lawn Rolls and Pallets Needed",
+  "metaDescription": "Calculate how many rolls and pallets of sod you need for your new lawn. Includes cut-waste allowances and pallet estimations.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Lawn length", "unit": "ft", "type": "number", "default": 50, "min": 0 },
+    { "id": "width", "label": "Lawn width", "unit": "ft", "type": "number", "default": 20, "min": 0 },
+    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 5% to 10% for rectangular lawns; use 10% to 15% for curved borders." }
+  ],
+  "constants": [
+    {
+      "id": "areaPerUnit",
+      "label": "Roll size (square feet)",
+      "default": 10,
+      "note": "Standard sod rolls are typically 10 sq ft (2 × 5 ft or 16 × 90 in). Some farms cut 9 sq ft rolls (1.5 × 6 ft). Check with your local sod grower."
+    }
+  ],
+  "outputs": [
+    { "id": "rolls", "label": "Sod rolls needed", "unit": "rolls", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "area", "label": "Total lawn area", "unit": "sq ft", "decimals": 1 }
+  ],
+  "testCases": [
+    {
+      "name": "50 × 20 ft lawn, 0% waste, 10 sq ft rolls",
+      "inputs": { "length": 50, "width": 20, "waste": 0 },
+      "constants": { "areaPerUnit": 10 },
+      "expected": { "area": 1000, "rolls": 100 }
+    },
+    {
+      "name": "50 × 20 ft lawn, 10% waste, 10 sq ft rolls",
+      "inputs": { "length": 50, "width": 20, "waste": 10 },
+      "constants": { "areaPerUnit": 10 },
+      "expected": { "area": 1000, "rolls": 110 }
+    },
+    {
+      "name": "30 × 15 ft lawn, 5% waste, 9 sq ft rolls",
+      "inputs": { "length": 30, "width": 15, "waste": 5 },
+      "constants": { "areaPerUnit": 9 },
+      "expected": { "area": 450, "rolls": 53 }
+    }
+  ],
+  "content": {
+    "intro": "Installing fresh sod delivers an instant, lush lawn that prevents soil erosion, chokes out weeds, and boosts home curb appeal in a single afternoon. Because fresh sod rolls are perishable living turf that must be installed immediately upon delivery, calculating exact yardage prevents overpaying for wasted pallets or running short during installation. This free calculator computes the total square footage of your lawn and the exact number of sod rolls required, with an adjustable cutting allowance for curves and edging. Enter your lawn dimensions below to determine accurate pallet counts and prepare your soil bed for a flawless installation.",
+    "howItWorks": "Total lawn area is calculated by multiplying lawn length in feet by width in feet to determine square footage. That area is multiplied by the waste allowance factor (such as 1.10 for 10% waste) to account for trimming around walkways, gardens, and curved boundaries. The adjusted square footage is then divided by the square footage of a single sod roll (most commonly 10 square feet) and rounded up to the nearest whole roll. To estimate pallets, divide the roll count by pallet capacity (typically 45 to 50 rolls, or 450 to 500 sq ft per pallet).",
+    "examples": [
+      {
+        "title": "A 50 by 20 foot backyard lawn installation",
+        "text": "For a standard rectangular backyard measuring 50 by 20 feet, surface area is 50 × 20 = 1,000 square feet. With a 10% cutting waste allowance: 1,000 × 1.10 = 1,100 square feet. Using standard 10-sq-ft rolls: 1,100 ÷ 10 = 110 rolls. This equals approximately 2.2 to 2.4 pallets of turf."
+      },
+      {
+        "title": "A 30 by 15 foot front lawn patch with 9 sq ft sod rolls",
+        "text": "For a front lawn measuring 30 by 15 feet, area is 450 square feet. Adding a 5% waste factor: 450 × 1.05 = 472.5 square feet. If the sod farm supplies 9-sq-ft rolls (1.5 × 6 ft): 472.5 ÷ 9 = 52.5, rounding up to 53 rolls (approx 1 pallet)."
+      }
+    ],
+    "quickReference": {
+      "caption": "Sod roll and pallet estimates with 10% cutting allowance",
+      "headers": ["Lawn Dimensions", "Lawn Area", "10 sq ft Rolls", "Estimated Pallets (500 sq ft)"],
+      "rows": [
+        ["20 × 25 ft", "500 sq ft", "55 rolls", "1.1 pallets"],
+        ["40 × 25 ft", "1,000 sq ft", "110 rolls", "2.2 pallets"],
+        ["50 × 30 ft", "1,500 sq ft", "165 rolls", "3.3 pallets"],
+        ["50 × 40 ft", "2,000 sq ft", "220 rolls", "4.4 pallets"],
+        ["60 × 50 ft", "3,000 sq ft", "330 rolls", "6.6 pallets"],
+        ["100 × 50 ft", "5,000 sq ft", "550 rolls", "11 pallets"]
+      ]
+    },
+    "commonMistakes": [
+      "Ordering sod before completing soil grading, raking, and starter fertilization.",
+      "Letting delivered sod pallets sit in the sun for more than 24 hours before unrolling and watering.",
+      "Laying rolls with continuous seams instead of staggering joints in a brickwork bond pattern.",
+      "Failing to saturate the soil beneath new sod within 30 minutes of unrolling."
+    ],
+    "faq": [
+      {
+        "q": "How many square feet of sod are on a standard pallet?",
+        "a": "Most sod farms stack between 450 and 500 square feet of sod per pallet (45 to 50 ten-square-foot rolls). A single pallet weighs roughly 1,500 to 3,000 pounds depending on soil moisture content."
+      },
+      {
+        "q": "How quickly must new sod be installed after delivery?",
+        "a": "Sod is living grass that generates internal heat when rolled up on a pallet. In warm weather (above 70°F), install and water sod within 12 to 24 hours of delivery. In cooler weather, install within 48 hours to prevent root dieback."
+      },
+      {
+        "q": "Why is a waste factor necessary when ordering sod?",
+        "a": "Edges along driveways, patios, and curved garden beds require diagonal trimming. Staggered joints also require half-roll cuts at end runs. A 10% waste buffer ensures you complete the installation without running short on the last few feet."
+      },
+      {
+        "q": "How often should new sod be watered after laying?",
+        "a": "Water thoroughly immediately after installation until the soil underneath is damp 3 to 4 inches deep. For the first two weeks, water two to three times daily in short sessions to keep the root zone consistently moist."
+      }
+    ]
+  },
+  "related": [
+    "grass-seed-calculator",
+    "topsoil-calculator",
+    "mulch-calculator",
+    "paver-calculator"
+  ]
+}

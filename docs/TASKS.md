@@ -64,7 +64,7 @@ Status: todo
 ### TASK-10 to TASK-13: Remaining calculators in batches of five
 Status: in progress
 - Batch A (done): topsoil, sand, raised bed soil, pavers, retaining wall blocks.
-- Batch B (todo): sod, grass seed, paint, flooring, tile.
+- Batch B (done): sod, grass seed, paint, flooring, tile.
 - Batch C (todo): drywall, fence, deck boards, roofing, post hole concrete.
 - Batch D (todo): cubic yard converter, square footage, plus internal-linking pass and a check for near-duplicate text across pages.
 - For each batch: implement missing formulas with tests first, then JSON drafts, then the owner reviews and sets `reviewed`.

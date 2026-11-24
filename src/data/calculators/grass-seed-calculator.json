@@ -1,0 +1,104 @@
+{
+  "slug": "grass-seed-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "seed-rate",
+  "title": "Grass Seed Calculator",
+  "metaTitle": "Grass Seed Calculator: Pounds of Seed Needed by Lawn Area",
+  "metaDescription": "Calculate how many pounds of grass seed you need for new lawns or overseeding. Enter lawn dimensions and recommended seeding rates.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Lawn length", "unit": "ft", "type": "number", "default": 50, "min": 0 },
+    { "id": "width", "label": "Lawn width", "unit": "ft", "type": "number", "default": 40, "min": 0 },
+    { "id": "rate", "label": "Seeding rate (lb per 1,000 sq ft)", "unit": "lb", "type": "number", "default": 4, "min": 0.5, "help": "Check your seed bag label. New lawns typically use 4 to 8 lbs/1,000 sq ft; overseeding uses 2 to 4 lbs." }
+  ],
+  "constants": [
+    {
+      "id": "bagSize",
+      "label": "Bag size (pounds)",
+      "default": 5,
+      "note": "Standard retail grass seed bags are commonly 3, 5, 10, 20, or 25 pounds. Check product packaging."
+    }
+  ],
+  "outputs": [
+    { "id": "pounds", "label": "Total seed needed", "unit": "lbs", "decimals": 1, "primary": true },
+    { "id": "bags", "label": "Bags to purchase", "unit": "bags", "decimals": 0, "roundUp": true },
+    { "id": "area", "label": "Total lawn area", "unit": "sq ft", "decimals": 1 }
+  ],
+  "testCases": [
+    {
+      "name": "50 × 40 ft lawn, 4 lbs/1000 sq ft, 5 lb bags",
+      "inputs": { "length": 50, "width": 40, "rate": 4 },
+      "constants": { "bagSize": 5 },
+      "expected": { "area": 2000, "pounds": 8, "bags": 2 }
+    },
+    {
+      "name": "100 × 50 ft lawn, 6 lbs/1000 sq ft, 25 lb bags",
+      "inputs": { "length": 100, "width": 50, "rate": 6 },
+      "constants": { "bagSize": 25 },
+      "expected": { "area": 5000, "pounds": 30, "bags": 2 }
+    },
+    {
+      "name": "25 × 20 ft lawn patch, 3 lbs/1000 sq ft, 5 lb bags",
+      "inputs": { "length": 25, "width": 20, "rate": 3 },
+      "constants": { "bagSize": 5 },
+      "expected": { "area": 500, "pounds": 1.5, "bags": 1 }
+    }
+  ],
+  "content": {
+    "intro": "Seeding a lawn is an economical, rewarding way to establish thick turf or revitalize thinning patches after seasonal stress. Because seeding rates vary substantially between new lawn establishment and autumn overseeding—and across cool-season and warm-season grass cultivars—calculating the required seed weight before visiting the garden center ensures uniform coverage. This calculator multiplies your yard dimensions by your specific cultivar sowing rate to determine exact seed poundage and standard bag counts. Enter your lawn measurements below to eliminate guesswork, avoid patchy germination, and prepare for healthy turf growth across your entire residential yard.",
+    "howItWorks": "Total lawn area is calculated by multiplying lawn length in feet by width in feet to obtain square footage. The area in thousands of square feet is determined by dividing square footage by 1,000. That figure is then multiplied by your chosen application rate in pounds per 1,000 square feet (specified on the seed bag label for either new lawns or overseeding). Dividing the total required pounds by the weight of retail seed bags (typically 5 or 25 pounds) and rounding up determines how many whole bags you should buy.",
+    "examples": [
+      {
+        "title": "Overseeding a 2,000 sq ft lawn with tall fescue",
+        "text": "For an existing 50 by 40 foot lawn (2,000 sq ft) needing a seasonal overseeding application at 4 pounds per 1,000 sq ft: (2,000 ÷ 1,000) × 4 = 8 pounds of seed. When purchasing standard 5-pound bags, 8 ÷ 5 = 1.6, which rounds up to two 5-lb bags."
+      },
+      {
+        "title": "Planting a brand-new 5,000 sq ft Kentucky bluegrass lawn",
+        "text": "For a 100 by 50 foot bare soil plot (5,000 sq ft) establishing a new Kentucky bluegrass lawn at a recommended rate of 3 pounds per 1,000 sq ft: (5,000 ÷ 1,000) × 3 = 15 pounds of seed. One 15-lb or 20-lb bag covers the entire property."
+      }
+    ],
+    "quickReference": {
+      "caption": "Typical seeding rates by grass type (pounds per 1,000 sq ft)",
+      "headers": ["Grass Species", "New Lawn Rate", "Overseeding Rate", "Germination Time"],
+      "rows": [
+        ["Kentucky Bluegrass", "2 – 3 lbs", "1 – 2 lbs", "14 – 28 days"],
+        ["Tall Fescue", "6 – 8 lbs", "3 – 4 lbs", "7 – 14 days"],
+        ["Perennial Ryegrass", "5 – 7 lbs", "3 – 4 lbs", "5 – 10 days"],
+        ["Fine Fescue", "4 – 5 lbs", "2 – 3 lbs", "10 – 14 days"],
+        ["Bermudagrass (hulled)", "1 – 2 lbs", "0.5 – 1 lb", "7 – 14 days"],
+        ["Zoysiagrass", "1 – 2 lbs", "0.5 – 1 lb", "14 – 21 days"]
+      ]
+    },
+    "commonMistakes": [
+      "Spreading grass seed too densely, which causes overcrowding, damp-off fungus, and root strangulation.",
+      "Sowing seed without raking loose the top 1/4 inch of soil to ensure good seed-to-soil contact.",
+      "Letting the seedbed dry out even once during the critical initial two-week germination window.",
+      "Using weed-and-feed herbicide fertilizers at the same time as seeding, which kills newly sprouted seedlings."
+    ],
+    "faq": [
+      {
+        "q": "What is the difference between new lawn seeding and overseeding?",
+        "a": "New lawn seeding is applied to bare, prepared topsoil and requires higher sowing rates (typically 4 to 8 lbs per 1,000 sq ft) to establish a full stand. Overseeding spreads seed over existing living grass to fill in thin spots and thicken turf density, using about half the seed rate."
+      },
+      {
+        "q": "When is the best time of year to plant grass seed?",
+        "a": "For cool-season grasses (fescue, bluegrass, ryegrass), late summer to early autumn is ideal because soil temperatures are warm and weed pressure is low. For warm-season grasses (bermuda, zoysia), late spring to early summer is best."
+      },
+      {
+        "q": "How deep should grass seed be buried?",
+        "a": "Grass seed should never be buried deeply. A light raking to cover seed with 1/8 to 1/4 inch of soil or peat moss is ideal. Burying seed deeper than 1/2 inch starves seedlings of light and stops germination."
+      },
+      {
+        "q": "How long does grass seed take to sprout?",
+        "a": "Germination speed depends on species and soil moisture: perennial ryegrass sprouts in 5 to 10 days, tall fescue in 7 to 14 days, and Kentucky bluegrass takes 14 to 28 days."
+      }
+    ]
+  },
+  "related": [
+    "sod-calculator",
+    "topsoil-calculator",
+    "mulch-calculator",
+    "square-footage-calculator"
+  ]
+}

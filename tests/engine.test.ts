@@ -5,6 +5,8 @@ import { volumeBags } from '../src/lib/calc/formulas/volume-bags.js';
 import { volumeWeight } from '../src/lib/calc/formulas/volume-weight.js';
 import { concreteSlab } from '../src/lib/calc/formulas/concrete-slab.js';
 import { unitCount } from '../src/lib/calc/formulas/unit-count.js';
+import { seedRate } from '../src/lib/calc/formulas/seed-rate.js';
+import { paint } from '../src/lib/calc/formulas/paint.js';
 import { calculate, runTestCase } from '../src/lib/calc/engine.js';
 import type { CalculatorDef } from '../src/lib/schema/types.js';
 
@@ -57,6 +59,54 @@ describe('Pure Formula Functions — Hand-Calculated Cases (docs/FORMULAS.md)', 
     expect(res.area).toBe(75);
     expect(res.blocks).toBe(124);
     expect(res.capBlocks).toBe(23);
+  });
+
+  it('sod (unit-count): L 50, W 20, waste 10%, areaPerUnit 10 sq ft -> area 1000, rolls 110', () => {
+    const res = unitCount(
+      { length: 50, width: 20, waste: 10 },
+      { areaPerUnit: 10 },
+    );
+    expect(res.area).toBe(1000);
+    expect(res.rolls).toBe(110);
+  });
+
+  it('grass seed (seed-rate): L 50, W 40, rate 4 lb/1000 sq ft -> area 2000, pounds 8, bags 2', () => {
+    const res = seedRate(
+      { length: 50, width: 40, rate: 4 },
+      { bagSize: 5 },
+    );
+    expect(res.area).toBe(2000);
+    expect(res.pounds).toBe(8);
+    expect(res.bags).toBe(2);
+  });
+
+  it('paint (paint): perimeter 44, height 8, 1 door, 2 windows, 2 coats, coverage 350 -> wallArea 302, gallons 1.7257, cans 2', () => {
+    const res = paint(
+      { perimeter: 44, height: 8, doors: 1, windows: 2, coats: 2 },
+      { coverage: 350, doorArea: 20, windowArea: 15 },
+    );
+    expect(res.wallArea).toBe(302);
+    expect(res.gallons).toBeCloseTo(1.7257, 4);
+    expect(res.cans).toBe(2);
+  });
+
+  it('flooring (unit-count): L 20, W 15, waste 10%, areaPerBox 20 sq ft -> area 300, boxes 17', () => {
+    const res = unitCount(
+      { length: 20, width: 15, waste: 10 },
+      { areaPerBox: 20 },
+    );
+    expect(res.area).toBe(300);
+    expect(res.boxes).toBe(17);
+  });
+
+  it('tile (unit-count): L 10, W 10, waste 10%, 12x12 in tiles, 10 tiles/box -> area 100, tiles 110, boxes 11', () => {
+    const res = unitCount(
+      { length: 10, width: 10, waste: 10 },
+      { unitLength: 12, unitWidth: 12, boxSize: 10 },
+    );
+    expect(res.area).toBe(100);
+    expect(res.tiles).toBe(110);
+    expect(res.boxes).toBe(11);
   });
 });
 
