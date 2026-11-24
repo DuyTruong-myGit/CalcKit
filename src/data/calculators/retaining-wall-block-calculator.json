@@ -1,0 +1,110 @@
+{
+  "slug": "retaining-wall-block-calculator",
+  "status": "draft",
+  "category": "concrete-masonry",
+  "formulaId": "unit-count",
+  "title": "Retaining Wall Block Calculator",
+  "metaTitle": "Retaining Wall Block Calculator: Wall Blocks and Capstones",
+  "metaDescription": "Calculate how many retaining wall blocks and capstones you need. Enter wall length and height with adjustable unit dimensions and waste.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Wall length", "unit": "ft", "type": "number", "default": 20, "min": 0 },
+    { "id": "width", "label": "Total wall height", "unit": "ft", "type": "number", "default": 3, "min": 0, "help": "Include the buried base course (usually 4 to 6 inches below ground level)." },
+    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 5% to 10% for straight walls; use 10% to 15% for curved or stepped walls." }
+  ],
+  "constants": [
+    {
+      "id": "unitLength",
+      "label": "Block face length (inches)",
+      "default": 16,
+      "note": "Standard retaining wall block face width is typically 16 or 18 inches. Verify against your block manufacturer specifications."
+    },
+    {
+      "id": "unitWidth",
+      "label": "Block face height (inches)",
+      "default": 6,
+      "note": "Standard block face height is typically 6 or 8 inches. Verify with your supplier."
+    }
+  ],
+  "outputs": [
+    { "id": "blocks", "label": "Wall blocks needed", "unit": "blocks", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "capBlocks", "label": "Cap blocks needed", "unit": "caps", "decimals": 0, "roundUp": true },
+    { "id": "area", "label": "Total wall face area", "unit": "sq ft", "decimals": 1 }
+  ],
+  "testCases": [
+    {
+      "name": "20 × 3 ft wall, 0% waste, 16 × 6 in blocks",
+      "inputs": { "length": 20, "width": 3, "waste": 0 },
+      "constants": { "unitLength": 16, "unitWidth": 6 },
+      "expected": { "area": 60, "blocks": 90, "capBlocks": 15 }
+    },
+    {
+      "name": "30 × 2.5 ft wall, 10% waste, 16 × 6 in blocks",
+      "inputs": { "length": 30, "width": 2.5, "waste": 10 },
+      "constants": { "unitLength": 16, "unitWidth": 6 },
+      "expected": { "area": 75, "blocks": 124, "capBlocks": 23 }
+    },
+    {
+      "name": "50 × 4 ft wall, 10% waste, 12 × 4 in compact blocks",
+      "inputs": { "length": 50, "width": 4, "waste": 10 },
+      "constants": { "unitLength": 12, "unitWidth": 4 },
+      "expected": { "area": 200, "blocks": 660, "capBlocks": 50 }
+    }
+  ],
+  "content": {
+    "intro": "Segmental retaining walls hold back sloped soil, prevent erosion, and create terraced, functional yard space for gardens and patios. Planning a retaining wall requires knowing both the number of structural wall blocks and the matching finishing capstones needed along the top course. This calculator calculates total wall face area, structural block count, and capstone units based on wall length and exposed wall height. Enter your planned wall dimensions below to calculate exact block quantities with a recommended waste allowance for end cuts, stepped slopes, and half-block staggered bonds on your backyard project.",
+    "howItWorks": "Wall face area is calculated by multiplying wall length in feet by total wall height in feet (including any buried base courses). The face area of a single retaining block is computed by multiplying its face length by its face height in inches and dividing by 144 (for example, a 16 × 6 inch block covers 96 ÷ 144 = 0.667 sq ft, or 1.5 blocks per square foot). Total face area is multiplied by the waste allowance and divided by the block face area, rounded up to the nearest whole block. Cap blocks are calculated by dividing the total wall length in inches by the length of a single cap block, rounding up to the nearest unit.",
+    "examples": [
+      {
+        "title": "A 20-foot long by 3-foot high garden retaining wall",
+        "text": "For a 20-foot long wall that is 3 feet high (including 6 inches of buried base course), the face area is 20 × 3 = 60 square feet. Standard 16 × 6 inch blocks cover 0.667 sq ft each (1.5 blocks/sq ft). Baseline block count is 60 × 1.5 = 90 blocks. With 10% waste for stepped cuts, order 99 wall blocks. For capping, 20 feet ÷ 1.33 feet per cap equals 15 cap blocks."
+      },
+      {
+        "title": "A 30-foot terrace wall at 2.5 feet high",
+        "text": "For a 30-foot terrace retaining wall that is 2.5 feet high, total face area is 75 square feet. At 1.5 blocks per square foot: 75 × 1.5 = 112.5 blocks. Adding 10% waste equals 123.75, which rounds up to 124 blocks. Capstones require 30 feet ÷ 1.33 feet = 22.5, rounding up to 23 cap blocks."
+      }
+    ],
+    "quickReference": {
+      "caption": "Retaining wall block counts (16 × 6 in blocks with 10% waste)",
+      "headers": ["Wall Dimensions (L × H)", "Face Area", "Wall Blocks Needed", "Cap Blocks (16 in)"],
+      "rows": [
+        ["10 × 2 ft", "20 sq ft", "33 blocks", "8 caps"],
+        ["15 × 2.5 ft", "37.5 sq ft", "62 blocks", "12 caps"],
+        ["20 × 3 ft", "60 sq ft", "99 blocks", "15 caps"],
+        ["25 × 3 ft", "75 sq ft", "124 blocks", "19 caps"],
+        ["30 × 3 ft", "90 sq ft", "149 blocks", "23 caps"],
+        ["40 × 3.5 ft", "140 sq ft", "231 blocks", "30 caps"]
+      ]
+    },
+    "commonMistakes": [
+      "Failing to bury the first course of blocks into the ground, causing the wall foot to slide out under soil pressure.",
+      "Skipping clean drainage gravel and perforated drain pipe behind the wall, trapping hydrostatic water weight.",
+      "Building taller than 3 or 4 feet without engineering review or geogrid structural reinforcement.",
+      "Placing blocks directly onto loose native soil without a firmly compacted crushed gravel trench foundation."
+    ],
+    "faq": [
+      {
+        "q": "How high can I build a retaining wall without an engineer?",
+        "a": "In most US municipalities, gravity retaining walls up to 3 or 4 feet total height (including the buried base course) can be built by DIY homeowners without a building permit or engineered structural design. Walls exceeding 4 feet usually require soil geogrid reinforcement and certified engineering plans."
+      },
+      {
+        "q": "Why must the first course of blocks be buried?",
+        "a": "Burying the first course (at least 4 to 6 inches or 10% of total wall height) anchors the wall into the ground and prevents the base from kicking out under hydraulic soil pressure behind the wall."
+      },
+      {
+        "q": "Do I need gravel behind a retaining wall?",
+        "a": "Yes. Poor drainage and hydrostatic pressure are the primary causes of retaining wall failure. Always place a minimum 12-inch column of clean angular gravel (#57 stone) and a perforated drain pipe wrapped in geotextile fabric immediately behind the wall."
+      },
+      {
+        "q": "How do I cut retaining wall blocks for ends and corners?",
+        "a": "Concrete retaining blocks can be cleanly split with a masonry chisel and 3-lb hammer after scoring a 1/8-inch groove on all four sides. For multiple clean cuts or step-downs, rent a handheld gas masonry saw with a diamond blade."
+      }
+    ]
+  },
+  "related": [
+    "paver-calculator",
+    "gravel-calculator",
+    "concrete-slab-calculator",
+    "sand-calculator"
+  ]
+}

@@ -38,6 +38,11 @@ describe('Sitemap and Robots Configuration', () => {
       expect(sitemap).not.toContain('/mulch-calculator');
       expect(sitemap).not.toContain('/gravel-calculator');
       expect(sitemap).not.toContain('/concrete-slab-calculator');
+      expect(sitemap).not.toContain('/topsoil-calculator');
+      expect(sitemap).not.toContain('/sand-calculator');
+      expect(sitemap).not.toContain('/raised-bed-soil-calculator');
+      expect(sitemap).not.toContain('/paver-calculator');
+      expect(sitemap).not.toContain('/retaining-wall-block-calculator');
 
       // Static non-draft pages must be included
       expect(sitemap).toContain('/about');

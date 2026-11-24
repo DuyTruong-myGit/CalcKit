@@ -1,0 +1,109 @@
+{
+  "slug": "paver-calculator",
+  "status": "draft",
+  "category": "concrete-masonry",
+  "formulaId": "unit-count",
+  "title": "Paver Calculator",
+  "metaTitle": "Paver Calculator: Brick and Concrete Patio Pavers Needed",
+  "metaDescription": "Calculate how many pavers you need for a patio, walkway, or driveway. Includes unit size adjustments and cut-waste allowance.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Patio / walkway length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "width", "label": "Patio / walkway width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for running bond or stack patterns; use 15% for herringbone or curved edges." }
+  ],
+  "constants": [
+    {
+      "id": "unitLength",
+      "label": "Paver length (inches)",
+      "default": 8,
+      "note": "Standard brick paver length. Common sizes range from 8 inches (brick) to 12, 16, or 24 inches for architectural slabs. Verify your paver dimensions."
+    },
+    {
+      "id": "unitWidth",
+      "label": "Paver width (inches)",
+      "default": 4,
+      "note": "Standard brick paver width. Verify with product specifications including joint spacer tabs."
+    }
+  ],
+  "outputs": [
+    { "id": "pavers", "label": "Pavers needed", "unit": "pavers", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "area", "label": "Total surface area", "unit": "sq ft", "decimals": 1 }
+  ],
+  "testCases": [
+    {
+      "name": "10 × 10 ft patio, 0% waste, 4 × 8 in pavers",
+      "inputs": { "length": 10, "width": 10, "waste": 0 },
+      "constants": { "unitLength": 8, "unitWidth": 4 },
+      "expected": { "area": 100, "pavers": 450 }
+    },
+    {
+      "name": "10 × 10 ft patio, 10% waste, 4 × 8 in pavers",
+      "inputs": { "length": 10, "width": 10, "waste": 10 },
+      "constants": { "unitLength": 8, "unitWidth": 4 },
+      "expected": { "area": 100, "pavers": 495 }
+    },
+    {
+      "name": "15 × 12 ft patio, 10% waste, 12 × 12 in square pavers",
+      "inputs": { "length": 15, "width": 12, "waste": 10 },
+      "constants": { "unitLength": 12, "unitWidth": 12 },
+      "expected": { "area": 180, "pavers": 198 }
+    }
+  ],
+  "content": {
+    "intro": "Installing a stone or concrete paver patio, walkway, or driveway enhances outdoor living spaces and increases home curb appeal. Accurate material estimation ensures you order enough pavers to finish your pattern without costly project interruptions or paying excess freight for unused pallets. This calculator determines the total square footage of your project and calculates the exact number of pavers required based on your selected unit dimensions and cut-waste allowance. Enter your layout dimensions below to get immediate totals for standard rectangular pavers, including recommendations for edge cuts, curved borders, and optional gravel subbase planning.",
+    "howItWorks": "Total project area is calculated by multiplying length in feet by width in feet to obtain square footage. The area of an individual paver in square feet is computed by multiplying its length in inches by width in inches and dividing by 144 (for example, a standard 4 by 8 inch paver covers 32 ÷ 144 = 0.222 square feet, or roughly 4.5 pavers per square foot). Total project area is multiplied by the waste allowance factor (such as 1.10 for 10% waste) and divided by the paver area. The resulting number is always rounded up to the next full paver.",
+    "examples": [
+      {
+        "title": "A 10 by 10 foot patio with standard 4 by 8 inch pavers",
+        "text": "For a 100-square-foot patio (10 × 10 ft), standard 4 × 8 inch pavers provide 0.222 sq ft each (4.5 pavers/sq ft). Base count is 100 × 4.5 = 450 pavers. With a recommended 10% cut-waste allowance for running bond layout: 450 × 1.10 = 495 pavers."
+      },
+      {
+        "title": "A 20 by 3 foot garden walkway with 12 by 12 inch stepping pavers",
+        "text": "For a walkway measuring 20 feet long and 3 feet wide, total surface area is 60 square feet. Each 12 × 12 inch square paver covers exactly 1.0 square foot. With 10% waste for border edge cuts: 60 × 1.10 = 66 pavers."
+      }
+    ],
+    "quickReference": {
+      "caption": "Paver quantities by patio area (4 × 8 in pavers with 10% cut-waste factor)",
+      "headers": ["Project Area", "Square Footage", "Paver Coverage", "Total Units Needed"],
+      "rows": [
+        ["8 × 8 ft", "64 sq ft", "4.5 pavers / sq ft", "317 pavers"],
+        ["10 × 10 ft", "100 sq ft", "4.5 pavers / sq ft", "495 pavers"],
+        ["12 × 12 ft", "144 sq ft", "4.5 pavers / sq ft", "713 pavers"],
+        ["16 × 12 ft", "192 sq ft", "4.5 pavers / sq ft", "951 pavers"],
+        ["20 × 10 ft", "200 sq ft", "4.5 pavers / sq ft", "990 pavers"],
+        ["20 × 15 ft", "300 sq ft", "4.5 pavers / sq ft", "1,485 pavers"]
+      ]
+    },
+    "commonMistakes": [
+      "Ordering exact counts without a 10% to 15% cutting allowance for edge trimming and border blocks.",
+      "Laying pavers directly on soil without a properly excavated and compacted crushed gravel base.",
+      "Using non-compacted sand thicker than 1.5 inches, leading to future dips and uneven pavers.",
+      "Omitting snap-edge or concrete edge restraints, allowing boundary pavers to spread over time."
+    ],
+    "faq": [
+      {
+        "q": "Why do I need a waste allowance when ordering pavers?",
+        "a": "Pavers along borders and corners must be cut with a masonry saw or splitter to fit your layout. Cut pieces are frequently unusable elsewhere. A 10% waste factor is recommended for rectangular layouts with running bond patterns, while herringbone patterns or curved borders require 15% due to extensive diagonal trimming."
+      },
+      {
+        "q": "What base materials are needed underneath patio pavers?",
+        "a": "A durable paver installation requires three distinct layers: excavated subsoil, 4 to 6 inches of compacted crushed stone gravel (such as crushed run or #21A), and a smooth 1-inch bedding layer of coarse concrete sand. Never lay pavers directly on bare dirt or topsoil."
+      },
+      {
+        "q": "How many pavers are on a typical pallet?",
+        "a": "A standard pallet of 4 by 8 inch concrete pavers typically contains between 450 and 500 units, covering approximately 100 to 110 square feet and weighing around 2,800 to 3,200 pounds. Check with your masonry yard for exact pallet counts."
+      },
+      {
+        "q": "Can I use stone dust instead of bedding sand?",
+        "a": "No. The Interlocking Concrete Pavement Institute (ICPI) advises against stone dust because it does not allow water to drain efficiently, retains moisture, and can track onto paver surfaces, compromising joint stability."
+      }
+    ]
+  },
+  "related": [
+    "sand-calculator",
+    "gravel-calculator",
+    "concrete-slab-calculator",
+    "retaining-wall-block-calculator"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "slug": "topsoil-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "volume-weight",
+  "title": "Topsoil Calculator",
+  "metaTitle": "Topsoil Calculator: Cubic Yards, Tons, and Depth Needed",
+  "metaDescription": "Calculate how many cubic yards and tons of topsoil you need for lawns, gardens, and leveling. Enter area dimensions and target soil depth.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 20, "min": 0 },
+    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 15, "min": 0 },
+    { "id": "depth", "label": "Depth", "unit": "in", "type": "number", "default": 4, "min": 0, "help": "Use 2 to 4 inches for lawn topdressing or 6 to 8 inches for new garden beds." },
+    { "id": "waste", "label": "Extra for compaction and settling", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+  ],
+  "constants": [
+    {
+      "id": "density",
+      "label": "Density (tons per cubic yard)",
+      "default": 1.1,
+      "note": "Typical dry, screened topsoil weighs approximately 1.0 to 1.25 tons per cubic yard. Wet or unscreened loam can weigh 1.3 to 1.5 tons. Verify with your local supplier."
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
+    { "id": "tons", "label": "Estimated tons", "unit": "tons", "decimals": 2 }
+  ],
+  "testCases": [
+    {
+      "name": "10 × 10 ft at 3 in, 0% waste, 1.1 tons/yd³",
+      "inputs": { "length": 10, "width": 10, "depth": 3, "waste": 0 },
+      "constants": { "density": 1.1 },
+      "expected": { "cubicFeet": 25, "cubicYards": 0.9259, "tons": 1.0185 },
+      "tolerance": 0.01
+    },
+    {
+      "name": "20 × 15 ft at 4 in, 10% waste, 1.1 tons/yd³",
+      "inputs": { "length": 20, "width": 15, "depth": 4, "waste": 10 },
+      "constants": { "density": 1.1 },
+      "expected": { "cubicFeet": 100, "cubicYards": 3.7037, "tons": 4.4815 },
+      "tolerance": 0.01
+    },
+    {
+      "name": "50 × 20 ft at 6 in, 5% waste, 1.2 tons/yd³",
+      "inputs": { "length": 50, "width": 20, "depth": 6, "waste": 5 },
+      "constants": { "density": 1.2 },
+      "expected": { "cubicFeet": 500, "cubicYards": 18.5185, "tons": 23.3333 },
+      "tolerance": 0.01
+    }
+  ],
+  "content": {
+    "intro": "Topsoil provides the organic nutrients and foundation needed for healthy lawns, perennial gardens, and planting beds. Estimating topsoil accurately prevents multiple delivery fees or excess dirt mounds lingering on your driveway. This free calculator computes the volume in cubic yards and cubic feet alongside estimated tonnage for dump truck deliveries. Whether you are leveling a settling lawn or establishing new planting rows, enter your area dimensions and target soil depth below. A standard application of two to four inches restores depleted native soil, while deeper coverage handles lawn regrading or new garden installations across any yard project.",
+    "howItWorks": "Topsoil volume is calculated by multiplying the surface area of your plot by the intended soil depth. Because soil depth is measured in inches while length and width are measured in feet, depth is converted to feet by dividing by 12. Multiplying length, width, and converted depth yields volume in cubic feet. Dividing cubic feet by 27 converts the measurement into cubic yards, which is the standard unit used by bulk soil suppliers and landscape supply yards. Estimated weight in tons is calculated by multiplying cubic yards by density (typically 1.1 tons per cubic yard for dry, screened topsoil) and applying your chosen waste or settling percentage.",
+    "examples": [
+      {
+        "title": "Topdressing an existing 20 by 15 foot lawn area",
+        "text": "For a 20 by 15 foot patchy lawn section receiving a 2-inch topdressing layer, total volume is 20 × 15 × (2 ÷ 12) = 50 cubic feet. Converting to cubic yards yields 50 ÷ 27 = 1.85 cubic yards. With a 10% allowance for settling into grass thatch: 1.85 × 1.10 = 2.04 cubic yards. At standard screened density of 1.1 tons per yard, the order weighs roughly 2.24 tons."
+      },
+      {
+        "title": "Establishing a new 20 by 15 foot garden bed at 4 inches deep",
+        "text": "For a new planting bed measuring 20 feet long by 15 feet wide with 4 inches of new topsoil, the volume is 20 × 15 × (4 ÷ 12) = 100 cubic feet. Dividing 100 by 27 gives 3.70 cubic yards. Adding a 10% allowance for compaction during raking gives 4.07 cubic yards, weighing approximately 4.48 tons."
+      }
+    ],
+    "quickReference": {
+      "caption": "Topsoil coverage and estimated tons at 1.1 tons per cubic yard with 10% waste",
+      "headers": ["Area", "Depth", "Cubic Feet", "Cubic Yards", "Tons Needed"],
+      "rows": [
+        ["100 sq ft", "2 in", "16.7", "0.62", "0.75 tons"],
+        ["100 sq ft", "4 in", "33.3", "1.23", "1.49 tons"],
+        ["200 sq ft", "3 in", "50.0", "1.85", "2.24 tons"],
+        ["300 sq ft", "4 in", "100.0", "3.70", "4.48 tons"],
+        ["500 sq ft", "4 in", "166.7", "6.17", "7.47 tons"],
+        ["1,000 sq ft", "4 in", "333.3", "12.35", "14.94 tons"]
+      ]
+    },
+    "commonMistakes": [
+      "Failing to account for settling: loose topsoil compacts by 10% to 15% after the first rainfall or roll.",
+      "Ordering unscreened fill dirt instead of screened topsoil, leading to rocks, clumps, and roots in finished lawns.",
+      "Measuring soil depth in feet instead of inches, which multiplies the volume order by twelve times.",
+      "Overloading residential driveways with tandem axle dump trucks exceeding surface load capacity."
+    ],
+    "faq": [
+      {
+        "q": "How deep should topsoil be for a new lawn?",
+        "a": "For a new lawn established from seed or sod, aim for a minimum of 4 to 6 inches of quality topsoil over the native subsoil. If topdressing an established lawn to smooth out small bumps, apply a light layer of 1/4 to 1/2 inch so existing grass blades remain uncovered."
+      },
+      {
+        "q": "How many cubic yards of topsoil fit in a pickup truck?",
+        "a": "A standard half-ton pickup truck bed can physically hold about 1 to 1.5 cubic yards of dry topsoil, but payload weight is the limiting factor. Because a single cubic yard weighs roughly 2,000 to 2,500 pounds, hauling more than one cubic yard in a half-ton pickup will likely exceed legal weight ratings. Check your vehicle's payload capacity."
+      },
+      {
+        "q": "What is the difference between topsoil, garden soil, and compost?",
+        "a": "Topsoil is the natural uppermost layer of native soil, typically screened of rocks and debris. Garden soil is topsoil enriched with organic matter and fertilizers for specific plant types. Compost is fully decomposed organic matter used as an amendment rather than a bulk filler."
+      },
+      {
+        "q": "How much does a cubic yard of topsoil weigh?",
+        "a": "Dry screened topsoil weighs between 2,000 and 2,200 pounds (1.0 to 1.1 tons) per cubic yard. Wet or clay-heavy topsoil can exceed 2,600 to 3,000 pounds (1.3 to 1.5 tons) per cubic yard."
+      }
+    ]
+  },
+  "related": [
+    "mulch-calculator",
+    "gravel-calculator",
+    "raised-bed-soil-calculator",
+    "sand-calculator"
+  ]
+}

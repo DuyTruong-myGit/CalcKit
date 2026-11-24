@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { volumeBags } from '../src/lib/calc/formulas/volume-bags.js';
 import { volumeWeight } from '../src/lib/calc/formulas/volume-weight.js';
 import { concreteSlab } from '../src/lib/calc/formulas/concrete-slab.js';
+import { unitCount } from '../src/lib/calc/formulas/unit-count.js';
 import { calculate, runTestCase } from '../src/lib/calc/engine.js';
 import type { CalculatorDef } from '../src/lib/schema/types.js';
 
@@ -36,6 +37,26 @@ describe('Pure Formula Functions — Hand-Calculated Cases (docs/FORMULAS.md)', 
     expect(res.cubicFeet).toBeCloseTo(33.333, 2);
     expect(res.cubicYards).toBeCloseTo(1.2346, 3);
     expect(res.bags).toBe(56);
+  });
+
+  it('paver (unit-count): L 10, W 10, waste 10%, 4x8 in pavers -> area 100, pavers 495', () => {
+    const res = unitCount(
+      { length: 10, width: 10, waste: 10 },
+      { unitLength: 8, unitWidth: 4 },
+    );
+    expect(res.area).toBe(100);
+    expect(res.pavers).toBe(495);
+    expect(res.units).toBe(495);
+  });
+
+  it('retaining wall (unit-count): L 30, H 2.5, waste 10%, 16x6 in blocks -> area 75, blocks 124, capBlocks 23', () => {
+    const res = unitCount(
+      { length: 30, width: 2.5, waste: 10 },
+      { unitLength: 16, unitWidth: 6 },
+    );
+    expect(res.area).toBe(75);
+    expect(res.blocks).toBe(124);
+    expect(res.capBlocks).toBe(23);
   });
 });
 
