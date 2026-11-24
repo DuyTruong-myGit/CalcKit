@@ -1,0 +1,71 @@
+---
+/**
+ * about.astro — About page
+ * Follows template in docs/CONTENT_GUIDE.md section 7
+ */
+import Base from '../layouts/Base.astro';
+import { SITE_CONFIG } from '../config';
+---
+
+<Base
+  metaTitle={`About ${SITE_CONFIG.siteName}`}
+  metaDescription={`Learn more about ${SITE_CONFIG.siteName}, our mission to provide accurate, transparent material calculators, and our editorial standards.`}
+>
+  <article class="prose-page">
+    <h1>About {SITE_CONFIG.siteName}</h1>
+
+    <p>
+      {SITE_CONFIG.siteName} offers free, transparent calculators that help US homeowners
+      and DIYers estimate how much material they need for common home and garden projects
+      such as mulch, gravel, concrete, paint, and flooring.
+    </p>
+
+    <h2>Why we built this site</h2>
+    <p>
+      Planning a weekend outdoor or home improvement project often begins with a simple question:
+      "How many bags do I need?" Too many online calculators hide their math behind lead-generation
+      forms or require accounts. We believe you should get a dependable number instantly, with
+      complete visibility into how that number was calculated.
+    </p>
+
+    <h2>How our calculators work</h2>
+    <p>
+      Every calculator on this site runs entirely in your web browser. No measurements or numbers
+      you enter are sent to a server or saved to a database. Our formulas use standard geometric
+      conversions and typical commercial product sizes (such as 2-cubic-foot mulch bags or 80-pound
+      concrete bags). We provide editable assumption panels so you can adjust dimensions, bag yields,
+      and waste allowances to match your specific supplier's product specifications.
+    </p>
+
+    <h2>Independence and accuracy</h2>
+    <p>
+      We are an independent project and are not affiliated with, sponsored by, or endorsed by
+      any home improvement retailer, building material manufacturer, or landscaping quarry.
+      Our priorities are mathematical correctness and clear, original explanations.
+    </p>
+
+    <h2>Questions or corrections</h2>
+    <p>
+      If you spot a mathematical discrepancy, an outdated product specification, or have a suggestion
+      for a new calculator, please email us directly at
+      <a href={`mailto:${SITE_CONFIG.contactEmail}`}>{SITE_CONFIG.contactEmail}</a>.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .prose-page {
+    max-width: 68ch;
+  }
+  .prose-page h1 {
+    margin-bottom: var(--space-6);
+  }
+  .prose-page h2 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+  .prose-page p {
+    margin-bottom: var(--space-4);
+    line-height: 1.65;
+  }
+</style>

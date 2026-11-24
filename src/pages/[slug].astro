@@ -37,6 +37,39 @@ interface Props {
 
 const { def } = Astro.props;
 const isDraft = def.status === 'draft';
+
+// Schema.org structured data (WebApplication + FAQPage matching visible content)
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: def.title,
+    description: def.metaDescription,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'All',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  },
+  ...(def.content.faq && def.content.faq.length > 0
+    ? [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: def.content.faq.map((item) => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.a,
+            },
+          })),
+        },
+      ]
+    : []),
+];
 ---
 
 <Base
@@ -44,6 +77,8 @@ const isDraft = def.status === 'draft';
   metaDescription={def.metaDescription}
   noindex={isDraft}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
   <article class="calculator-page">
     <header class="page-header">
       <h1>{def.title}</h1>

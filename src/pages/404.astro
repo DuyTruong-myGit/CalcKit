@@ -1,0 +1,101 @@
+---
+/**
+ * 404.astro — Custom 404 Not Found page
+ */
+import Base from '../layouts/Base.astro';
+import { SITE_CONFIG } from '../config';
+---
+
+<Base
+  metaTitle={`Page Not Found | ${SITE_CONFIG.siteName}`}
+  metaDescription="The calculator or page you were looking for could not be found. Browse our free home improvement calculators."
+  noindex={true}
+>
+  <div class="not-found-page">
+    <p class="error-badge">404 Error</p>
+    <h1>Page not found</h1>
+    <p class="lead-text">
+      The page or calculator you requested does not exist or may have been moved.
+    </p>
+
+    <div class="help-box">
+      <h2>Popular calculators</h2>
+      <ul class="quick-links">
+        <li><a href="/mulch-calculator/">Mulch Calculator</a> &mdash; Bags and cubic yards for garden beds</li>
+        <li><a href="/gravel-calculator/">Gravel Calculator</a> &mdash; Tons and yards for driveways and paths</li>
+        <li><a href="/concrete-slab-calculator/">Concrete Slab Calculator</a> &mdash; 80-lb and 60-lb bag counts</li>
+      </ul>
+      <p>
+        <a href="/" class="btn-home">&larr; Return to all calculators</a>
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .not-found-page {
+    max-width: 68ch;
+    padding: var(--space-4) 0;
+  }
+
+  .error-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: #f1f5f9;
+    border-radius: var(--radius);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: var(--space-2);
+  }
+
+  h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .lead-text {
+    font-size: 1.125rem;
+    color: var(--muted);
+    margin-bottom: var(--space-8);
+  }
+
+  .help-box {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+    background: #f8fafc;
+  }
+
+  .help-box h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+    font-size: 1.125rem;
+  }
+
+  .quick-links {
+    list-style: none;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .quick-links a {
+    font-weight: 600;
+  }
+
+  .btn-home {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    background: var(--action);
+    color: var(--page);
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+  }
+  .btn-home:hover {
+    filter: brightness(1.1);
+    text-decoration: none;
+  }
+</style>

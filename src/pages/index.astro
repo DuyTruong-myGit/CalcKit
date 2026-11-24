@@ -1,46 +1,224 @@
 ---
+/**
+ * index.astro — Home page
+ * Clean, practical directory of home and garden material calculators.
+ */
 import Base from '../layouts/Base.astro';
-import Calculator from '../components/Calculator.astro';
-import FAQ from '../components/FAQ.astro';
-import RelatedLinks from '../components/RelatedLinks.astro';
-import AdSlot from '../components/AdSlot.astro';
-import mulchDef from '../../tests/fixtures/valid/mulch-calculator.json';
-import type { CalculatorDef } from '../lib/schema/types';
 
-const calculator = mulchDef as CalculatorDef;
+const FEATURED_CALCULATORS = [
+  {
+    slug: 'mulch-calculator',
+    title: 'Mulch Calculator',
+    badge: 'Popular',
+    desc: 'Calculate bags and cubic yards of mulch for planting beds and borders. Includes depth recommendations and waste factor.',
+  },
+  {
+    slug: 'gravel-calculator',
+    title: 'Gravel Calculator',
+    badge: 'Popular',
+    desc: 'Estimate tons and cubic yards of crushed stone or pea gravel for driveways, walkways, and French drains.',
+  },
+  {
+    slug: 'concrete-slab-calculator',
+    title: 'Concrete Slab Calculator',
+    badge: 'Essential',
+    desc: 'Determine cubic yards and premixed 80-lb or 60-lb bag counts for patios, sidewalks, and shed foundations.',
+  },
+];
 ---
 
 <Base
-  metaTitle="Free Material Calculators for Home & Garden"
-  metaDescription="Accurate, free material calculators for home and garden DIY projects: mulch, gravel, concrete, paint, flooring, and more."
+  metaTitle="Free Material Calculators for Home & Garden DIY Projects"
+  metaDescription="Free, accurate material calculators for US homeowners: mulch, gravel, concrete slabs, and more. Calculate bags, yards, and tons with clear math."
 >
-  <h1>{calculator.title}</h1>
-  <p>{calculator.content.intro}</p>
+  <div class="home-page">
+    <header class="hero-section">
+      <h1>Free Material Calculators for Home & Garden</h1>
+      <p class="hero-lead">
+        Get instant, accurate estimates for materials before you head to the store or call
+        for delivery. Our calculators run 100% in your browser with no accounts, no ads
+        interfering with calculations, and complete transparency into the math.
+      </p>
+    </header>
 
-  <Calculator def={calculator} />
+    <section class="featured-section" aria-labelledby="featured-heading">
+      <div class="section-header">
+        <h2 id="featured-heading">Available Calculators</h2>
+        <a href="/categories/" class="view-all-link">Browse all categories &rarr;</a>
+      </div>
 
-  <AdSlot position="below-calculator" />
-
-  <hr class="section-divider" />
-
-  <section>
-    <h2>How it works</h2>
-    <p>{calculator.content.howItWorks}</p>
-  </section>
-
-  {calculator.content.examples.length > 0 && (
-    <section>
-      <h2>Worked examples</h2>
-      {calculator.content.examples.map((ex) => (
-        <div>
-          <h3>{ex.title}</h3>
-          <p>{ex.text}</p>
-        </div>
-      ))}
+      <div class="featured-grid">
+        {FEATURED_CALCULATORS.map((calc) => (
+          <a href={`/${calc.slug}/`} class="calc-card">
+            <div class="card-top">
+              <span class="card-badge">{calc.badge}</span>
+              <span class="card-arrow" aria-hidden="true">&rarr;</span>
+            </div>
+            <h3>{calc.title}</h3>
+            <p>{calc.desc}</p>
+          </a>
+        ))}
+      </div>
     </section>
-  )}
 
-  <FAQ items={calculator.content.faq} />
+    <hr class="section-divider" />
 
-  <RelatedLinks slugs={calculator.related} />
+    <section class="trust-section">
+      <h2>Why use our calculators?</h2>
+      <div class="trust-grid">
+        <div class="trust-item">
+          <h3>Exact math, verified</h3>
+          <p>
+            Every formula is tested against hand-calculated standards. We show you the exact
+            conversions and formulas used so you can trust the numbers.
+          </p>
+        </div>
+        <div class="trust-item">
+          <h3>Fast & phone-ready</h3>
+          <p>
+            Designed for mobile use standing in your yard with a tape measure. Instant live
+            updates, clear 44px tap targets, and no heavy frameworks.
+          </p>
+        </div>
+        <div class="trust-item">
+          <h3>Private by design</h3>
+          <p>
+            Everything runs in your browser. Your measurements are never sent to a remote
+            server, stored in a database, or sold to advertisers.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
 </Base>
+
+<style>
+  .home-page {
+    max-width: 720px;
+  }
+
+  .hero-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .hero-section h1 {
+    font-size: 1.75rem;
+    line-height: 1.25;
+    margin-bottom: var(--space-4);
+    letter-spacing: -0.01em;
+  }
+
+  .hero-lead {
+    font-size: 1.0625rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .section-header h2 {
+    margin: 0;
+  }
+
+  .view-all-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .featured-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .calc-card {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    background: var(--page);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, background 0.15s;
+    display: block;
+  }
+
+  .calc-card:hover {
+    border-color: var(--action);
+    background: #f8fafc;
+    text-decoration: none;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+  }
+
+  .card-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    background: #e0e7ff;
+    color: var(--action);
+    border-radius: var(--radius);
+  }
+
+  .card-arrow {
+    color: var(--muted);
+    font-size: 1.125rem;
+  }
+
+  .calc-card:hover .card-arrow {
+    color: var(--action);
+  }
+
+  .calc-card h3 {
+    margin: 0 0 var(--space-2);
+    font-size: 1.125rem;
+    color: var(--ink);
+  }
+
+  .calc-card p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .trust-section {
+    margin-top: var(--space-8);
+  }
+
+  .trust-section h2 {
+    margin-bottom: var(--space-6);
+  }
+
+  .trust-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .trust-item h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-1);
+  }
+
+  .trust-item p {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+</style>

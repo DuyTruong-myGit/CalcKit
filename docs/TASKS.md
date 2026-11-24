@@ -46,7 +46,7 @@ Status: done
 - Acceptance: three pages build, tests pass, report a hand-check list for the owner (constants and text to verify).
 
 ### TASK-07: Required pages and SEO plumbing
-Status: todo
+Status: done
 - About, Contact, Privacy Policy, Terms and Disclaimer, 404, home page, category index.
 - `@astrojs/sitemap`, `robots.txt`, structured data that matches visible content only.
 - Acceptance: all pages build, footer links work, sitemap lists only reviewed pages.

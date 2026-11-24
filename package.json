@@ -13,6 +13,7 @@
     "validate:data": "node --experimental-strip-types scripts/validate-data.js"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
     "astro": "^5.4.2"
   },
   "devDependencies": {

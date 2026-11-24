@@ -1,0 +1,201 @@
+---
+/**
+ * categories.astro — Category Index
+ * Displays the 5 material categories and all calculators.
+ */
+import Base from '../layouts/Base.astro';
+import { SITE_CONFIG } from '../config';
+
+const CATEGORIES = [
+  {
+    id: 'landscaping',
+    name: 'Landscaping & Garden',
+    description: 'Calculators for bulk mulch, decorative gravel, topsoil, sand, sod, and raised bed soil.',
+    items: [
+      { slug: 'mulch-calculator', title: 'Mulch Calculator', available: true, desc: 'Bags and cubic yards needed for flower and garden beds.' },
+      { slug: 'gravel-calculator', title: 'Gravel Calculator', available: true, desc: 'Tons and yards of crushed stone for driveways and paths.' },
+      { slug: 'topsoil-calculator', title: 'Topsoil Calculator', available: false, desc: 'Cubic yards and tonnage for lawns and grading.' },
+      { slug: 'sand-calculator', title: 'Sand Calculator', available: false, desc: 'Tons and volume for sandboxes and paver bedding.' },
+      { slug: 'raised-bed-soil-calculator', title: 'Raised Bed Soil Calculator', available: false, desc: 'Soil bags and blends for garden boxes.' },
+      { slug: 'sod-calculator', title: 'Sod Calculator', available: false, desc: 'Rolls and square footage for new lawn installation.' },
+      { slug: 'grass-seed-calculator', title: 'Grass Seed Calculator', available: false, desc: 'Pounds of seed for new lawns and overseeding.' },
+    ],
+  },
+  {
+    id: 'concrete-masonry',
+    name: 'Concrete & Masonry',
+    description: 'Calculators for concrete slabs, post holes, interlocking pavers, and retaining walls.',
+    items: [
+      { slug: 'concrete-slab-calculator', title: 'Concrete Slab Calculator', available: true, desc: 'Cubic yards and 80-lb or 60-lb bag estimates.' },
+      { slug: 'concrete-post-hole-calculator', title: 'Post Hole Concrete Calculator', available: false, desc: 'Bags needed per fence post or deck pier.' },
+      { slug: 'paver-calculator', title: 'Paver Calculator', available: false, desc: 'Patio block count, sand base, and gravel sub-base.' },
+      { slug: 'retaining-wall-block-calculator', title: 'Retaining Wall Calculator', available: false, desc: 'Face blocks, cap blocks, and backfill gravel.' },
+    ],
+  },
+  {
+    id: 'painting-flooring',
+    name: 'Painting & Flooring',
+    description: 'Calculators for interior wall paint, hardwood/laminate flooring, tile, and drywall.',
+    items: [
+      { slug: 'paint-calculator', title: 'Paint Calculator', available: false, desc: 'Gallons of paint accounting for doors and windows.' },
+      { slug: 'flooring-calculator', title: 'Flooring Calculator', available: false, desc: 'Boxes of hardwood, laminate, or vinyl plank.' },
+      { slug: 'tile-calculator', title: 'Tile Calculator', available: false, desc: 'Tile count, box counts, and grout spacing.' },
+      { slug: 'drywall-calculator', title: 'Drywall Calculator', available: false, desc: '4x8 and 4x12 sheet counts for walls and ceilings.' },
+    ],
+  },
+  {
+    id: 'structures-roofing',
+    name: 'Outdoor Structures & Roofing',
+    description: 'Calculators for privacy fences, deck boards, and asphalt shingle roofing.',
+    items: [
+      { slug: 'fence-calculator', title: 'Fence Calculator', available: false, desc: 'Posts, rails, pickets, and gate allowances.' },
+      { slug: 'deck-board-calculator', title: 'Deck Board Calculator', available: false, desc: 'Total linear feet and board counts.' },
+      { slug: 'roofing-calculator', title: 'Roofing Calculator', available: false, desc: 'Roof pitch multipliers, squares, and shingle bundles.' },
+    ],
+  },
+  {
+    id: 'utilities',
+    name: 'Measurement Utilities',
+    description: 'General conversion tools for area and volume.',
+    items: [
+      { slug: 'cubic-yard-calculator', title: 'Cubic Yard Calculator', available: false, desc: 'Convert between feet, inches, yards, and meters.' },
+      { slug: 'square-footage-calculator', title: 'Square Footage Calculator', available: false, desc: 'Area calculators for rectangles, circles, and triangles.' },
+    ],
+  },
+];
+---
+
+<Base
+  metaTitle={`Material Calculator Categories | ${SITE_CONFIG.siteName}`}
+  metaDescription={`Browse free material calculators by category: landscaping, concrete and masonry, painting, flooring, fencing, and roofing.`}
+>
+  <div class="categories-page">
+    <header class="page-header">
+      <h1>Calculator Categories</h1>
+      <p class="lead-text">
+        Browse our comprehensive collection of free home and garden material calculators,
+        organized by project type.
+      </p>
+    </header>
+
+    <div class="category-grid">
+      {CATEGORIES.map((cat) => (
+        <section class="category-card" aria-labelledby={`cat-${cat.id}`}>
+          <h2 id={`cat-${cat.id}`}>{cat.name}</h2>
+          <p class="category-desc">{cat.description}</p>
+          <ul class="calculator-list">
+            {cat.items.map((item) => (
+              <li class="calculator-item">
+                {item.available ? (
+                  <a href={`/${item.slug}/`} class="active-calc-link">
+                    <span class="calc-name">{item.title}</span>
+                    <span class="calc-arrow" aria-hidden="true">&rarr;</span>
+                  </a>
+                ) : (
+                  <div class="upcoming-calc">
+                    <span class="calc-name">{item.title}</span>
+                    <span class="badge-upcoming">Coming soon</span>
+                  </div>
+                )}
+                <p class="item-desc">{item.desc}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .categories-page {
+    max-width: 720px;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .lead-text {
+    font-size: 1.0625rem;
+    color: var(--muted);
+  }
+
+  .category-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .category-card {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+    background: var(--page);
+  }
+
+  .category-card h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+
+  .category-desc {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-6);
+  }
+
+  .calculator-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .calculator-item {
+    border-top: 1px solid var(--rule);
+    padding-top: var(--space-3);
+  }
+
+  .active-calc-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--action);
+  }
+
+  .active-calc-link:hover {
+    text-decoration: underline;
+  }
+
+  .upcoming-calc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .badge-upcoming {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    background: #f1f5f9;
+    border-radius: var(--radius);
+    color: var(--muted);
+  }
+
+  .item-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin: var(--space-1) 0 0;
+  }
+</style>

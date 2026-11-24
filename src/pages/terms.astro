@@ -1,0 +1,87 @@
+---
+/**
+ * terms.astro — Terms of Service and Disclaimer
+ * Follows template in docs/CONTENT_GUIDE.md section 7
+ */
+import Base from '../layouts/Base.astro';
+import { SITE_CONFIG } from '../config';
+---
+
+<Base
+  metaTitle={`Terms of Service and Disclaimer | ${SITE_CONFIG.siteName}`}
+  metaDescription={`Terms of use and calculation disclaimer for ${SITE_CONFIG.siteName}. All calculations are estimates for planning purposes only.`}
+>
+  <article class="prose-page">
+    <h1>Terms of Service and Disclaimer</h1>
+    <p class="effective-date">Last updated: November 24, 2026</p>
+
+    <h2>1. Calculation disclaimer</h2>
+    <p>
+      The calculators on this site provide estimates for planning purposes only. Actual material
+      needs depend on site-specific conditions, soil settlement, excavation irregularities, product
+      dimensions, manufacturer tolerances, spillage, and installation methods.
+    </p>
+    <p>
+      Always confirm quantities with your building material supplier, ready-mix dispatcher, or a
+      qualified contractor before purchasing, especially for structural work such as concrete slabs,
+      retaining walls, roofing, and deck framing.
+    </p>
+
+    <h2>2. No professional advice</h2>
+    <p>
+      The content and calculations provided on {SITE_CONFIG.siteName} do not constitute engineering,
+      architectural, structural, legal, or professional building code advice. Local municipal building
+      codes, frost depth requirements, and load requirements vary by jurisdiction. You are responsible
+      for complying with all local regulations and safety standards.
+    </p>
+
+    <h2>3. Disclaimer of warranties</h2>
+    <p>
+      This website and its calculation tools are provided on an "as is" and "as available" basis,
+      without any warranties of any kind, whether express or implied. We do not warrant that calculations
+      will be error-free, continuous, or completely accurate for every unique construction situation.
+    </p>
+
+    <h2>4. Limitation of liability</h2>
+    <p>
+      To the fullest extent permitted by applicable law, {SITE_CONFIG.siteName} and its operators
+      shall not be liable for any direct, indirect, incidental, consequential, or financial damages
+      arising out of your use of or inability to use the calculators, including but not limited to
+      material over-purchases, delivery shortages, construction delays, or labor costs.
+    </p>
+
+    <h2>5. Changes to these terms</h2>
+    <p>
+      We reserve the right to modify these terms at any time. Any revisions will be published
+      directly on this page with an updated effective date.
+    </p>
+
+    <h2>6. Contact</h2>
+    <p>
+      If you have questions regarding these terms, please contact us at
+      <a href={`mailto:${SITE_CONFIG.contactEmail}`}>{SITE_CONFIG.contactEmail}</a>.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .prose-page {
+    max-width: 68ch;
+  }
+  .prose-page h1 {
+    margin-bottom: var(--space-2);
+  }
+  .effective-date {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: var(--space-6);
+  }
+  .prose-page h2 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+  .prose-page p {
+    margin-bottom: var(--space-4);
+    line-height: 1.65;
+  }
+</style>

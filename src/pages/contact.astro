@@ -1,0 +1,89 @@
+---
+/**
+ * contact.astro — Contact page
+ * Follows template in docs/CONTENT_GUIDE.md section 7
+ */
+import Base from '../layouts/Base.astro';
+import { SITE_CONFIG } from '../config';
+---
+
+<Base
+  metaTitle={`Contact ${SITE_CONFIG.siteName}`}
+  metaDescription={`Get in touch with the ${SITE_CONFIG.siteName} team for questions, suggestions, or corrections.`}
+>
+  <article class="prose-page">
+    <h1>Contact us</h1>
+
+    <p>
+      Have a question about a calculation, a suggestion for a new material calculator,
+      or a correction to an existing formula? We welcome feedback from homeowners,
+      DIYers, and trade professionals.
+    </p>
+
+    <div class="contact-card">
+      <h2>Email</h2>
+      <p>
+        Please send all inquiries to:
+        <br />
+        <a href={`mailto:${SITE_CONFIG.contactEmail}`} class="contact-email">
+          {SITE_CONFIG.contactEmail}
+        </a>
+      </p>
+      <p class="response-note">
+        We review incoming emails regularly and aim to reply within 2 business days.
+      </p>
+    </div>
+
+    <h2>Reporting formula errors</h2>
+    <p>
+      If you believe an expected calculation is inaccurate, please include:
+    </p>
+    <ul>
+      <li>The calculator name or URL.</li>
+      <li>The inputs and constants you entered.</li>
+      <li>The expected result according to your calculations or supplier's technical sheet.</li>
+    </ul>
+  </article>
+</Base>
+
+<style>
+  .prose-page {
+    max-width: 68ch;
+  }
+  .prose-page h1 {
+    margin-bottom: var(--space-6);
+  }
+  .prose-page h2 {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+  .contact-card {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+    background: #f8fafc;
+    margin: var(--space-6) 0;
+  }
+  .contact-card h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+  }
+  .contact-email {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .response-note {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+  }
+  ul {
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+  li {
+    margin-bottom: var(--space-2);
+    line-height: 1.6;
+  }
+</style>
