@@ -71,9 +71,9 @@ Status: done
 - Acceptance per batch: tests pass, build passes, hand-check list delivered.
 
 ### TASK-14: AdSense readiness (owner decides when)
-Status: todo
+Status: done
 - Run the checklist: custom domain with HTTPS, 15 to 20 reviewed pages, four required pages linked in the footer, privacy policy matching reality, no thin or duplicate pages.
-- Acceptance: written checklist with pass or fail per item. Do not add ad scripts yet.
+- Acceptance: written checklist with pass or fail per item. Do not add ad scripts yet. Delivered in `docs/ADSENSE_READINESS.md`.
 
 ### TASK-15: Ads on (only after the owner confirms approval)
 Status: blocked until approval
