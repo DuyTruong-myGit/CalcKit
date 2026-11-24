@@ -40,7 +40,31 @@ if (files.length === 0) {
 
 // ── First pass: collect all slugs (for related-slug cross-check) ──────────────
 
-const knownSlugs = new Set();
+// The 20 valid calculator slugs defined in docs/SPEC.md and docs/FORMULAS.md
+const PLANNED_SLUGS = [
+  'mulch-calculator',
+  'gravel-calculator',
+  'topsoil-calculator',
+  'sand-calculator',
+  'raised-bed-soil-calculator',
+  'concrete-slab-calculator',
+  'concrete-post-hole-calculator',
+  'paver-calculator',
+  'retaining-wall-block-calculator',
+  'sod-calculator',
+  'grass-seed-calculator',
+  'paint-calculator',
+  'flooring-calculator',
+  'tile-calculator',
+  'drywall-calculator',
+  'fence-calculator',
+  'deck-board-calculator',
+  'roofing-calculator',
+  'cubic-yard-calculator',
+  'square-footage-calculator',
+];
+
+const knownSlugs = new Set(PLANNED_SLUGS);
 for (const file of files) {
   try {
     const raw = JSON.parse(readFileSync(join(DATA_DIR, file), 'utf-8'));

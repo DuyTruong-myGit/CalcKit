@@ -1,0 +1,236 @@
+---
+/**
+ * [slug].astro — dynamic route for calculator pages
+ * Builds a page for every JSON definition in src/data/calculators/
+ *
+ * Rules:
+ * - Draft pages (status: "draft") get noindex, nofollow.
+ * - Single H1 per page.
+ * - Section order follows docs/CONTENT_GUIDE.md.
+ */
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import Base from '../layouts/Base.astro';
+import Calculator from '../components/Calculator.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import AdSlot from '../components/AdSlot.astro';
+import type { CalculatorDef } from '../lib/schema/types';
+
+export async function getStaticPaths() {
+  const dataDir = join(process.cwd(), 'src', 'data', 'calculators');
+  const files = readdirSync(dataDir).filter((f) => f.endsWith('.json'));
+
+  return files.map((file) => {
+    const raw = readFileSync(join(dataDir, file), 'utf-8');
+    const def = JSON.parse(raw) as CalculatorDef;
+    return {
+      params: { slug: def.slug },
+      props: { def },
+    };
+  });
+}
+
+interface Props {
+  def: CalculatorDef;
+}
+
+const { def } = Astro.props;
+const isDraft = def.status === 'draft';
+---
+
+<Base
+  metaTitle={def.metaTitle}
+  metaDescription={def.metaDescription}
+  noindex={isDraft}
+>
+  <article class="calculator-page">
+    <header class="page-header">
+      <h1>{def.title}</h1>
+      <p class="intro-text">{def.content.intro}</p>
+    </header>
+
+    <Calculator def={def} />
+
+    <AdSlot position="below-calculator" />
+
+    <hr class="section-divider" />
+
+    <section class="content-section" aria-labelledby="how-it-works-heading">
+      <h2 id="how-it-works-heading">How it works</h2>
+      <p>{def.content.howItWorks}</p>
+    </section>
+
+    {def.content.examples && def.content.examples.length > 0 && (
+      <section class="content-section" aria-labelledby="examples-heading">
+        <h2 id="examples-heading">Worked examples</h2>
+        <div class="examples-list">
+          {def.content.examples.map((ex) => (
+            <div class="example-card">
+              <h3>{ex.title}</h3>
+              <p>{ex.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {def.content.quickReference && (
+      <section class="content-section" aria-labelledby="quick-ref-heading">
+        <h2 id="quick-ref-heading">Quick reference table</h2>
+        <div class="table-container">
+          <table class="quick-ref-table">
+            <caption>{def.content.quickReference.caption}</caption>
+            <thead>
+              <tr>
+                {def.content.quickReference.headers.map((h) => (
+                  <th scope="col">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {def.content.quickReference.rows.map((row) => (
+                <tr>
+                  {row.map((cell, idx) => (
+                    idx === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {def.content.commonMistakes && def.content.commonMistakes.length > 0 && (
+      <section class="content-section" aria-labelledby="mistakes-heading">
+        <h2 id="mistakes-heading">Common mistakes to avoid</h2>
+        <ul class="mistakes-list">
+          {def.content.commonMistakes.map((m) => (
+            <li>{m}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {def.content.faq && def.content.faq.length > 0 && (
+      <FAQ items={def.content.faq} />
+    )}
+
+    {def.related && def.related.length > 0 && (
+      <RelatedLinks slugs={def.related} />
+    )}
+  </article>
+</Base>
+
+<style>
+  .calculator-page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .intro-text {
+    font-size: 1.0625rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .content-section {
+    margin: var(--space-8) 0;
+  }
+
+  .content-section h2 {
+    margin-bottom: var(--space-4);
+  }
+
+  .examples-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .example-card {
+    border-left: 3px solid var(--action);
+    padding: var(--space-3) var(--space-4);
+    background: #f8fafc;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .example-card h3 {
+    margin-bottom: var(--space-2);
+    font-size: 1.0625rem;
+  }
+
+  .example-card p {
+    margin: 0;
+  }
+
+  /* ── Quick reference table ──────────────────────────────────────────────── */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .quick-ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    text-align: left;
+  }
+
+  .quick-ref-table caption {
+    padding: var(--space-3) var(--space-4);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-align: left;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .quick-ref-table th,
+  .quick-ref-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+
+  .quick-ref-table thead th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .quick-ref-table tbody th {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .quick-ref-table tbody tr:last-child th,
+  .quick-ref-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .quick-ref-table tbody tr:hover {
+    background: #f8fafc;
+  }
+
+  /* ── Common mistakes ────────────────────────────────────────────────────── */
+  .mistakes-list {
+    margin: 0;
+    padding-left: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .mistakes-list li {
+    line-height: 1.5;
+  }
+</style>

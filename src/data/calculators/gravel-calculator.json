@@ -1,0 +1,105 @@
+{
+  "slug": "gravel-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "volume-weight",
+  "title": "Gravel Calculator",
+  "metaTitle": "Gravel Calculator: Tons and Cubic Yards Needed",
+  "metaDescription": "Calculate how many tons or cubic yards of gravel you need for driveways, paths, and drainage. Adjust stone depth and density for accurate estimates.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 20, "min": 0 },
+    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "depth", "label": "Depth", "unit": "in", "type": "number", "default": 4, "min": 0, "help": "Most driveways use 4 to 6 inches." },
+    { "id": "waste", "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+  ],
+  "constants": [
+    {
+      "id": "density",
+      "label": "Density (tons per cubic yard)",
+      "default": 1.4,
+      "note": "Typical crushed stone density. Pea gravel averages 1.3 tons per cubic yard; dense granite averages 1.5. Confirm with your supplier."
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
+    { "id": "tons", "label": "Tons needed", "unit": "tons", "decimals": 2 }
+  ],
+  "testCases": [
+    {
+      "name": "20 × 10 ft at 4 in, density 1.4, no waste",
+      "inputs": { "length": 20, "width": 10, "depth": 4, "waste": 0 },
+      "constants": { "density": 1.4 },
+      "expected": { "cubicFeet": 66.667, "cubicYards": 2.4691, "tons": 3.4568 }
+    },
+    {
+      "name": "10 × 10 ft at 3 in, density 1.4, no waste",
+      "inputs": { "length": 10, "width": 10, "depth": 3, "waste": 0 },
+      "constants": { "density": 1.4 },
+      "expected": { "cubicFeet": 25, "cubicYards": 0.9259, "tons": 1.2963 }
+    },
+    {
+      "name": "20 × 10 ft at 4 in, density 1.4, 10% waste",
+      "inputs": { "length": 20, "width": 10, "depth": 4, "waste": 10 },
+      "constants": { "density": 1.4 },
+      "expected": { "cubicFeet": 66.667, "cubicYards": 2.4691, "tons": 3.8025 }
+    }
+  ],
+  "content": {
+    "intro": "Ordering gravel for a driveway, French drain, or patio foundation requires knowing both volume in cubic yards and weight in tons, as quarries and landscape suppliers sell by either measurement. This calculator takes the length, width, and depth of your project area to calculate the total cubic feet, cubic yards, and estimated tonnage needed. The default density of 1.4 tons per cubic yard represents standard crushed stone, but you can adjust this figure for lighter gravel or dense crushed granite. Measure your layout to get reliable estimates before arranging delivery.",
+    "howItWorks": "Gravel calculations determine total volume and convert that volume into weight based on material density. The volume in cubic feet is calculated as length in feet multiplied by width in feet multiplied by depth in inches divided by 12. Dividing cubic feet by 27 converts the measurement into cubic yards. Because aggregate suppliers often bill by weight rather than volume, the calculator multiplies cubic yards by your chosen stone density (default 1.4 tons per cubic yard) and includes your waste allowance. Formula: cubic feet = L × W × (D ÷ 12). Cubic yards = cubic feet ÷ 27. Total tons = cubic yards × (1 + waste%) × density.",
+    "examples": [
+      {
+        "title": "A 20 by 10 foot driveway pad at 4 inches deep",
+        "text": "For a driveway section measuring 20 feet long by 10 feet wide with a 4-inch compacted gravel base, the volume is: 20 × 10 × (4 ÷ 12) = 66.67 cubic feet. Dividing by 27 gives 2.47 cubic yards. With a 10% waste factor and a density of 1.4 tons per cubic yard: tons = 2.47 × 1.10 × 1.4 = 3.80 tons."
+      },
+      {
+        "title": "A 30 by 3 foot garden walkway at 3 inches deep",
+        "text": "For a walking path 30 feet long and 3 feet wide filled with 3 inches of decorative gravel, the volume is: 30 × 3 × (3 ÷ 12) = 22.50 cubic feet. Dividing by 27 yields 0.83 cubic yards. With a 10% waste allowance and standard density: tons = 0.83 × 1.10 × 1.4 = 1.28 tons."
+      }
+    ],
+    "quickReference": {
+      "caption": "Gravel coverage and weight by area at 1.4 tons per cubic yard with 10% waste",
+      "headers": ["Project Area", "Depth", "Cubic Feet", "Cubic Yards", "Tons Needed"],
+      "rows": [
+        ["50 sq ft", "2 in", "8.3", "0.31", "0.48 tons"],
+        ["50 sq ft", "4 in", "16.7", "0.62", "0.95 tons"],
+        ["100 sq ft", "3 in", "25.0", "0.93", "1.43 tons"],
+        ["100 sq ft", "4 in", "33.3", "1.23", "1.90 tons"],
+        ["200 sq ft", "4 in", "66.7", "2.47", "3.80 tons"],
+        ["300 sq ft", "4 in", "100.0", "3.70", "5.70 tons"],
+        ["500 sq ft", "6 in", "250.0", "9.26", "14.26 tons"]
+      ]
+    },
+    "commonMistakes": [
+      "Underestimating depth reduction caused by mechanical tamping and vehicular compaction.",
+      "Assuming all gravel types weigh the same per cubic yard instead of checking quarry density specs.",
+      "Ordering without checking delivery truck weight restrictions for residential driveways.",
+      "Failing to excavate deep enough to allow for both the compacted sub-base and surface gravel."
+    ],
+    "faq": [
+      {
+        "q": "How deep should gravel be for a driveway versus a walkway?",
+        "a": "A residential vehicle driveway requires 4 to 6 inches of compacted crushed stone. For walking paths and patio borders, 2 to 3 inches of gravel provides adequate coverage and stability."
+      },
+      {
+        "q": "How much does a cubic yard of gravel weigh?",
+        "a": "Most crushed construction stone weighs between 1.3 and 1.5 tons per cubic yard. Coarse crushed limestone is generally heavier, while rounded pea gravel is slightly lighter."
+      },
+      {
+        "q": "How many cubic yards of gravel are in a ton?",
+        "a": "At an average density of 1.4 tons per cubic yard, one ton of gravel covers approximately 0.71 cubic yards (about 19.3 cubic feet)."
+      },
+      {
+        "q": "Why is a waste factor necessary for gravel projects?",
+        "a": "Gravel settles into uneven native soil and compacts under foot or vehicle traffic. Adding a 10% buffer prevents running short of material during final grading."
+      }
+    ]
+  },
+  "related": [
+    "mulch-calculator",
+    "topsoil-calculator",
+    "concrete-slab-calculator"
+  ]
+}

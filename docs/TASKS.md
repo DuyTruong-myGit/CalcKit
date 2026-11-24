@@ -40,7 +40,7 @@ Status: done
 - Acceptance: works at 360 px, keyboard only and with JavaScript errors from third parties absent. Results announced via `aria-live`. JS under 30 KB gzipped per page.
 
 ### TASK-06: First three pages (mulch, gravel, concrete slab)
-Status: todo
+Status: done
 - Create the three JSON files with real drafts following `docs/CONTENT_GUIDE.md`. Keep `status: "draft"`.
 - Dynamic route `[slug].astro` builds pages from the JSON. Draft pages get `noindex` and are excluded from the sitemap.
 - Acceptance: three pages build, tests pass, report a hand-check list for the owner (constants and text to verify).

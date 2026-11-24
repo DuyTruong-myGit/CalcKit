@@ -114,23 +114,34 @@ describe('Calculation Engine — Validation and Robustness', () => {
 });
 
 describe('Data-Driven Test Runner — Fixtures and Calculator Definitions', () => {
-  const fixturesDir = join(import.meta.dirname, 'fixtures', 'valid');
-  const fixtureFiles = readdirSync(fixturesDir).filter((f) => f.endsWith('.json'));
+  const dirs = [
+    join(import.meta.dirname, 'fixtures', 'valid'),
+    join(import.meta.dirname, '..', 'src', 'data', 'calculators'),
+  ];
 
-  for (const file of fixtureFiles) {
-    const content = JSON.parse(readFileSync(join(fixturesDir, file), 'utf-8')) as CalculatorDef;
+  for (const dir of dirs) {
+    let files: string[] = [];
+    try {
+      files = readdirSync(dir).filter((f) => f.endsWith('.json'));
+    } catch {
+      continue;
+    }
 
-    describe(`Data-driven suite: ${content.title} (${file})`, () => {
-      for (const tc of content.testCases) {
-        it(`testCase: "${tc.name}"`, () => {
-          const testResult = runTestCase(content, tc);
-          if (!testResult.pass) {
-            console.error(`Failures in ${file} - "${tc.name}":`, testResult.failures);
-          }
-          expect(testResult.pass).toBe(true);
-          expect(testResult.failures).toEqual([]);
-        });
-      }
-    });
+    for (const file of files) {
+      const content = JSON.parse(readFileSync(join(dir, file), 'utf-8')) as CalculatorDef;
+
+      describe(`Data-driven suite: ${content.title} (${file})`, () => {
+        for (const tc of content.testCases) {
+          it(`testCase: "${tc.name}"`, () => {
+            const testResult = runTestCase(content, tc);
+            if (!testResult.pass) {
+              console.error(`Failures in ${file} - "${tc.name}":`, testResult.failures);
+            }
+            expect(testResult.pass).toBe(true);
+            expect(testResult.failures).toEqual([]);
+          });
+        }
+      });
+    }
   }
 });
