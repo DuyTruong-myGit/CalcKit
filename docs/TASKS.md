@@ -23,7 +23,7 @@ Status: done
 - Acceptance: validator passes on the valid example and rejects each invalid fixture with a clear message.
 
 ### TASK-03: Calculation engine and units
-Status: todo
+Status: done
 - Implement `units.ts` and `engine.ts`. Implement formulas `volume-bags`, `volume-weight`, `concrete-slab` from `docs/FORMULAS.md`.
 - Add a data-driven test that runs every `testCases` entry of every JSON file.
 - Acceptance: the hand-calculated cases for mulch, gravel and concrete slab pass. Negative, empty and non-numeric inputs return a clear error, never `NaN`.

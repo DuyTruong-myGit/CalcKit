@@ -1,0 +1,88 @@
+{
+  "slug": "concrete-slab-calculator",
+  "status": "draft",
+  "category": "concrete-masonry",
+  "formulaId": "concrete-slab",
+  "title": "Concrete Slab Calculator",
+  "metaTitle": "Concrete Slab Calculator: Bags and Yards of Concrete",
+  "metaDescription": "Calculate cubic yards and bags of concrete needed for slabs, patios, and footings. Includes 60-lb and 80-lb bag options and waste allowance.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "depth", "label": "Depth / Thickness", "unit": "in", "type": "number", "default": 4, "min": 0, "help": "Most patios and sidewalks are 4 inches thick." },
+    { "id": "waste", "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+  ],
+  "constants": [
+    {
+      "id": "yield",
+      "label": "Bag yield (cubic feet per bag)",
+      "default": 0.6,
+      "note": "Typical yield: 80-lb bag = 0.60 ft³, 60-lb bag = 0.45 ft³. Check the bag label."
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
+    { "id": "bags", "label": "Bags needed", "unit": "bags", "decimals": 0, "roundUp": true }
+  ],
+  "testCases": [
+    {
+      "name": "10 × 10 ft at 4 in, waste 0, yield 0.6",
+      "inputs": { "length": 10, "width": 10, "depth": 4, "waste": 0 },
+      "constants": { "yield": 0.6 },
+      "expected": { "cubicFeet": 33.333, "cubicYards": 1.2346, "bags": 56 }
+    },
+    {
+      "name": "12 × 12 ft at 4 in, waste 10%, yield 0.6",
+      "inputs": { "length": 12, "width": 12, "depth": 4, "waste": 10 },
+      "constants": { "yield": 0.6 },
+      "expected": { "cubicFeet": 48, "cubicYards": 1.7778, "bags": 88 }
+    },
+    {
+      "name": "6 × 6 ft at 6 in, waste 0, yield 0.45 (60-lb bags)",
+      "inputs": { "length": 6, "width": 6, "depth": 6, "waste": 0 },
+      "constants": { "yield": 0.45 },
+      "expected": { "cubicFeet": 18, "cubicYards": 0.6667, "bags": 40 }
+    }
+  ],
+  "content": {
+    "intro": "Pouring concrete leaves no room for running out halfway through, because a cold joint weakens the finished slab. This calculator helps you determine whether you should mix pre-packaged bags in a wheelbarrow or order ready-mix concrete delivered by the truckload. Enter the length, width, and thickness of your slab, and the tool will calculate the exact cubic yards and total bags required. A ten percent waste buffer covers uneven sub-grade excavation and spillage along the forms. Measure your framed area carefully before ordering. Results are estimates — confirm with your supplier before you buy.",
+    "howItWorks": "The calculator multiplies length × width × thickness (thickness converted from inches to feet) to find cubic feet, then divides by 27 for cubic yards. Bags needed = ceil(cubic feet × (1 + waste%) / bag yield). Formula: cubic feet = L × W × (D ÷ 12). Cubic yards = cubic feet ÷ 27. Bags = ⌈cubic feet × (1 + waste%) ÷ yield⌉.",
+    "examples": [
+      {
+        "title": "A 10 by 10 foot patio slab at 4 inches thick",
+        "text": "Length 10 ft, width 10 ft, thickness 4 in. Cubic feet = 10 × 10 × (4 ÷ 12) = 33.33 ft³. Cubic yards = 33.33 ÷ 27 = 1.23 yd³. Using 80-lb bags (0.60 ft³ yield) with 10% waste: bags = ⌈33.33 × 1.1 ÷ 0.60⌉ = ⌈61.1⌉ = 62 bags."
+      }
+    ],
+    "commonMistakes": [
+      "Entering slab thickness in feet instead of inches — 4 inches is 0.33 feet, not 4.",
+      "Forgetting to excavate deep enough for a gravel drainage base under the concrete.",
+      "Underestimating how heavy bagged concrete is — 60 bags of 80-lb mix weighs over two tons.",
+      "Not adding waste allowance for ground that dips below the bottom of the form boards."
+    ],
+    "faq": [
+      {
+        "q": "How thick should a concrete slab be?",
+        "a": "A 4-inch slab is standard for walkways, residential patios, and shed bases. Heavy vehicle driveways usually require 5 to 6 inches with rebar."
+      },
+      {
+        "q": "When is it better to order ready-mix concrete instead of bags?",
+        "a": "If your project requires more than 1 to 1.5 cubic yards (about 45 to 70 eighty-pound bags), ordering ready-mix delivery saves significant manual labor."
+      },
+      {
+        "q": "How many 80-pound bags of concrete are in a cubic yard?",
+        "a": "It takes 45 eighty-pound bags (yield 0.60 ft³ each) to equal one cubic yard (27 ft³). Always add 5 to 10 percent for waste."
+      },
+      {
+        "q": "How many 60-pound bags of concrete are in a cubic yard?",
+        "a": "It takes 60 sixty-pound bags (yield 0.45 ft³ each) to make one cubic yard."
+      }
+    ]
+  },
+  "related": [
+    "mulch-calculator",
+    "gravel-calculator",
+    "topsoil-calculator"
+  ]
+}
