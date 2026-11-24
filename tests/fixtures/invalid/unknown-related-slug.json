@@ -1,0 +1,89 @@
+{
+  "_invalidRule": "related contains 'nonexistent-calculator' which does not exist in src/data/calculators/ — validator must reject this",
+  "slug": "raised-bed-soil-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "volume-bags",
+  "title": "Raised Bed Soil Calculator",
+  "metaTitle": "Raised Bed Soil Calculator: Bags and Cubic Yards",
+  "metaDescription": "Calculate how much soil you need to fill a raised garden bed. Enter the bed dimensions to get cubic feet, cubic yards, and bag count.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 8,  "min": 0 },
+    { "id": "width",  "label": "Width",  "unit": "ft", "type": "number", "default": 4,  "min": 0 },
+    { "id": "depth",  "label": "Depth",  "unit": "in", "type": "number", "default": 12, "min": 0 },
+    { "id": "waste",  "label": "Extra for settling", "unit": "pct", "type": "number", "default": 10, "min": 0 }
+  ],
+  "constants": [
+    {
+      "id": "bagSize",
+      "label": "Bag size (cubic feet)",
+      "default": 1.5,
+      "note": "Typical raised-bed mix bag. Check the size printed on the bag you plan to buy."
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet",  "label": "Cubic feet",  "unit": "ft³", "decimals": 1 },
+    { "id": "bags",       "label": "Bags needed",  "unit": "bags","decimals": 0, "roundUp": true }
+  ],
+  "testCases": [
+    {
+      "name": "8 × 4 ft at 12 in, no waste, 1.5 ft³ bags",
+      "inputs": { "length": 8, "width": 4, "depth": 12, "waste": 0 },
+      "constants": { "bagSize": 1.5 },
+      "expected": { "cubicFeet": 32, "cubicYards": 1.1852, "bags": 22 }
+    },
+    {
+      "name": "4 × 4 ft at 8 in, no waste, 1.5 ft³ bags",
+      "inputs": { "length": 4, "width": 4, "depth": 8, "waste": 0 },
+      "constants": { "bagSize": 1.5 },
+      "expected": { "cubicFeet": 10.667, "cubicYards": 0.3951, "bags": 8 }
+    },
+    {
+      "name": "6 × 3 ft at 10 in, 10% waste, 1.5 ft³ bags",
+      "inputs": { "length": 6, "width": 3, "depth": 10, "waste": 10 },
+      "constants": { "bagSize": 1.5 },
+      "expected": { "cubicFeet": 16.5, "cubicYards": 0.6111, "bags": 11 }
+    }
+  ],
+  "content": {
+    "intro": "Filling a raised bed from scratch takes more soil than most gardeners expect. A standard 4 by 8 foot bed at 12 inches deep holds 32 cubic feet — that is more than 20 bags of potting mix. This calculator takes the inside dimensions of your bed and tells you exactly how many bags to buy or how many cubic yards to order in bulk. The 10% settling allowance accounts for soil that compresses after watering; remove it if you plan to top up after the first season. Measure your bed, enter the numbers, and get a shopping list you can use at the nursery. Confirm quantities with your supplier before purchase.",
+    "howItWorks": "The formula treats the bed as a rectangle: cubic feet = L × W × (H ÷ 12), where H is the bed depth in inches. Cubic yards = cubic feet ÷ 27. Bags = ⌈cubic feet × (1 + settling%) ÷ bag size⌉. The settling factor adds extra soil to account for compression after watering.",
+    "examples": [
+      {
+        "title": "A standard 4 by 8 foot bed at 12 inches deep",
+        "text": "Length 8 ft, width 4 ft, depth 12 in. Cubic feet = 8 × 4 × (12 ÷ 12) = 32 ft³. Cubic yards = 32 ÷ 27 = 1.19 yd³. With no settling factor and 1.5 ft³ bags: bags = ⌈32 ÷ 1.5⌉ = 22 bags."
+      }
+    ],
+    "commonMistakes": [
+      "Measuring the outside of the bed instead of the inside — boards take up space.",
+      "Forgetting that soil settles; add 10 to 15% if you want a full bed after watering.",
+      "Buying bags labeled in quarts — most soil bags use cubic feet, not quarts.",
+      "Mixing bag sizes (1 ft³ vs 1.5 ft³) without recalculating."
+    ],
+    "faq": [
+      {
+        "q": "How deep should a raised bed be?",
+        "a": "Most vegetables grow well in 12 inches of soil. Root crops like carrots need 18 inches. Herbs and flowers do fine in 8 inches."
+      },
+      {
+        "q": "What soil mix should I use?",
+        "a": "A common recipe is one-third compost, one-third coarse material (perlite or bark), and one-third topsoil. Use this calculator for the total volume, then split by proportion."
+      },
+      {
+        "q": "Is it cheaper to buy bags or bulk?",
+        "a": "Bulk cubic yards are usually cheaper once you need more than about 2 cubic yards. For smaller beds, bags are easier to manage without a truck or wheelbarrow."
+      },
+      {
+        "q": "Can I reuse old garden soil?",
+        "a": "Yes, but mix in fresh compost each season. If the bed previously had disease or pest problems, replace the top 6 inches."
+      }
+    ]
+  },
+  "related": [
+    "mulch-calculator",
+    "topsoil-calculator",
+    "nonexistent-calculator"
+  ]
+}

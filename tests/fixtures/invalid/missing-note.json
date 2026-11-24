@@ -1,0 +1,88 @@
+{
+  "_invalidRule": "constants[0].note is missing — validator must reject this",
+  "slug": "gravel-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "volume-weight",
+  "title": "Gravel Calculator",
+  "metaTitle": "Gravel Calculator: Cubic Yards and Tons",
+  "metaDescription": "Calculate cubic yards and tons of gravel for driveways and landscaping. Adjust depth and density to match your stone type.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 20, "min": 0 },
+    { "id": "width",  "label": "Width",  "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "depth",  "label": "Depth",  "unit": "in", "type": "number", "default": 4,  "min": 0 },
+    { "id": "waste",  "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0 }
+  ],
+  "constants": [
+    {
+      "id": "density",
+      "label": "Density (tons per cubic yard)",
+      "default": 1.4
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet",  "label": "Cubic feet",  "unit": "ft³", "decimals": 1 },
+    { "id": "tons",       "label": "Tons",         "unit": "tons","decimals": 2 }
+  ],
+  "testCases": [
+    {
+      "name": "20 × 10 ft at 4 in, density 1.4, no waste",
+      "inputs": { "length": 20, "width": 10, "depth": 4, "waste": 0 },
+      "constants": { "density": 1.4 },
+      "expected": { "cubicFeet": 66.667, "cubicYards": 2.4691, "tons": 3.4568 }
+    },
+    {
+      "name": "10 × 10 ft at 2 in, density 1.4, no waste",
+      "inputs": { "length": 10, "width": 10, "depth": 2, "waste": 0 },
+      "constants": { "density": 1.4 },
+      "expected": { "cubicFeet": 16.667, "cubicYards": 0.6173, "tons": 0.8642 }
+    },
+    {
+      "name": "5 × 5 ft at 6 in, density 1.5, 10% waste",
+      "inputs": { "length": 5, "width": 5, "depth": 6, "waste": 10 },
+      "constants": { "density": 1.5 },
+      "expected": { "cubicFeet": 13.75, "cubicYards": 0.5093, "tons": 0.7639 }
+    }
+  ],
+  "content": {
+    "intro": "Gravel is sold by the ton or by the cubic yard, so knowing your volume before you call the supplier keeps you from over-ordering a full truck or making a second trip. This calculator takes the dimensions of your project area and the depth of stone you need, then gives you cubic yards and an estimated weight in tons. The default density of 1.4 tons per cubic yard suits most crushed stone; adjust it for lighter pea gravel or heavier river rock. Measure your area, pick a depth, and get the number to put in your order. Confirm quantities with your supplier before purchase.",
+    "howItWorks": "The formula multiplies length × width × depth (depth converted from inches to feet) to get cubic feet, then divides by 27 for cubic yards. Tons = cubic yards × density. Formula: cubic feet = L × W × (D ÷ 12). Cubic yards = cubic feet ÷ 27. Tons = cubic yards × density.",
+    "examples": [
+      {
+        "title": "A 20 by 10 foot driveway at 4 inches deep",
+        "text": "Length 20 ft, width 10 ft, depth 4 in. Cubic feet = 20 × 10 × (4 ÷ 12) = 66.67 ft³. Cubic yards = 66.67 ÷ 27 = 2.47 yd³. At 1.4 tons per cubic yard: 2.47 × 1.4 = 3.46 tons."
+      }
+    ],
+    "commonMistakes": [
+      "Using the depth in feet instead of inches — 4 inches is 0.33 feet, not 4.",
+      "Using an average density without checking the actual stone type.",
+      "Ordering by weight without confirming the supplier's conversion rate.",
+      "Forgetting to add extra for settling, especially on soft sub-bases."
+    ],
+    "faq": [
+      {
+        "q": "How deep should a gravel driveway be?",
+        "a": "A compacted base of 4 to 6 inches is typical for a residential driveway. For a path or garden border, 2 to 3 inches is enough."
+      },
+      {
+        "q": "How much does a cubic yard of gravel weigh?",
+        "a": "Most crushed stone runs 1.3 to 1.5 tons per cubic yard. Pea gravel is on the lighter end; dense granite is on the heavier end. Check with your supplier."
+      },
+      {
+        "q": "How many cubic yards are in a ton of gravel?",
+        "a": "At 1.4 tons per cubic yard, one ton covers about 0.71 cubic yards. Use the calculator's density field to match your stone."
+      },
+      {
+        "q": "Can I use the calculator for sand or topsoil?",
+        "a": "Yes. Sand and topsoil follow the same volume formula. Adjust the density constant to match the material — sand is roughly 1.4 tons per cubic yard, topsoil varies more."
+      }
+    ]
+  },
+  "related": [
+    "mulch-calculator",
+    "topsoil-calculator",
+    "raised-bed-soil-calculator"
+  ]
+}

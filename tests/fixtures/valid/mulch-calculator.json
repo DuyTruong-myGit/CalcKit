@@ -1,0 +1,89 @@
+{
+  "slug": "mulch-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "volume-bags",
+  "title": "Mulch Calculator",
+  "metaTitle": "Mulch Calculator: How Many Bags or Yards You Need",
+  "metaDescription": "Enter the size of your bed and mulch depth to get cubic yards and the number of bags. Includes a waste allowance you can adjust.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "width",  "label": "Width",  "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "depth",  "label": "Depth",  "unit": "in", "type": "number", "default": 3,  "min": 0, "help": "Most beds use 2 to 3 inches." },
+    { "id": "waste",  "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+  ],
+  "constants": [
+    {
+      "id": "bagSize",
+      "label": "Bag size (cubic feet)",
+      "default": 2,
+      "note": "Typical retail bag. Check the size printed on the bag you plan to buy."
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet",  "label": "Cubic feet",  "unit": "ft³", "decimals": 1 },
+    { "id": "bags",       "label": "Bags needed",  "unit": "bags","decimals": 0, "roundUp": true }
+  ],
+  "testCases": [
+    {
+      "name": "10 × 10 ft at 3 in, no waste, 2 ft³ bags",
+      "inputs": { "length": 10, "width": 10, "depth": 3, "waste": 0 },
+      "constants": { "bagSize": 2 },
+      "expected": { "cubicFeet": 25, "cubicYards": 0.9259, "bags": 13 }
+    },
+    {
+      "name": "20 × 5 ft at 2 in, 10% waste, 2 ft³ bags",
+      "inputs": { "length": 20, "width": 5, "depth": 2, "waste": 10 },
+      "constants": { "bagSize": 2 },
+      "expected": { "cubicFeet": 18.333, "cubicYards": 0.6790, "bags": 11 },
+      "tolerance": 0.01
+    },
+    {
+      "name": "Circle bed — total area 50 ft², 3 in, no waste, 3 ft³ bags",
+      "inputs": { "length": 50, "width": 1, "depth": 3, "waste": 0 },
+      "constants": { "bagSize": 3 },
+      "expected": { "cubicFeet": 12.5, "cubicYards": 0.4630, "bags": 5 }
+    }
+  ],
+  "content": {
+    "intro": "Knowing how much mulch to buy saves you a second trip to the store and keeps leftover bags from cluttering the garage. This calculator takes the length and width of your bed and the depth you want, then tells you how many cubic yards and how many bags to put in your cart. A standard two-inch layer suppresses weeds and holds moisture; three inches is better in hot climates or sandy soil. Measure your bed, enter the numbers below, and get a bag count you can use on your phone at the checkout. Results are estimates — confirm with your supplier before you buy.",
+    "howItWorks": "The calculator multiplies length × width × depth (converted from inches to feet) to get cubic feet. It divides by 27 to convert to cubic yards. It then applies your waste factor and divides by bag size, rounding up because you cannot buy a fraction of a bag. Formula: cubic feet = L × W × (D ÷ 12). Cubic yards = cubic feet ÷ 27. Bags = ⌈cubic feet × (1 + waste%) ÷ bag size⌉.",
+    "examples": [
+      {
+        "title": "A 10 by 10 foot bed at 3 inches deep",
+        "text": "Length 10 ft, width 10 ft, depth 3 in. Cubic feet = 10 × 10 × (3 ÷ 12) = 25 ft³. Cubic yards = 25 ÷ 27 = 0.93 yd³. With a 10% waste factor and 2 ft³ bags: bags = ⌈25 × 1.1 ÷ 2⌉ = ⌈13.75⌉ = 14 bags."
+      }
+    ],
+    "commonMistakes": [
+      "Measuring depth in feet instead of inches — 3 inches is 0.25 feet, not 3.",
+      "Forgetting to add a waste factor for spills and uneven ground.",
+      "Buying bags labeled in cubic feet when the calculator shows cubic yards.",
+      "Measuring only the rectangle and ignoring curved or L-shaped sections."
+    ],
+    "faq": [
+      {
+        "q": "How deep should mulch be?",
+        "a": "Two to three inches is enough for most garden beds. Less than two inches lets weeds through; more than four inches can prevent rain from reaching the soil."
+      },
+      {
+        "q": "How many bags in a cubic yard?",
+        "a": "One cubic yard equals 27 cubic feet. A standard 2 ft³ bag means you need 14 bags per cubic yard (27 ÷ 2 = 13.5, rounded up)."
+      },
+      {
+        "q": "What is the waste factor for?",
+        "a": "Mulch settles, spills at the edges, and covers ground that is not perfectly flat. A 10% addition is a safe buffer for most jobs."
+      },
+      {
+        "q": "Does the type of mulch change the calculation?",
+        "a": "No. Volume is the same regardless of material. Only weight varies, which matters for delivery limits but not for coverage."
+      }
+    ]
+  },
+  "related": [
+    "gravel-calculator",
+    "topsoil-calculator",
+    "raised-bed-soil-calculator"
+  ]
+}

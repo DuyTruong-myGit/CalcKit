@@ -1,0 +1,89 @@
+{
+  "_invalidRule": "no output has primary: true — validator must reject this",
+  "slug": "sand-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "volume-weight",
+  "title": "Sand Calculator",
+  "metaTitle": "Sand Calculator: Cubic Yards and Tons",
+  "metaDescription": "Calculate how much sand you need for a sandbox, patio base, or landscaping project. Enter area and depth to get cubic yards and tons.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "width",  "label": "Width",  "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "depth",  "label": "Depth",  "unit": "in", "type": "number", "default": 2,  "min": 0 },
+    { "id": "waste",  "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0 }
+  ],
+  "constants": [
+    {
+      "id": "density",
+      "label": "Density (tons per cubic yard)",
+      "default": 1.4,
+      "note": "Typical dry sand. Wet or compacted sand is heavier. Check with your supplier."
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2 },
+    { "id": "cubicFeet",  "label": "Cubic feet",  "unit": "ft³", "decimals": 1 },
+    { "id": "tons",       "label": "Tons",         "unit": "tons","decimals": 2 }
+  ],
+  "testCases": [
+    {
+      "name": "10 × 10 ft at 2 in, density 1.4, no waste",
+      "inputs": { "length": 10, "width": 10, "depth": 2, "waste": 0 },
+      "constants": { "density": 1.4 },
+      "expected": { "cubicFeet": 16.667, "cubicYards": 0.6173, "tons": 0.8642 }
+    },
+    {
+      "name": "5 × 5 ft at 4 in, density 1.4, no waste",
+      "inputs": { "length": 5, "width": 5, "depth": 4, "waste": 0 },
+      "constants": { "density": 1.4 },
+      "expected": { "cubicFeet": 8.333, "cubicYards": 0.3086, "tons": 0.4321 }
+    },
+    {
+      "name": "20 × 10 ft at 3 in, density 1.5, 10% waste",
+      "inputs": { "length": 20, "width": 10, "depth": 3, "waste": 10 },
+      "constants": { "density": 1.5 },
+      "expected": { "cubicFeet": 55, "cubicYards": 2.0370, "tons": 3.0556 }
+    }
+  ],
+  "content": {
+    "intro": "Sand is the foundation of patios, sandboxes, and paver installations, and ordering the right amount keeps your project on schedule. This calculator takes the dimensions of the area you need to fill and the depth of sand you want, then gives you cubic yards and estimated tons. The default density of 1.4 tons per cubic yard suits dry construction sand; wet or coarser materials run heavier. Measure the area, enter a depth, and use the result to place your order. Confirm quantities with your supplier before purchase.",
+    "howItWorks": "The formula is: cubic feet = L × W × (D ÷ 12). Cubic yards = cubic feet ÷ 27. Tons = cubic yards × density. The waste factor adds extra for spillage and uneven ground.",
+    "examples": [
+      {
+        "title": "A 10 by 10 foot sandbox at 2 inches deep",
+        "text": "Length 10 ft, width 10 ft, depth 2 in. Cubic feet = 10 × 10 × (2 ÷ 12) = 16.67 ft³. Cubic yards = 16.67 ÷ 27 = 0.62 yd³. At 1.4 tons per cubic yard: 0.62 × 1.4 = 0.86 tons."
+      }
+    ],
+    "commonMistakes": [
+      "Entering depth in feet instead of inches — 2 inches is 0.17 feet, not 2.",
+      "Using dry density for wet sand, which is significantly heavier.",
+      "Ordering by weight without knowing the supplier's conversion rate.",
+      "Forgetting the base layer under a patio and only calculating the top sand."
+    ],
+    "faq": [
+      {
+        "q": "How deep should a paver base sand layer be?",
+        "a": "One inch of compacted bedding sand is standard under pavers. The gravel sub-base beneath it is separate and usually 4 to 6 inches deep."
+      },
+      {
+        "q": "How many cubic yards of sand do I need for a sandbox?",
+        "a": "A 5 by 5 foot sandbox filled 6 inches deep needs about 0.46 cubic yards. Enter your dimensions above to get an exact number."
+      },
+      {
+        "q": "How much does a cubic yard of sand weigh?",
+        "a": "Dry construction sand runs about 1.3 to 1.5 tons per cubic yard. Wet sand can be 1.6 tons or more. Ask your supplier for the weight of their specific product."
+      },
+      {
+        "q": "Is play sand different from construction sand?",
+        "a": "Yes. Play sand is washed and finer, making it safer for children. The volume formula is the same, but play sand may be priced and sold differently."
+      }
+    ]
+  },
+  "related": [
+    "mulch-calculator",
+    "gravel-calculator",
+    "topsoil-calculator"
+  ]
+}

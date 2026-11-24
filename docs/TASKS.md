@@ -17,7 +17,7 @@ Status: done
 - Acceptance: `npm run dev`, `test`, `check`, `build` all run. A placeholder home page builds.
 
 ### TASK-02: Data schema and validator
-Status: todo
+Status: done
 - Implement the types and the validator for `docs/CALCULATOR_SCHEMA.md` (`npm run validate:data`).
 - Add one invalid fixture per rule in the tests (missing `note`, fewer than 3 test cases, unknown `related` slug, missing primary output).
 - Acceptance: validator passes on the valid example and rejects each invalid fixture with a clear message.

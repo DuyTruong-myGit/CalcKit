@@ -1,0 +1,83 @@
+{
+  "_invalidRule": "testCases has only 2 entries — validator must reject this (minimum is 3)",
+  "slug": "topsoil-calculator",
+  "status": "draft",
+  "category": "landscaping",
+  "formulaId": "volume-weight",
+  "title": "Topsoil Calculator",
+  "metaTitle": "Topsoil Calculator: Cubic Yards and Tons",
+  "metaDescription": "Find out how many cubic yards of topsoil your lawn or garden needs. Enter area and depth to get volume and an estimated weight.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 20, "min": 0 },
+    { "id": "width",  "label": "Width",  "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "depth",  "label": "Depth",  "unit": "in", "type": "number", "default": 6,  "min": 0 },
+    { "id": "waste",  "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0 }
+  ],
+  "constants": [
+    {
+      "id": "density",
+      "label": "Density (tons per cubic yard)",
+      "default": 1.1,
+      "note": "Typical dry topsoil. Wet topsoil is heavier. Check with your supplier."
+    }
+  ],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet",  "label": "Cubic feet",  "unit": "ft³", "decimals": 1 },
+    { "id": "tons",       "label": "Tons",         "unit": "tons","decimals": 2 }
+  ],
+  "testCases": [
+    {
+      "name": "20 × 10 ft at 6 in, density 1.1, no waste",
+      "inputs": { "length": 20, "width": 10, "depth": 6, "waste": 0 },
+      "constants": { "density": 1.1 },
+      "expected": { "cubicFeet": 100, "cubicYards": 3.7037, "tons": 4.0741 }
+    },
+    {
+      "name": "10 × 10 ft at 4 in, density 1.1, no waste",
+      "inputs": { "length": 10, "width": 10, "depth": 4, "waste": 0 },
+      "constants": { "density": 1.1 },
+      "expected": { "cubicFeet": 33.333, "cubicYards": 1.2346, "tons": 1.3580 }
+    }
+  ],
+  "content": {
+    "intro": "Adding fresh topsoil is one of the fastest ways to improve a lawn or raise the level of a garden bed. This calculator tells you how many cubic yards to order based on the size of the area and the depth you want to add. Topsoil is usually sold by the cubic yard for bulk orders or in bags for smaller jobs. The calculator shows both volume and an estimated weight so you can check whether a single truck load covers your project. Measure the length and width of the area, pick a depth, and use the number for your order. Confirm quantities with your supplier before you buy.",
+    "howItWorks": "The formula is the same as for mulch or gravel: cubic feet = L × W × (D ÷ 12). Cubic yards = cubic feet ÷ 27. Tons = cubic yards × density. Topsoil density varies with moisture; the default of 1.1 tons per cubic yard suits dry material.",
+    "examples": [
+      {
+        "title": "A 20 by 10 foot lawn patch at 6 inches deep",
+        "text": "Length 20 ft, width 10 ft, depth 6 in. Cubic feet = 20 × 10 × (6 ÷ 12) = 100 ft³. Cubic yards = 100 ÷ 27 = 3.70 yd³. At 1.1 tons per cubic yard: 3.70 × 1.1 = 4.07 tons."
+      }
+    ],
+    "commonMistakes": [
+      "Entering depth in feet instead of inches.",
+      "Ordering for a rectangular area when the lawn has curved edges.",
+      "Ignoring the weight limit of the delivery truck for large jobs.",
+      "Using topsoil density for compacted fill dirt, which is heavier."
+    ],
+    "faq": [
+      {
+        "q": "How deep should I add topsoil?",
+        "a": "For lawn repairs, 2 to 4 inches is enough. For a new garden bed, 6 inches gives roots room to grow."
+      },
+      {
+        "q": "How much does a cubic yard of topsoil weigh?",
+        "a": "Dry topsoil weighs roughly 1.0 to 1.3 tons per cubic yard. Wet topsoil can be 1.5 tons or more. Ask your supplier for the actual weight of their product."
+      },
+      {
+        "q": "How many bags of topsoil equal a cubic yard?",
+        "a": "A common 1 ft³ bag means you need 27 bags per cubic yard. Bulk delivery is more economical for areas larger than about 50 square feet at 4 inches deep."
+      },
+      {
+        "q": "Can I mix topsoil with compost?",
+        "a": "Yes. A common mix is two parts topsoil to one part compost. Run each through the calculator separately and add the volumes."
+      }
+    ]
+  },
+  "related": [
+    "mulch-calculator",
+    "gravel-calculator",
+    "raised-bed-soil-calculator"
+  ]
+}
