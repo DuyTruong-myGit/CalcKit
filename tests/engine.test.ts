@@ -11,6 +11,8 @@ import { concreteCylinder } from '../src/lib/calc/formulas/concrete-cylinder.js'
 import { fence } from '../src/lib/calc/formulas/fence.js';
 import { deckBoards } from '../src/lib/calc/formulas/deck-boards.js';
 import { roofing } from '../src/lib/calc/formulas/roofing.js';
+import { converter } from '../src/lib/calc/formulas/converter.js';
+import { areaShapes } from '../src/lib/calc/formulas/area-shapes.js';
 import { calculate, runTestCase } from '../src/lib/calc/engine.js';
 import type { CalculatorDef } from '../src/lib/schema/types.js';
 
@@ -163,6 +165,30 @@ describe('Pure Formula Functions — Hand-Calculated Cases (docs/FORMULAS.md)', 
     expect(res.roofArea).toBeCloseTo(1118.03, 2);
     expect(res.squares).toBeCloseTo(11.18, 2);
     expect(res.bundles).toBe(34);
+  });
+
+  it('cubic yard converter (converter): L 10, W 10, D 12 in -> cuFt 100, cuYd 3.7037', () => {
+    const res = converter({ length: 10, width: 10, depth: 12 });
+    expect(res.cubicFeet).toBe(100);
+    expect(res.cubicYards).toBeCloseTo(3.7037, 4);
+    expect(res.cubicMeters).toBeCloseTo(2.8317, 3);
+    expect(res.liters).toBeCloseTo(2831.68, 1);
+  });
+
+  it('square footage (area-shapes): rectangle 20x10 -> 200 sq ft, 22.22 sq yd', () => {
+    const res = areaShapes({ length: 20, width: 10, shape: 1 });
+    expect(res.squareFeet).toBe(200);
+    expect(res.squareYards).toBeCloseTo(22.22, 2);
+  });
+
+  it('square footage (area-shapes): triangle base 20, height 10 -> 100 sq ft', () => {
+    const res = areaShapes({ length: 20, width: 10, shape: 2 });
+    expect(res.squareFeet).toBe(100);
+  });
+
+  it('square footage (area-shapes): circle diameter 20 -> 314.16 sq ft', () => {
+    const res = areaShapes({ length: 20, shape: 3 });
+    expect(res.squareFeet).toBeCloseTo(314.159, 2);
   });
 });
 

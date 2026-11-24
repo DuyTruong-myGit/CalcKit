@@ -53,6 +53,8 @@ describe('Sitemap and Robots Configuration', () => {
       expect(sitemap).not.toContain('/fence-calculator');
       expect(sitemap).not.toContain('/deck-board-calculator');
       expect(sitemap).not.toContain('/roofing-calculator');
+      expect(sitemap).not.toContain('/cubic-yard-calculator');
+      expect(sitemap).not.toContain('/square-footage-calculator');
 
       // Static non-draft pages must be included
       expect(sitemap).toContain('/about');

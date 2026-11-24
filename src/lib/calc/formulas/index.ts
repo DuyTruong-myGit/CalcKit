@@ -8,6 +8,8 @@ import { concreteCylinder } from './concrete-cylinder.js';
 import { fence } from './fence.js';
 import { deckBoards } from './deck-boards.js';
 import { roofing } from './roofing.js';
+import { converter } from './converter.js';
+import { areaShapes } from './area-shapes.js';
 
 export { volumeBags } from './volume-bags.js';
 export { volumeWeight } from './volume-weight.js';
@@ -19,6 +21,8 @@ export { concreteCylinder } from './concrete-cylinder.js';
 export { fence } from './fence.js';
 export { deckBoards } from './deck-boards.js';
 export { roofing } from './roofing.js';
+export { converter } from './converter.js';
+export { areaShapes } from './area-shapes.js';
 
 export type FormulaFunction = (
   inputs: Record<string, number>,
@@ -36,4 +40,6 @@ export const FORMULAS: Record<string, FormulaFunction> = {
   fence: fence as unknown as FormulaFunction,
   'deck-boards': deckBoards as unknown as FormulaFunction,
   roofing: roofing as unknown as FormulaFunction,
+  converter: converter as unknown as FormulaFunction,
+  'area-shapes': areaShapes as unknown as FormulaFunction,
 };

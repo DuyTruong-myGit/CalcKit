@@ -1,0 +1,98 @@
+{
+  "slug": "cubic-yard-calculator",
+  "status": "draft",
+  "category": "utilities",
+  "formulaId": "converter",
+  "title": "Cubic Yard Calculator",
+  "metaTitle": "Cubic Yard Calculator: Convert Yards, Feet, and Meters",
+  "metaDescription": "Convert between cubic yards, cubic feet, cubic meters, and liters. Calculate rectangular volume for bulk landscaping and construction materials.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "depth", "label": "Depth / thickness", "unit": "in", "type": "number", "default": 12, "min": 0, "help": "Enter depth in inches (e.g. 12 inches for 1 foot, 3 inches for mulch)." }
+  ],
+  "constants": [],
+  "outputs": [
+    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
+    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
+    { "id": "cubicMeters", "label": "Cubic meters", "unit": "m³", "decimals": 2 },
+    { "id": "liters", "label": "Liters", "unit": "L", "decimals": 0 }
+  ],
+  "testCases": [
+    {
+      "name": "10 × 10 ft at 12 in (1 ft deep)",
+      "inputs": { "length": 10, "width": 10, "depth": 12 },
+      "expected": { "cubicFeet": 100, "cubicYards": 3.7037, "cubicMeters": 2.8317, "liters": 2832 },
+      "tolerance": 1
+    },
+    {
+      "name": "27 × 1 ft at 12 in (exactly 1 cubic yard)",
+      "inputs": { "length": 27, "width": 1, "depth": 12 },
+      "expected": { "cubicFeet": 27, "cubicYards": 1.0, "cubicMeters": 0.7646, "liters": 765 },
+      "tolerance": 1
+    },
+    {
+      "name": "20 × 15 ft at 6 in deep",
+      "inputs": { "length": 20, "width": 15, "depth": 6 },
+      "expected": { "cubicFeet": 150, "cubicYards": 5.5556, "cubicMeters": 4.2475, "liters": 4248 },
+      "tolerance": 1
+    }
+  ],
+  "content": {
+    "intro": "Estimating bulk materials like topsoil, gravel, mulch, and crushed stone requires converting between square footage measurements taken in feet and bulk volume sold in cubic yards. Whether arranging a commercial dump truck delivery or comparing bulk prices against packaged retail bags, understanding exact three-dimensional volume prevents ordering errors and surprise delivery charges. This free cubic yard calculator computes total volume from length, width, and depth dimensions and converts simultaneously between cubic yards, cubic feet, cubic meters, and liters. Enter your dimensions below to convert measurements instantly for any residential landscaping, earthmoving, or construction excavation project.",
+    "howItWorks": "Volume calculation begins by multiplying surface length in feet by width in feet to obtain square footage. Depth in inches is divided by 12 to convert it to feet. Multiplying square footage by depth in feet yields total volume in cubic feet. Because one cubic yard contains exactly 27 cubic feet (3 ft × 3 ft × 3 ft), dividing cubic feet by 27 converts the measurement into cubic yards. Cubic meters are computed by multiplying cubic feet by 0.0283168, and liters are calculated by multiplying cubic meters by 1,000.",
+    "examples": [
+      {
+        "title": "A 10 by 10 foot garden plot excavated to 12 inches deep",
+        "text": "For a plot measuring 10 feet by 10 feet with a depth of 12 inches (1.0 foot): volume = 10 × 10 × 1 = 100 cubic feet. Converting to cubic yards: 100 ÷ 27 = 3.70 cubic yards. In metric units, this equals 2.83 cubic meters or approximately 2,832 liters."
+      },
+      {
+        "title": "A 20 by 15 foot driveway excavation at 6 inches deep",
+        "text": "For an area of 20 × 15 feet at 6 inches (0.5 feet) deep: volume = 300 × 0.5 = 150 cubic feet. In cubic yards: 150 ÷ 27 = 5.56 cubic yards. This represents approximately 4.25 cubic meters of excavated soil or gravel fill."
+      }
+    ],
+    "quickReference": {
+      "caption": "Cubic yards and cubic feet conversions by surface area and depth",
+      "headers": ["Area (sq ft)", "Depth (in)", "Cubic Feet (ft³)", "Cubic Yards (yd³)", "Cubic Meters (m³)"],
+      "rows": [
+        ["100 sq ft", "2 inches", "16.7 ft³", "0.62 yd³", "0.47 m³"],
+        ["100 sq ft", "3 inches", "25.0 ft³", "0.93 yd³", "0.71 m³"],
+        ["100 sq ft", "4 inches", "33.3 ft³", "1.23 yd³", "0.94 m³"],
+        ["200 sq ft", "3 inches", "50.0 ft³", "1.85 yd³", "1.42 m³"],
+        ["500 sq ft", "3 inches", "125.0 ft³", "4.63 yd³", "3.54 m³"],
+        ["1,000 sq ft", "4 inches", "333.3 ft³", "12.35 yd³", "9.44 m³"]
+      ]
+    },
+    "commonMistakes": [
+      "Multiplying length, width, and depth without converting depth from inches to feet, giving an answer twelve times too large.",
+      "Dividing cubic feet by 9 instead of 27: square yards divide by 9, while cubic yards divide by 27.",
+      "Assuming weight and volume are identical: one cubic yard of light mulch weighs 600 lbs, while gravel weighs 2,800 lbs.",
+      "Forgetting to allow for soil compaction when backfilling or regrading excavated trenches."
+    ],
+    "faq": [
+      {
+        "q": "How many cubic feet are in a cubic yard?",
+        "a": "There are exactly 27 cubic feet in one cubic yard. Imagine a cube that is 3 feet long, 3 feet wide, and 3 feet tall (3 × 3 × 3 = 27 cubic feet)."
+      },
+      {
+        "q": "How do I convert square feet to cubic yards?",
+        "a": "Multiply your total square footage by the desired depth in inches, then divide the resulting number by 324. For example, 100 sq ft at 3 inches deep: (100 × 3) ÷ 324 = 0.93 cubic yards."
+      },
+      {
+        "q": "How much does a cubic yard of material cover?",
+        "a": "One cubic yard spread 1 inch deep covers 324 square feet. At 2 inches deep it covers 162 square feet, at 3 inches deep it covers 108 square feet, and at 4 inches deep it covers 81 square feet."
+      },
+      {
+        "q": "How many cubic yards fit in a standard dump truck?",
+        "a": "A single-axle dump truck typically hauls 5 to 7 cubic yards. A tandem-axle dump truck carries 10 to 14 cubic yards, and a tri-axle truck holds 15 to 18 cubic yards depending on material density."
+      }
+    ]
+  },
+  "related": [
+    "square-footage-calculator",
+    "mulch-calculator",
+    "gravel-calculator",
+    "topsoil-calculator"
+  ]
+}

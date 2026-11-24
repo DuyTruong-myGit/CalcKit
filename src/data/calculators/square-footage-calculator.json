@@ -1,0 +1,108 @@
+{
+  "slug": "square-footage-calculator",
+  "status": "draft",
+  "category": "utilities",
+  "formulaId": "area-shapes",
+  "title": "Square Footage Calculator",
+  "metaTitle": "Square Footage Calculator: Calculate Area for Any Shape",
+  "metaDescription": "Calculate square footage for rectangular rooms, triangular areas, and circular plots. Converts instantly between square feet, yards, and meters.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    {
+      "id": "shape",
+      "label": "Geometric shape",
+      "unit": "none",
+      "type": "select",
+      "default": 1,
+      "options": [
+        { "value": "1", "label": "Rectangle (Length × Width)" },
+        { "value": "2", "label": "Triangle (½ × Base × Height)" },
+        { "value": "3", "label": "Circle (Diameter)" }
+      ]
+    },
+    { "id": "length", "label": "Length / Base / Diameter", "unit": "ft", "type": "number", "default": 20, "min": 0 },
+    { "id": "width", "label": "Width / Height (ignored for circles)", "unit": "ft", "type": "number", "default": 10, "min": 0 }
+  ],
+  "constants": [],
+  "outputs": [
+    { "id": "squareFeet", "label": "Square footage", "unit": "sq ft", "decimals": 1, "primary": true },
+    { "id": "squareYards", "label": "Square yards", "unit": "sq yd", "decimals": 2 },
+    { "id": "squareMeters", "label": "Square meters", "unit": "m²", "decimals": 2 }
+  ],
+  "testCases": [
+    {
+      "name": "Rectangle 20 × 10 ft",
+      "inputs": { "shape": 1, "length": 20, "width": 10 },
+      "expected": { "squareFeet": 200, "squareYards": 22.22, "squareMeters": 18.58 },
+      "tolerance": 0.05
+    },
+    {
+      "name": "Triangle base 20 ft, height 10 ft",
+      "inputs": { "shape": 2, "length": 20, "width": 10 },
+      "expected": { "squareFeet": 100, "squareYards": 11.11, "squareMeters": 9.29 },
+      "tolerance": 0.05
+    },
+    {
+      "name": "Circle diameter 20 ft (radius 10 ft)",
+      "inputs": { "shape": 3, "length": 20, "width": 0 },
+      "expected": { "squareFeet": 314.16, "squareYards": 34.91, "squareMeters": 29.19 },
+      "tolerance": 0.05
+    }
+  ],
+  "content": {
+    "intro": "Calculating surface area accurately is the essential first step for nearly every home improvement, gardening, and renovation project. Whether measuring room dimensions for new flooring, sizing a ceiling for drywall, calculating lawn square footage for fertilizer, or designing a circular flower bed, knowing your exact square footage ensures you buy the correct material quantities. This free square footage calculator computes surface areas for rectangles, triangles, and circular layouts while converting instantly between square feet, square yards, and square meters. Enter your project measurements below to obtain precise surface calculations and streamline your project planning.",
+    "howItWorks": "For rectangular areas, square footage is determined by multiplying length by width. For triangular sections (such as gables or angled yard corners), area equals 0.5 multiplied by base multiplied by height. For circular areas, diameter is divided by two to obtain radius, and area is calculated as π multiplied by radius squared. Square yards are obtained by dividing square footage by 9 (because one yard equals 3 feet, and 3 × 3 = 9 sq ft). Square meters are determined by multiplying square footage by 0.092903.",
+    "examples": [
+      {
+        "title": "A 20 by 10 foot rectangular patio or bedroom",
+        "text": "For a rectangle measuring 20 feet long by 10 feet wide: surface area = 20 × 10 = 200 square feet. Converting to square yards: 200 ÷ 9 = 22.22 square yards. In metric units: 200 × 0.092903 = 18.58 square meters."
+      },
+      {
+        "title": "A circular patio or fire pit area with a 20-foot diameter",
+        "text": "For a circle with a diameter of 20 feet: the radius is 10 feet. Area = 3.14159 × 10² = 314.16 square feet. In square yards: 314.16 ÷ 9 = 34.91 sq yd. In square meters: 314.16 × 0.092903 = 29.19 m²."
+      }
+    ],
+    "quickReference": {
+      "caption": "Square footage to square yards and square meters conversion reference",
+      "headers": ["Dimensions / Shape", "Square Feet (sq ft)", "Square Yards (sq yd)", "Square Meters (m²)"],
+      "rows": [
+        ["10 × 10 ft (Rectangle)", "100 sq ft", "11.11 sq yd", "9.29 m²"],
+        ["12 × 12 ft (Rectangle)", "144 sq ft", "16.00 sq yd", "13.38 m²"],
+        ["15 × 20 ft (Rectangle)", "300 sq ft", "33.33 sq yd", "27.87 m²"],
+        ["10 ft base × 8 ft height (Triangle)", "40 sq ft", "4.44 sq yd", "3.72 m²"],
+        ["12 ft diameter (Circle)", "113.1 sq ft", "12.57 sq yd", "10.51 m²"],
+        ["20 ft diameter (Circle)", "314.2 sq ft", "34.91 sq yd", "29.19 m²"]
+      ]
+    },
+    "commonMistakes": [
+      "Dividing square feet by 3 instead of 9 when converting to square yards (1 yard = 3 feet, but 1 sq yd = 9 sq ft).",
+      "Confusing radius with diameter when measuring circular spaces; radius is always half of the total diameter.",
+      "Measuring complex L-shaped rooms as a single rectangle rather than splitting into smaller rectangles and adding areas together.",
+      "Forgetting to deduct large obstructions like fireplaces, kitchen islands, or built-in closets from net floor area."
+    ],
+    "faq": [
+      {
+        "q": "How do I calculate square footage of an L-shaped room?",
+        "a": "Divide the L-shaped space into two separate rectangular sections with a tape measure or chalk line. Calculate the square footage of each rectangle individually (Length × Width), then add the two totals together."
+      },
+      {
+        "q": "How do I convert square feet to square yards?",
+        "a": "Divide total square footage by 9. For example, 180 square feet divided by 9 equals 20 square yards. Carpet and artificial turf are frequently sold and priced by the square yard."
+      },
+      {
+        "q": "How do I convert square feet to square meters?",
+        "a": "Multiply square footage by 0.0929 (or divide by 10.764). For example, a 200 sq ft room equals approximately 18.58 square meters."
+      },
+      {
+        "q": "How do I measure an odd or irregular shaped room?",
+        "a": "Sketch the floorplan on paper and divide the odd shape into a combination of basic geometric figures: rectangles, triangles, and half-circles. Calculate each part separately, then sum all sections for the grand total."
+      }
+    ]
+  },
+  "related": [
+    "cubic-yard-calculator",
+    "flooring-calculator",
+    "paint-calculator",
+    "paver-calculator"
+  ]
+}

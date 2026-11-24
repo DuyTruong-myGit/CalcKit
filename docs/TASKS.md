@@ -62,11 +62,11 @@ Status: todo
 - Acceptance: the production site loads, `robots.txt` and the sitemap are reachable. Owner verifies the domain in Search Console and submits the sitemap.
 
 ### TASK-10 to TASK-13: Remaining calculators in batches of five
-Status: in progress
+Status: done
 - Batch A (done): topsoil, sand, raised bed soil, pavers, retaining wall blocks.
 - Batch B (done): sod, grass seed, paint, flooring, tile.
 - Batch C (done): drywall, fence, deck boards, roofing, post hole concrete.
-- Batch D (todo): cubic yard converter, square footage, plus internal-linking pass and a check for near-duplicate text across pages.
+- Batch D (done): cubic yard converter, square footage, plus internal-linking pass and a check for near-duplicate text across pages.
 - For each batch: implement missing formulas with tests first, then JSON drafts, then the owner reviews and sets `reviewed`.
 - Acceptance per batch: tests pass, build passes, hand-check list delivered.
 
