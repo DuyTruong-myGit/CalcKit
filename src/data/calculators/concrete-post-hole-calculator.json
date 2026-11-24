@@ -1,0 +1,113 @@
+{
+  "slug": "concrete-post-hole-calculator",
+  "status": "draft",
+  "category": "concrete-masonry",
+  "formulaId": "concrete-cylinder",
+  "title": "Post Hole Concrete Calculator",
+  "metaTitle": "Post Hole Concrete Calculator: Bags Needed per Footing",
+  "metaDescription": "Calculate how many bags of concrete you need for fence post holes and deck footings. Enter hole diameter, depth, and post count.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "diameter", "label": "Hole diameter", "unit": "in", "type": "number", "default": 10, "min": 4 },
+    { "id": "depth", "label": "Hole depth", "unit": "in", "type": "number", "default": 36, "min": 6, "help": "Hole depth must extend below your local frost line (commonly 30 to 48 inches)." },
+    { "id": "holes", "label": "Number of holes", "unit": "count", "type": "number", "default": 4, "min": 1 },
+    { "id": "waste", "label": "Extra for spillage and irregular soil", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+  ],
+  "constants": [
+    {
+      "id": "yield80",
+      "label": "Yield per 80-lb bag (cubic feet)",
+      "default": 0.6,
+      "note": "Standard 80-pound concrete mix yields approximately 0.60 cubic feet. Check bag packaging."
+    },
+    {
+      "id": "yield60",
+      "label": "Yield per 60-lb bag (cubic feet)",
+      "default": 0.45,
+      "note": "Standard 60-pound concrete mix yields approximately 0.45 cubic feet. Check bag packaging."
+    }
+  ],
+  "outputs": [
+    { "id": "bags", "label": "80-lb bags needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "bags60", "label": "60-lb bags needed", "unit": "count", "decimals": 0, "roundUp": true },
+    { "id": "cubicFeet", "label": "Total cubic feet", "unit": "ft", "decimals": 2 },
+    { "id": "cubicYards", "label": "Total cubic yards", "unit": "yd", "decimals": 2 }
+  ],
+  "testCases": [
+    {
+      "name": "1 hole, 12 in diameter, 36 in deep, 0% waste",
+      "inputs": { "diameter": 12, "depth": 36, "holes": 1, "waste": 0 },
+      "constants": { "yield80": 0.6, "yield60": 0.45 },
+      "expected": { "cubicFeet": 2.3562, "bags": 4, "bags60": 6 },
+      "tolerance": 0.01
+    },
+    {
+      "name": "4 holes, 10 in diameter, 36 in deep, 10% waste",
+      "inputs": { "diameter": 10, "depth": 36, "holes": 4, "waste": 10 },
+      "constants": { "yield80": 0.6, "yield60": 0.45 },
+      "expected": { "cubicFeet": 6.545, "bags": 12, "bags60": 16 },
+      "tolerance": 0.01
+    },
+    {
+      "name": "6 holes, 8 in diameter, 24 in deep, 0% waste",
+      "inputs": { "diameter": 8, "depth": 24, "holes": 6, "waste": 0 },
+      "constants": { "yield80": 0.6, "yield60": 0.45 },
+      "expected": { "cubicFeet": 4.1888, "bags": 7 },
+      "tolerance": 0.01
+    }
+  ],
+  "content": {
+    "intro": "Setting structural fence posts, deck footings, mailbox supports, and pergola columns requires secure concrete anchoring below your local frost line. Estimating cylindrical concrete volume correctly prevents structural sagging while avoiding extra trips to buy heavy premixed bags. This free post hole calculator determines the total volume in cubic feet and cubic yards for any cylindrical footing, providing exact counts for standard 80-pound and 60-pound ready-mix bags. Enter your hole diameter, depth, and post count below to calculate materials with an adjustable allowance for ragged soil excavation and gravel drainage.",
+    "howItWorks": "Cylindrical volume is computed using the geometric cylinder formula: volume = π × radius² × depth. Hole diameter in inches is halved to get radius, squared, multiplied by π, and multiplied by depth in inches to obtain cubic inches. Dividing by 1,728 converts cubic inches to cubic feet per hole. Multiplying by total hole count and applying your waste factor (typically 10% to account for uneven auger holes and flared bottoms) produces total cubic feet. Dividing by bag yield (0.60 cu ft for 80-lb bags or 0.45 cu ft for 60-lb bags) yields required bag quantities.",
+    "examples": [
+      {
+        "title": "A single 12-inch diameter by 36-inch deep deck pier footing",
+        "text": "For a 12-inch diameter post hole dug 36 inches deep: radius is 6 inches. Area = 3.1416 × 36 = 113.1 sq in. Volume = 113.1 × 36 = 4,071.5 cu in. In cubic feet: 4,071.5 ÷ 1,728 = 2.36 cu ft. At 0.60 cu ft per 80-lb bag: 2.36 ÷ 0.60 = 3.93, requiring 4 bags."
+      },
+      {
+        "title": "Four 10-inch diameter fence posts at 36 inches deep with 10% waste",
+        "text": "For four 10-inch holes at 36 inches deep: each hole holds 1.64 cu ft. Four holes equal 6.55 cu ft. Adding 10% waste for flared soil walls gives 7.20 cu ft. Dividing by 0.60 cu ft per 80-lb bag gives exactly 12 bags (or 16 sixty-pound bags)."
+      }
+    ],
+    "quickReference": {
+      "caption": "80-lb concrete bag estimates per single post hole (10% waste)",
+      "headers": ["Hole Diameter", "Hole Depth (24 in)", "Hole Depth (36 in)", "Hole Depth (48 in)"],
+      "rows": [
+        ["8 inches", "1.5 bags (order 2)", "2.2 bags (order 3)", "2.9 bags (order 3)"],
+        ["10 inches", "2.3 bags (order 3)", "3.4 bags (order 4)", "4.5 bags (order 5)"],
+        ["12 inches", "3.2 bags (order 4)", "4.8 bags (order 5)", "6.4 bags (order 7)"],
+        ["14 inches", "4.4 bags (order 5)", "6.5 bags (order 7)", "8.7 bags (order 9)"]
+      ]
+    },
+    "commonMistakes": [
+      "Digging post holes shallower than local frost depth, causing winter frost heaving to lift fence posts.",
+      "Digging holes with tapering V-shaped sides; post holes should be straight-sided or bell-bottomed at the base.",
+      "Setting wooden posts directly onto bare soil at the bottom of the hole without 3 to 4 inches of crushed gravel drainage.",
+      "Pouring dry concrete mix into the hole and adding water on top without thorough mechanical mixing."
+    ],
+    "faq": [
+      {
+        "q": "How wide should a fence post hole be?",
+        "a": "A reliable rule of thumb is that the hole diameter should be three times the width of the post. For a standard 4 × 4 inch post (actual 3.5 × 3.5 in), dig an 8 to 10 inch diameter hole. For a 6 × 6 inch post, dig a 12 to 14 inch diameter hole."
+      },
+      {
+        "q": "How deep should fence post holes be dug?",
+        "a": "Post holes should generally be dug to a depth equal to one-third to one-half the above-ground height of the post, or at least 6 inches below your local frost line (whichever is deeper). For a 6-foot privacy fence, 30 to 36 inches is standard."
+      },
+      {
+        "q": "Should I subtract the post volume from the concrete calculation?",
+        "a": "While a 4x4 post displaces roughly 0.25 cubic feet of concrete per foot of depth, in practice rough augered holes in native soil are flared and irregular, naturally requiring 10% to 20% more concrete. Leaving post displacement un-subtracted naturally accounts for this soil expansion."
+      },
+      {
+        "q": "Can I use fast-setting concrete without mixing?",
+        "a": "Fast-setting concrete in red bags can be poured dry into a water-filled hole according to manufacturer instructions. However, for structural deck footings or heavy gate posts, standard pre-mixed concrete mixed with water in a wheelbarrow provides significantly higher compressive strength."
+      }
+    ]
+  },
+  "related": [
+    "concrete-slab-calculator",
+    "fence-calculator",
+    "gravel-calculator",
+    "retaining-wall-block-calculator"
+  ]
+}

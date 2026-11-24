@@ -1,0 +1,109 @@
+{
+  "slug": "roofing-calculator",
+  "status": "draft",
+  "category": "structures-roofing",
+  "formulaId": "roofing",
+  "title": "Roofing Calculator",
+  "metaTitle": "Roofing Calculator: Shingle Bundles and Squares Needed",
+  "metaDescription": "Calculate how many roofing squares and shingle bundles you need. Accounts for roof pitch multipliers, ground footprint, and waste.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Building footprint length", "unit": "ft", "type": "number", "default": 40, "min": 0 },
+    { "id": "width", "label": "Building footprint width", "unit": "ft", "type": "number", "default": 25, "min": 0 },
+    { "id": "rise", "label": "Roof pitch (rise per 12-inch run)", "unit": "in", "type": "number", "default": 6, "min": 1, "max": 24, "help": "E.g., enter 4 for a 4:12 pitch or 6 for a 6:12 pitch. Common residential pitch is 4:12 to 8:12." },
+    { "id": "waste", "label": "Extra for hips, valleys, and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for simple gable roofs; use 15% to 20% for complex hip roofs with valleys and dormers." }
+  ],
+  "constants": [
+    {
+      "id": "bundlesPerSquare",
+      "label": "Bundles per square",
+      "default": 3,
+      "note": "Standard asphalt architectural and 3-tab shingles are packaged 3 bundles per square (100 sq ft). Heavy designer shingles may require 4 or 5 bundles per square."
+    }
+  ],
+  "outputs": [
+    { "id": "bundles", "label": "Shingle bundles needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "squares", "label": "Roofing squares (100 sq ft)", "unit": "count", "decimals": 2 },
+    { "id": "roofArea", "label": "True sloped roof area", "unit": "ft2", "decimals": 1 },
+    { "id": "pitchFactor", "label": "Pitch slope multiplier", "unit": "none", "decimals": 4 }
+  ],
+  "testCases": [
+    {
+      "name": "1,000 sq ft footprint (40 × 25 ft), 6:12 pitch, 0% waste",
+      "inputs": { "length": 40, "width": 25, "rise": 6, "waste": 0 },
+      "constants": { "bundlesPerSquare": 3 },
+      "expected": { "pitchFactor": 1.1180, "roofArea": 1118.03, "squares": 11.18, "bundles": 34 },
+      "tolerance": 0.01
+    },
+    {
+      "name": "1,000 sq ft footprint (40 × 25 ft), 6:12 pitch, 10% waste",
+      "inputs": { "length": 40, "width": 25, "rise": 6, "waste": 10 },
+      "constants": { "bundlesPerSquare": 3 },
+      "expected": { "pitchFactor": 1.1180, "roofArea": 1118.03, "squares": 11.18, "bundles": 37 },
+      "tolerance": 0.01
+    },
+    {
+      "name": "1,500 sq ft footprint (50 × 30 ft), 4:12 pitch, 10% waste",
+      "inputs": { "length": 50, "width": 30, "rise": 4, "waste": 10 },
+      "constants": { "bundlesPerSquare": 3 },
+      "expected": { "pitchFactor": 1.0541, "roofArea": 1581.14, "squares": 15.81, "bundles": 53 },
+      "tolerance": 0.01
+    }
+  ],
+  "content": {
+    "intro": "Replacing or installing an asphalt shingle roof protects your home from severe weather, prevents structural water intrusion, and restores aesthetic value. Because sloped roofs have a significantly larger surface area than the building flat footprint, accounting for roof pitch multipliers and starter course waste is essential before ordering materials. This free roofing calculator converts ground dimensions and pitch rise into true sloped square footage, standard roofing squares, and bundle counts. Enter your structure dimensions below to calculate exact architectural or three-tab shingle quantities, plan hip and ridge caps, and prevent costly mid-job delivery delays.",
+    "howItWorks": "Building footprint area is calculated by multiplying structure length by width (including eave overhangs). Roof slope is accounted for by computing the pitch multiplier: square root of (1 + (rise / 12)²). Multiplying footprint area by this pitch factor gives the true sloped roof surface area in square feet. In roofing terminology, 100 square feet equals one roofing 'square'. Dividing roof area by 100 yields the number of squares. Multiplying squares by 3 bundles per square and adding your waste allowance (typically 10% to 15%) gives the total bundle count to purchase.",
+    "examples": [
+      {
+        "title": "A 1,000 sq ft home footprint with a standard 6:12 roof pitch",
+        "text": "For a home measuring 40 by 25 feet (1,000 sq ft footprint) with a 6:12 roof pitch: the pitch factor is √(1 + 0.5²) = 1.118. Sloped roof area is 1,000 × 1.118 = 1,118 square feet (11.18 squares). With 10% waste for cut starter courses and valleys: 11.18 × 1.10 = 12.3 squares. At 3 bundles per square: 12.3 × 3 = 36.9, requiring 37 bundles."
+      },
+      {
+        "title": "A 1,500 sq ft ranch home with a low 4:12 roof pitch",
+        "text": "For a 50 × 30 foot footprint with a 4:12 slope: the pitch factor is 1.0541. Sloped area is 1,500 × 1.0541 = 1,581 square feet (15.81 squares). Adding a 10% waste allowance: 15.81 × 1.10 = 17.39 squares. Multiplying by 3 bundles per square equals 52.17, which rounds up to 53 bundles."
+      }
+    ],
+    "quickReference": {
+      "caption": "Roof pitch multipliers and shingle bundle estimates (1,000 sq ft footprint, 10% waste)",
+      "headers": ["Roof Pitch", "Slope Multiplier", "Sloped Roof Area", "Roofing Squares", "Bundles to Buy"],
+      "rows": [
+        ["3:12 (Low slope)", "1.0308", "1,031 sq ft", "10.3 squares", "34 bundles"],
+        ["4:12 (Standard ranch)", "1.0541", "1,054 sq ft", "10.5 squares", "35 bundles"],
+        ["6:12 (Common gable)", "1.1180", "1,118 sq ft", "11.2 squares", "37 bundles"],
+        ["8:12 (Moderate slope)", "1.2019", "1,202 sq ft", "12.0 squares", "40 bundles"],
+        ["10:12 (Steep colonial)", "1.3017", "1,302 sq ft", "13.0 squares", "43 bundles"],
+        ["12:12 (45° steep pitch)", "1.4142", "1,414 sq ft", "14.1 squares", "47 bundles"]
+      ]
+    },
+    "commonMistakes": [
+      "Calculating shingle quantities from ground flat footprint area without multiplying by the roof pitch factor.",
+      "Forgetting to include roof eave and rake overhangs (typically 1 to 2 feet around the building perimeter).",
+      "Using standard 10% waste on complex roofs with multiple dormers, hips, and valleys; these require 15% to 20% waste.",
+      "Omitting starter shingles and ridge cap shingles from the materials order; these are separate from standard field bundles."
+    ],
+    "faq": [
+      {
+        "q": "What is a 'square' in roofing terminology?",
+        "a": "A roofing square is the universal unit of measurement used by contractors and material suppliers. One square equals exactly 100 square feet of roof surface area."
+      },
+      {
+        "q": "How many bundles of shingles make up one roofing square?",
+        "a": "For standard 3-tab and architectural laminated shingles, exactly 3 bundles make up one roofing square (roughly 33.3 square feet per bundle). Certain ultra-heavy specialty designer shingles require 4 or 5 bundles per square."
+      },
+      {
+        "q": "How do I determine my roof pitch?",
+        "a": "Roof pitch is expressed as inches of vertical rise over a 12-inch horizontal run (e.g., 6:12). In an attic, place a 12-inch level horizontally against the bottom of a rafter. Measure vertically from the 12-inch mark on the level up to the bottom of the rafter; that measurement is your pitch rise."
+      },
+      {
+        "q": "Do I need separate shingles for the roof ridge and hips?",
+        "a": "Yes. Ridge caps and hip caps require specialized hip and ridge shingles (or 3-tab shingles cut into thirds). They are not included in your field shingle bundle calculation and must be ordered based on linear feet of ridges and hips."
+      }
+    ]
+  },
+  "related": [
+    "deck-board-calculator",
+    "fence-calculator",
+    "square-footage-calculator",
+    "cubic-yard-calculator"
+  ]
+}

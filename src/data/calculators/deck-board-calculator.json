@@ -1,0 +1,117 @@
+{
+  "slug": "deck-board-calculator",
+  "status": "draft",
+  "category": "structures-roofing",
+  "formulaId": "deck-boards",
+  "title": "Deck Board Calculator",
+  "metaTitle": "Deck Board Calculator: Boards and Linear Feet Needed",
+  "metaDescription": "Calculate how many deck boards and total linear feet you need for wood or composite decking with customizable board sizes and gaps.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Deck length (along boards)", "unit": "ft", "type": "number", "default": 16, "min": 0 },
+    { "id": "width", "label": "Deck width (across boards)", "unit": "ft", "type": "number", "default": 12, "min": 0 },
+    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for straight layouts; use 15% for diagonal or herringbone patterns." }
+  ],
+  "constants": [
+    {
+      "id": "boardWidth",
+      "label": "Board width (inches)",
+      "default": 5.5,
+      "note": "Standard 5/4 × 6 and 2 × 6 nominal decking lumber measures exactly 5.5 inches wide. Composite boards are typically 5.5 inches wide."
+    },
+    {
+      "id": "gap",
+      "label": "Gap between boards (inches)",
+      "default": 0.25,
+      "note": "Standard spacing gap is 1/8 to 1/4 inch (0.125 to 0.25 in) for drainage and thermal expansion."
+    },
+    {
+      "id": "boardLength",
+      "label": "Nominal board length (feet)",
+      "default": 16,
+      "note": "Standard lumber lengths: 12, 16, or 20 feet. Choosing board lengths equal to or greater than deck length eliminates unsightly end seams."
+    }
+  ],
+  "outputs": [
+    { "id": "boards", "label": "Deck boards needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "totalLinearFeet", "label": "Total linear feet", "unit": "ft", "decimals": 1 },
+    { "id": "rows", "label": "Board courses across width", "unit": "count", "decimals": 0, "roundUp": true },
+    { "id": "area", "label": "Deck surface area", "unit": "ft2", "decimals": 1 }
+  ],
+  "testCases": [
+    {
+      "name": "16 × 12 ft deck, 0% waste, 16 ft boards (5.5 in wide, 0.25 in gap)",
+      "inputs": { "length": 16, "width": 12, "waste": 0 },
+      "constants": { "boardWidth": 5.5, "gap": 0.25, "boardLength": 16 },
+      "expected": { "area": 192, "rows": 26, "totalLinearFeet": 416, "boards": 26 }
+    },
+    {
+      "name": "16 × 12 ft deck, 10% waste, 16 ft boards (5.5 in wide, 0.25 in gap)",
+      "inputs": { "length": 16, "width": 12, "waste": 10 },
+      "constants": { "boardWidth": 5.5, "gap": 0.25, "boardLength": 16 },
+      "expected": { "area": 192, "rows": 26, "totalLinearFeet": 416, "boards": 29 }
+    },
+    {
+      "name": "20 × 16 ft deck, 10% waste, 20 ft boards (5.5 in wide, 0.25 in gap)",
+      "inputs": { "length": 20, "width": 16, "waste": 10 },
+      "constants": { "boardWidth": 5.5, "gap": 0.25, "boardLength": 20 },
+      "expected": { "area": 320, "rows": 34, "totalLinearFeet": 680, "boards": 38 }
+    }
+  ],
+  "content": {
+    "intro": "Building or resurfacing an outdoor deck with natural cedar, pressure-treated lumber, or composite boards creates an inviting extension of your home for entertaining and relaxation. Ordering deck boards requires knowing both the number of parallel courses across the deck width and the total linear footage to purchase in standard lumber lengths. This free deck board calculator determines the required board count based on your deck dimensions, plank width, spacing gaps, and cut-waste allowances. Enter your deck dimensions below to plan your surface lumber order and avoid expensive seam splices on your outdoor deck.",
+    "howItWorks": "First, the deck width in inches is calculated by multiplying width in feet by 12. Dividing width in inches by the combined width of one board plus its spacing gap (such as 5.5 in + 0.25 in gap = 5.75 in) gives the number of parallel rows across the deck, rounded up. Multiplying rows by deck length yields total linear footage. Total linear footage is increased by your cut-waste factor (typically 10%) and divided by your chosen nominal board length (most commonly 16 feet) to determine total boards to purchase.",
+    "examples": [
+      {
+        "title": "A 16 by 12 foot deck with 16-foot pressure-treated boards",
+        "text": "For a deck measuring 16 feet along the boards and 12 feet across: width is 12 × 12 = 144 inches. With standard 5.5-inch boards and 0.25-inch gaps (5.75 in per course): 144 ÷ 5.75 = 25.04, which rounds up to 26 courses. Total linear footage is 26 × 16 = 416 feet. Adding 10% waste: 416 × 1.10 = 457.6 linear feet. At 16 feet per board: 457.6 ÷ 16 = 28.6, requiring 29 boards."
+      },
+      {
+        "title": "A 20 by 16 foot deck with 20-foot composite planks",
+        "text": "Width is 16 × 12 = 192 inches. Dividing 192 by 5.75 inches gives 33.39, rounded up to 34 rows. Total linear footage is 34 × 20 = 680 feet. With 10% waste allowance: 680 × 1.10 = 748 linear feet. Dividing by 20-foot boards equals 37.4, rounding up to 38 boards."
+      }
+    ],
+    "quickReference": {
+      "caption": "Deck board estimates (5.5 in wide boards with 1/4 in gap and 10% waste)",
+      "headers": ["Deck Size (L × W)", "Surface Area", "Parallel Rows", "Total Linear Feet", "16 ft Boards Needed"],
+      "rows": [
+        ["12 × 10 ft", "120 sq ft", "21 rows", "252 lin ft", "18 boards"],
+        ["16 × 10 ft", "160 sq ft", "21 rows", "336 lin ft", "24 boards"],
+        ["16 × 12 ft", "192 sq ft", "26 rows", "416 lin ft", "29 boards"],
+        ["20 × 12 ft", "240 sq ft", "26 rows", "520 lin ft", "36 boards"],
+        ["20 × 16 ft", "320 sq ft", "34 rows", "680 lin ft", "47 boards"],
+        ["24 × 16 ft", "384 sq ft", "34 rows", "816 lin ft", "57 boards"]
+      ]
+    },
+    "commonMistakes": [
+      "Installing wet pressure-treated lumber with gaps; wet wood shrinks as it dries, turning 1/4-inch gaps into 1/2-inch gaps.",
+      "Fastening composite decking tight without manufacturer-recommended thermal expansion gaps at butt ends.",
+      "Ordering board lengths shorter than deck length, forcing unattractive staggered butt joints across the deck field.",
+      "Overhanging boards without properly squaring and chalk-lining the rim joists before final trimming."
+    ],
+    "faq": [
+      {
+        "q": "What is the true width of standard 5/4 x 6 deck boards?",
+        "a": "Nominal 5/4 × 6 inch wood decking boards have an actual finished dimension of 1 inch thick by 5-1/2 inches (5.5 in) wide. Standard 2 × 6 lumber boards have an actual finished dimension of 1-1/2 inches thick by 5-1/2 inches wide."
+      },
+      {
+        "q": "How large should the gap between deck boards be?",
+        "a": "If installing kiln-dried lumber or composite decking, leave a 1/8 to 1/4 inch gap for water drainage. If installing soaking wet pressure-treated lumber straight from the lumberyard, butt boards tightly together with no gap, as they will shrink naturally as they dry."
+      },
+      {
+        "q": "How many deck screws do I need per board?",
+        "a": "Plan for 2 screws per joist intersection. On standard 16-inch on-center joists, a 16-foot board crosses 13 joists, requiring 26 screws per board. Plan for roughly 350 deck screws per 100 square feet of decking surface."
+      },
+      {
+        "q": "Should deck boards be laid bark side up or down?",
+        "a": "Modern wood science recommends installing boards bark side up (growth rings curving downward like an arch) so that when the board weathers, water drains off the crown rather than pooling in a concave dish."
+      }
+    ]
+  },
+  "related": [
+    "fence-calculator",
+    "concrete-post-hole-calculator",
+    "square-footage-calculator",
+    "paint-calculator"
+  ]
+}

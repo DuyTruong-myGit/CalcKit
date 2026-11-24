@@ -1,0 +1,103 @@
+{
+  "slug": "drywall-calculator",
+  "status": "draft",
+  "category": "painting-flooring",
+  "formulaId": "unit-count",
+  "title": "Drywall Calculator",
+  "metaTitle": "Drywall Calculator: Sheets of Sheetrock Needed",
+  "metaDescription": "Calculate how many sheets of 4x8 or 4x12 drywall you need for walls and ceilings with custom sheet sizes and waste.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Surface length / perimeter", "unit": "ft", "type": "number", "default": 40, "min": 0 },
+    { "id": "width", "label": "Wall height / surface width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
+    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for standard rooms; use 15% for rooms with multiple doorways, windows, and closets." }
+  ],
+  "constants": [
+    {
+      "id": "areaPerUnit",
+      "label": "Sheet size (square feet)",
+      "default": 32,
+      "note": "Standard 4 × 8 ft sheet equals 32 sq ft. Large 4 × 12 ft sheets equal 48 sq ft. Verify your selected drywall sheet size."
+    }
+  ],
+  "outputs": [
+    { "id": "sheets", "label": "Drywall sheets needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "area", "label": "Total surface area", "unit": "ft2", "decimals": 1 }
+  ],
+  "testCases": [
+    {
+      "name": "400 sq ft wall surface (400 × 1 ft), 10% waste, 4 × 8 ft (32 sq ft) sheets",
+      "inputs": { "length": 400, "width": 1, "waste": 10 },
+      "constants": { "areaPerUnit": 32 },
+      "expected": { "area": 400, "sheets": 14 }
+    },
+    {
+      "name": "40 × 10 ft wall surface, 0% waste, 4 × 8 ft (32 sq ft) sheets",
+      "inputs": { "length": 40, "width": 10, "waste": 0 },
+      "constants": { "areaPerUnit": 32 },
+      "expected": { "area": 400, "sheets": 13 }
+    },
+    {
+      "name": "60 × 10 ft wall surface, 10% waste, 4 × 12 ft (48 sq ft) sheets",
+      "inputs": { "length": 60, "width": 10, "waste": 10 },
+      "constants": { "areaPerUnit": 48 },
+      "expected": { "area": 600, "sheets": 14 }
+    }
+  ],
+  "content": {
+    "intro": "Hanging drywall transforms open wall framing into smooth, paint-ready interior rooms. Whether finishing a basement, remodeling a garage, or hanging sheetrock across an entire addition, accurate board estimation prevents delays from running short or struggling to store cumbersome 8-foot sheets. This free drywall calculator computes the total square footage of your walls or ceilings and determines the exact count of standard sheets required. Enter your project dimensions below to compare 4-by-8 and 4-by-12 sheet counts, calculate cut-waste allowances, and prepare your materials order with confidence.",
+    "howItWorks": "Total drywall area is calculated by multiplying the surface length by the wall height or ceiling width in feet. Because sheetrock must be trimmed around electrical outlets, doors, windows, and ceiling angles, a 10% waste factor is added (15% for complex floorplans). The total square footage including waste is divided by the square footage of an individual drywall sheet (32 square feet for a 4 × 8 foot panel or 48 square feet for a 4 × 12 foot panel). The result is always rounded up to the nearest whole panel.",
+    "examples": [
+      {
+        "title": "A 400-square-foot basement accent wall with 4 by 8 foot sheets",
+        "text": "For a finished wall measuring 40 feet long and 10 feet high, total surface area is 40 × 10 = 400 square feet. Adding a 10% waste factor: 400 × 1.10 = 440 square feet. Dividing 440 by 32 square feet per standard sheet yields 13.75, which rounds up to 14 sheets."
+      },
+      {
+        "title": "A 600-square-foot open garage ceiling with 4 by 12 foot sheets",
+        "text": "For a ceiling area of 600 square feet using longer 4 × 12 foot boards to minimize butt joints: with 10% waste, total coverage is 660 square feet. Dividing 660 by 48 square feet per 12-foot board gives 13.75, rounding up to 14 sheets."
+      }
+    ],
+    "quickReference": {
+      "caption": "Drywall sheet counts by wall area (using 4 × 8 ft sheets with 10% waste)",
+      "headers": ["Surface Area", "Area with 10% Waste", "4 × 8 ft Sheets (32 sq ft)", "4 × 12 ft Sheets (48 sq ft)"],
+      "rows": [
+        ["200 sq ft", "220 sq ft", "7 sheets", "5 sheets"],
+        ["300 sq ft", "330 sq ft", "11 sheets", "7 sheets"],
+        ["400 sq ft", "440 sq ft", "14 sheets", "10 sheets"],
+        ["600 sq ft", "660 sq ft", "21 sheets", "14 sheets"],
+        ["800 sq ft", "880 sq ft", "28 sheets", "19 sheets"],
+        ["1,000 sq ft", "1,100 sq ft", "35 sheets", "23 sheets"]
+      ]
+    },
+    "commonMistakes": [
+      "Hanging boards vertically on horizontal studs, which increases the number of butt joints requiring taping and mudding.",
+      "Ordering 4x8 panels when 4x12 panels could span the entire wall or ceiling without awkward mid-wall joints.",
+      "Placing drywall joints directly aligned with the corners of doors and windows, leading to future stress cracks.",
+      "Forgetting drywall screws and joint compound: allocate roughly one 5-gallon bucket of all-purpose mud per 1,000 sq ft."
+    ],
+    "faq": [
+      {
+        "q": "What is the standard thickness of drywall for residential walls?",
+        "a": "Standard interior residential walls and ceilings framed on 16-inch centers use 1/2-inch thick drywall. Ceiling framing spaced 24 inches on center or walls adjoining attached garages typically require 5/8-inch Type X fire-rated drywall."
+      },
+      {
+        "q": "Should I use 4x8 or 4x12 sheets of drywall?",
+        "a": "Use 4 × 12 foot sheets whenever possible if you have a helper and open access. Longer boards reduce the total number of tapered joints by 25% and virtually eliminate butt joints, resulting in faster mudding and smoother walls."
+      },
+      {
+        "q": "How many drywall screws do I need per sheet?",
+        "a": "A standard 4 × 8 foot sheet of drywall requires approximately 28 to 32 screws when spaced 12 inches apart along wall studs, or 36 to 40 screws on ceiling joists. A 5-pound box of 1-1/4 inch coarse thread drywall screws covers roughly 30 sheets."
+      },
+      {
+        "q": "How much joint compound and tape do I need?",
+        "a": "Plan for approximately 100 feet of paper drywall tape and 0.05 gallons of joint compound per sheet of drywall. For a 1,000-square-foot room (about 32 sheets), you will need one 500-foot roll of tape and about two 4.5-gallon buckets of mud."
+      }
+    ]
+  },
+  "related": [
+    "paint-calculator",
+    "flooring-calculator",
+    "tile-calculator",
+    "square-footage-calculator"
+  ]
+}

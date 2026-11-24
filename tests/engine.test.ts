@@ -7,6 +7,10 @@ import { concreteSlab } from '../src/lib/calc/formulas/concrete-slab.js';
 import { unitCount } from '../src/lib/calc/formulas/unit-count.js';
 import { seedRate } from '../src/lib/calc/formulas/seed-rate.js';
 import { paint } from '../src/lib/calc/formulas/paint.js';
+import { concreteCylinder } from '../src/lib/calc/formulas/concrete-cylinder.js';
+import { fence } from '../src/lib/calc/formulas/fence.js';
+import { deckBoards } from '../src/lib/calc/formulas/deck-boards.js';
+import { roofing } from '../src/lib/calc/formulas/roofing.js';
 import { calculate, runTestCase } from '../src/lib/calc/engine.js';
 import type { CalculatorDef } from '../src/lib/schema/types.js';
 
@@ -107,6 +111,58 @@ describe('Pure Formula Functions — Hand-Calculated Cases (docs/FORMULAS.md)', 
     expect(res.area).toBe(100);
     expect(res.tiles).toBe(110);
     expect(res.boxes).toBe(11);
+  });
+
+  it('drywall (unit-count): area 400, sheet 32 sq ft, waste 10% -> sheets 14', () => {
+    const res = unitCount(
+      { length: 400, width: 1, waste: 10 },
+      { areaPerUnit: 32 },
+    );
+    expect(res.area).toBe(400);
+    expect(res.sheets).toBe(14);
+    expect(res.units).toBe(14);
+  });
+
+  it('concrete post hole (concrete-cylinder): d 12, h 36, n 1, waste 0 -> cuFt 2.3562', () => {
+    const res = concreteCylinder(
+      { diameter: 12, depth: 36, holes: 1, waste: 0 },
+      { yield80: 0.6, yield60: 0.45 },
+    );
+    expect(res.cubicFeet).toBeCloseTo(2.3562, 3);
+    expect(res.bags80).toBe(4);
+    expect(res.bags60).toBe(6);
+  });
+
+  it('fence (fence): length 100, spacing 8, extra 0 -> posts 14, panels 13', () => {
+    const res = fence(
+      { length: 100, gates: 0, corners: 0 },
+      { postSpacing: 8, panelWidth: 8, railsPerSection: 3 },
+    );
+    expect(res.posts).toBe(14);
+    expect(res.panels).toBe(13);
+    expect(res.rails).toBe(39);
+  });
+
+  it('deck boards (deck-boards): L 16, W 12, waste 10%, boardLength 16, width 5.5 in, gap 0.25 in -> rows 26, boards 29', () => {
+    const res = deckBoards(
+      { length: 16, width: 12, waste: 10 },
+      { boardWidth: 5.5, gap: 0.25, boardLength: 16 },
+    );
+    expect(res.area).toBe(192);
+    expect(res.rows).toBe(26);
+    expect(res.totalLinearFeet).toBe(416);
+    expect(res.boards).toBe(29);
+  });
+
+  it('roofing (roofing): footprint 1000, rise 6, bundlesPerSquare 3, waste 0 -> pitchFactor 1.1180, roofArea 1118.03, squares 11.18, bundles 34', () => {
+    const res = roofing(
+      { footprint: 1000, rise: 6, waste: 0 },
+      { bundlesPerSquare: 3 },
+    );
+    expect(res.pitchFactor).toBeCloseTo(1.1180, 4);
+    expect(res.roofArea).toBeCloseTo(1118.03, 2);
+    expect(res.squares).toBeCloseTo(11.18, 2);
+    expect(res.bundles).toBe(34);
   });
 });
 

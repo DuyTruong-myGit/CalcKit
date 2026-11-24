@@ -1,0 +1,123 @@
+{
+  "slug": "fence-calculator",
+  "status": "draft",
+  "category": "structures-roofing",
+  "formulaId": "fence",
+  "title": "Fence Calculator",
+  "metaTitle": "Fence Calculator: Posts, Rails, and Pickets Needed",
+  "metaDescription": "Calculate how many fence posts, rails, and pickets you need for wood privacy fences or pre-built panels with gate and corner allowances.",
+  "updatedAt": "2026-11-24",
+  "inputs": [
+    { "id": "length", "label": "Total fence length", "unit": "ft", "type": "number", "default": 100, "min": 0 },
+    { "id": "gates", "label": "Number of gates", "unit": "count", "type": "number", "default": 1, "min": 0 },
+    { "id": "corners", "label": "Number of corner posts", "unit": "count", "type": "number", "default": 2, "min": 0 }
+  ],
+  "constants": [
+    {
+      "id": "postSpacing",
+      "label": "Post spacing (feet)",
+      "default": 8,
+      "note": "Standard fence post spacing is 8 feet on center. In high-wind areas, 6-foot spacing is recommended. Check local building codes."
+    },
+    {
+      "id": "panelWidth",
+      "label": "Pre-built panel width (feet)",
+      "default": 8,
+      "note": "Most pre-fabricated wood and vinyl fence panels are 8 feet wide (some are 6 feet). Verify with panel manufacturer."
+    },
+    {
+      "id": "railsPerSection",
+      "label": "Horizontal rails per section",
+      "default": 3,
+      "note": "Fences 6 feet tall or higher require 3 horizontal 2×4 rails to prevent warping. 4-foot fences typically use 2 rails."
+    },
+    {
+      "id": "picketsPerFoot",
+      "label": "Pickets per linear foot",
+      "default": 2.25,
+      "note": "Standard 5.5-inch dog-ear pickets with small spacing gaps equal roughly 2.2 to 2.25 pickets per linear foot."
+    }
+  ],
+  "outputs": [
+    { "id": "posts", "label": "Total fence posts", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
+    { "id": "panels", "label": "Pre-built panels", "unit": "count", "decimals": 0, "roundUp": true },
+    { "id": "rails", "label": "Horizontal 2×4 rails", "unit": "count", "decimals": 0, "roundUp": true },
+    { "id": "pickets", "label": "Individual pickets", "unit": "count", "decimals": 0, "roundUp": true }
+  ],
+  "testCases": [
+    {
+      "name": "100 ft fence, 8 ft spacing, 0 gates, 0 corners",
+      "inputs": { "length": 100, "gates": 0, "corners": 0 },
+      "constants": { "postSpacing": 8, "panelWidth": 8, "railsPerSection": 3, "picketsPerFoot": 2.25 },
+      "expected": { "posts": 14, "panels": 13, "rails": 39, "pickets": 225 }
+    },
+    {
+      "name": "120 ft fence, 8 ft spacing, 1 gate, 2 corners",
+      "inputs": { "length": 120, "gates": 1, "corners": 2 },
+      "constants": { "postSpacing": 8, "panelWidth": 8, "railsPerSection": 3, "picketsPerFoot": 2.25 },
+      "expected": { "posts": 19, "panels": 15, "rails": 45, "pickets": 270 }
+    },
+    {
+      "name": "48 ft fence, 8 ft spacing, 0 gates, 0 corners",
+      "inputs": { "length": 48, "gates": 0, "corners": 0 },
+      "constants": { "postSpacing": 8, "panelWidth": 8, "railsPerSection": 3, "picketsPerFoot": 2.25 },
+      "expected": { "posts": 7, "panels": 6, "rails": 18, "pickets": 108 }
+    }
+  ],
+  "content": {
+    "intro": "Building a wood privacy fence or installing pre-assembled perimeter panels secures your yard, protects children and pets, and establishes clear property boundaries. Estimating fencing materials accurately ensures you buy matching posts, horizontal 2-by-4 rails, and dog-ear pickets without running out mid-installation or paying for surplus lumber. This calculator determines the total post count, pre-assembled panel requirements, horizontal rails, and individual vertical pickets needed based on your total run length. Enter your fence dimensions below to account for gate openings and corner posts, ensuring a sturdy, well-spaced boundary fence.",
+    "howItWorks": "Base post count is calculated by dividing total fence run length by on-center post spacing (typically 8 feet), rounding up to the nearest section, and adding 1 end post. Extra posts are then added for gate latch sides and corner changes. If using pre-assembled fence panels, panel count equals total length divided by panel width, rounded up. For stick-built fences, horizontal rails equal total sections multiplied by the rails per section (typically 3 for a 6-foot fence), while pickets equal length multiplied by pickets per foot (approximately 2.25 for 5.5-inch boards).",
+    "examples": [
+      {
+        "title": "A 100-foot privacy fence run with 8-foot spacing",
+        "text": "For a continuous 100-foot fence line without gates: 100 ÷ 8 = 12.5 sections, which rounds up to 13 sections. Base posts equal 13 + 1 = 14 posts. If buying pre-assembled panels, purchase 13 panels. For a custom stick-built fence with 3 rails per section, buy 13 × 3 = 39 rails and 100 × 2.25 = 225 dog-ear pickets."
+      },
+      {
+        "title": "A 120-foot perimeter fence with 1 gate and 2 corners",
+        "text": "For 120 feet: 120 ÷ 8 = 15 sections. Base post count is 15 + 1 = 16 posts. Adding 1 extra post for gate hanging and 2 corner posts totals 19 posts. Pre-built panel count is 15 panels."
+      }
+    ],
+    "quickReference": {
+      "caption": "Fence material estimates by total run length (8-foot spacing, 3 rails)",
+      "headers": ["Total Run Length", "Posts (Straight Run)", "Pre-Built Panels (8 ft)", "Horizontal 2×4 Rails", "Pickets (5.5 in)"],
+      "rows": [
+        ["50 feet", "8 posts", "7 panels", "21 rails", "113 pickets"],
+        ["75 feet", "11 posts", "10 panels", "30 rails", "169 pickets"],
+        ["100 feet", "14 posts", "13 panels", "39 rails", "225 pickets"],
+        ["150 feet", "20 posts", "19 panels", "57 rails", "338 pickets"],
+        ["200 feet", "26 posts", "25 panels", "75 rails", "450 pickets"],
+        ["300 feet", "39 posts", "38 panels", "114 rails", "675 pickets"]
+      ]
+    },
+    "commonMistakes": [
+      "Spacing posts more than 8 feet apart, causing horizontal rails to sag and pickets to bow under heavy wind.",
+      "Using only 2 horizontal rails on a 6-foot privacy fence instead of 3, leading to warped, curled pickets.",
+      "Neglecting gate hinge and latch posts, which require heavy-duty 4x6 or 6x6 posts to prevent gate sagging.",
+      "Fastening pickets with electro-galvanized drywall screws that rust and leave dark black streaks on cedar or treated pine."
+    ],
+    "faq": [
+      {
+        "q": "What size lumber should I use for fence posts?",
+        "a": "For standard residential fences up to 6 feet high, pressure-treated 4 × 4 inch lumber rated for Ground Contact (UC4A) is the industry standard. For gate hinge posts or fences 8 feet tall, upgrade to 6 × 6 inch posts to resist sagging and heavy wind loads."
+      },
+      {
+        "q": "How many bags of concrete do I need per fence post?",
+        "a": "Most residential 4 × 4 posts set in a 10-inch diameter by 36-inch deep hole require approximately three to four 80-pound bags of concrete (or four to five 60-pound bags) per post."
+      },
+      {
+        "q": "Should pickets touch the ground?",
+        "a": "No, keep pickets 1 to 2 inches above the ground level. Allowing wood pickets to contact soil or grass causes rapid moisture absorption, rot, and termite damage."
+      },
+      {
+        "q": "What fasteners are best for building wood fences?",
+        "a": "Always use hot-dipped galvanized (HDG) or exterior polymer-coated ceramic screws, or stainless steel ring-shank nails. Never use interior zinc-plated drywall screws or electro-galvanized nails, which corrode quickly when exposed to treated lumber chemicals."
+      }
+    ]
+  },
+  "related": [
+    "concrete-post-hole-calculator",
+    "deck-board-calculator",
+    "square-footage-calculator",
+    "gravel-calculator"
+  ]
+}
