@@ -38,6 +38,16 @@ interface Props {
 const { def } = Astro.props;
 const isDraft = def.status === 'draft';
 
+// Category labels for breadcrumb
+const CATEGORY_LABELS: Record<string, string> = {
+  'landscaping': 'Landscaping & Garden',
+  'concrete-masonry': 'Concrete & Masonry',
+  'painting-flooring': 'Painting & Flooring',
+  'structures-roofing': 'Outdoor Structures & Roofing',
+  'utilities': 'Measurement Utilities',
+};
+const categoryLabel = CATEGORY_LABELS[def.category] ?? def.category;
+
 // Schema.org structured data (WebApplication + FAQPage matching visible content)
 const structuredData = [
   {
@@ -69,6 +79,15 @@ const structuredData = [
         },
       ]
     : []),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: '/' },
+      { '@type': 'ListItem', position: 2, name: categoryLabel, item: '/categories/' },
+      { '@type': 'ListItem', position: 3, name: def.title },
+    ],
+  },
 ];
 ---
 
@@ -80,6 +99,15 @@ const structuredData = [
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
   <article class="calculator-page">
+    <!-- Breadcrumb navigation -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="/categories/">{categoryLabel}</a></li>
+        <li aria-current="page">{def.title}</li>
+      </ol>
+    </nav>
+
     <header class="page-header">
       <h1>{def.title}</h1>
       <p class="intro-text">{def.content.intro}</p>
@@ -164,6 +192,45 @@ const structuredData = [
     flex-direction: column;
   }
 
+  /* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+  .breadcrumb {
+    margin-bottom: var(--space-5);
+  }
+
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .breadcrumb li:not(:last-child)::after {
+    content: '›';
+    margin-left: var(--space-1);
+    color: var(--rule);
+  }
+
+  .breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--action);
+    text-decoration: underline;
+  }
+
+  .breadcrumb [aria-current="page"] {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ── Page header ─────────────────────────────────────────────────────────── */
   .page-header {
     margin-bottom: var(--space-6);
   }
@@ -172,8 +239,10 @@ const structuredData = [
     font-size: 1.0625rem;
     color: var(--ink);
     line-height: 1.6;
+    max-width: 65ch;
   }
 
+  /* ── Content sections ────────────────────────────────────────────────────── */
   .content-section {
     margin: var(--space-8) 0;
   }
@@ -182,6 +251,11 @@ const structuredData = [
     margin-bottom: var(--space-4);
   }
 
+  .content-section p {
+    line-height: 1.65;
+  }
+
+  /* ── Worked examples ─────────────────────────────────────────────────────── */
   .examples-list {
     display: flex;
     flex-direction: column;
@@ -190,18 +264,21 @@ const structuredData = [
 
   .example-card {
     border-left: 3px solid var(--action);
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-4) var(--space-5);
     background: #f8fafc;
     border-radius: 0 var(--radius) var(--radius) 0;
   }
 
   .example-card h3 {
     margin-bottom: var(--space-2);
-    font-size: 1.0625rem;
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   .example-card p {
     margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
   /* ── Quick reference table ──────────────────────────────────────────────── */
@@ -262,10 +339,10 @@ const structuredData = [
     padding-left: var(--space-6);
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
 
   .mistakes-list li {
-    line-height: 1.5;
+    line-height: 1.6;
   }
 </style>

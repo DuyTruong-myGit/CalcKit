@@ -63,18 +63,19 @@ const FEATURED_CALCULATORS = [
 >
   <div class="home-page">
     <header class="hero-section">
-      <h1>Free Material Calculators for Home & Garden</h1>
+      <p class="hero-eyebrow">Free online tools — no account needed</p>
+      <h1>Material calculators for home&nbsp;&amp;&nbsp;garden</h1>
       <p class="hero-lead">
         Get instant, accurate estimates for materials before you head to the store or call
-        for delivery. Our calculators run 100% in your browser with no accounts, no ads
-        interfering with calculations, and complete transparency into the math.
+        for delivery. Every calculator runs in your browser with full transparency
+        into&nbsp;the&nbsp;math.
       </p>
     </header>
 
     <section class="featured-section" aria-labelledby="featured-heading">
       <div class="section-header">
-        <h2 id="featured-heading">Available Calculators</h2>
-        <a href="/categories/" class="view-all-link">Browse all categories &rarr;</a>
+        <h2 id="featured-heading">Popular calculators</h2>
+        <a href="/categories/" class="view-all-link">All 20 calculators &rarr;</a>
       </div>
 
       <div class="featured-grid">
@@ -89,6 +90,10 @@ const FEATURED_CALCULATORS = [
           </a>
         ))}
       </div>
+
+      <div class="cta-row">
+        <a href="/categories/" class="cta-link">Browse all categories &rarr;</a>
+      </div>
     </section>
 
     <hr class="section-divider" />
@@ -97,24 +102,27 @@ const FEATURED_CALCULATORS = [
       <h2>Why use our calculators?</h2>
       <div class="trust-grid">
         <div class="trust-item">
+          <div class="trust-icon" aria-hidden="true">✓</div>
           <h3>Exact math, verified</h3>
           <p>
-            Every formula is tested against hand-calculated standards. We show you the exact
-            conversions and formulas used so you can trust the numbers.
+            Every formula is tested against hand-calculated standards. We show the exact
+            conversions and formulas so you can trust the numbers.
           </p>
         </div>
         <div class="trust-item">
-          <h3>Fast & phone-ready</h3>
+          <div class="trust-icon" aria-hidden="true">⚡</div>
+          <h3>Fast &amp; phone-ready</h3>
           <p>
-            Designed for mobile use standing in your yard with a tape measure. Instant live
-            updates, clear 44px tap targets, and no heavy frameworks.
+            Designed for mobile use in your yard with a tape measure. Live results,
+            large tap targets, and no heavy frameworks slowing you&nbsp;down.
           </p>
         </div>
         <div class="trust-item">
+          <div class="trust-icon" aria-hidden="true">🔒</div>
           <h3>Private by design</h3>
           <p>
-            Everything runs in your browser. Your measurements are never sent to a remote
-            server, stored in a database, or sold to advertisers.
+            Everything runs in your browser. Your measurements are never sent to a server,
+            stored in a database, or sold to advertisers.
           </p>
         </div>
       </div>
@@ -127,15 +135,30 @@ const FEATURED_CALCULATORS = [
     max-width: 720px;
   }
 
+  /* ── Hero ────────────────────────────────────────────────────────────────── */
   .hero-section {
     margin-bottom: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--action);
+    letter-spacing: 0.01em;
+    margin: 0 0 var(--space-2);
   }
 
   .hero-section h1 {
     font-size: 1.75rem;
-    line-height: 1.25;
+    line-height: 1.2;
     margin-bottom: var(--space-4);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+  }
+
+  @media (min-width: 480px) {
+    .hero-section h1 { font-size: 2rem; }
   }
 
   .hero-lead {
@@ -143,15 +166,17 @@ const FEATURED_CALCULATORS = [
     color: var(--muted);
     line-height: 1.6;
     margin: 0;
+    max-width: 60ch;
   }
 
+  /* ── Section header ─────────────────────────────────────────────────────── */
   .section-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: var(--space-2);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
   }
 
   .section-header h2 {
@@ -159,14 +184,21 @@ const FEATURED_CALCULATORS = [
   }
 
   .view-all-link {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 600;
   }
 
+  /* ── Calculator cards grid ──────────────────────────────────────────────── */
   .featured-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: var(--space-4);
+  }
+
+  @media (min-width: 560px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   .calc-card {
@@ -176,13 +208,14 @@ const FEATURED_CALCULATORS = [
     background: var(--page);
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.15s, background 0.15s;
-    display: block;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
   }
 
   .calc-card:hover {
     border-color: var(--action);
-    background: #f8fafc;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     text-decoration: none;
   }
 
@@ -194,12 +227,12 @@ const FEATURED_CALCULATORS = [
   }
 
   .card-badge {
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     padding: 2px 8px;
-    background: #e0e7ff;
+    background: #e8eefb;
     color: var(--action);
     border-radius: var(--radius);
   }
@@ -207,25 +240,55 @@ const FEATURED_CALCULATORS = [
   .card-arrow {
     color: var(--muted);
     font-size: 1.125rem;
+    transition: transform 0.15s;
   }
 
   .calc-card:hover .card-arrow {
     color: var(--action);
+    transform: translateX(2px);
   }
 
   .calc-card h3 {
     margin: 0 0 var(--space-2);
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
     color: var(--ink);
   }
 
   .calc-card p {
     margin: 0;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     color: var(--muted);
     line-height: 1.5;
+    flex: 1;
   }
 
+  /* ── CTA row ────────────────────────────────────────────────────────────── */
+  .cta-row {
+    margin-top: var(--space-6);
+    text-align: center;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border: 1.5px solid var(--action);
+    border-radius: var(--radius);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--action);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .cta-link:hover {
+    background: var(--action);
+    color: var(--page);
+    text-decoration: none;
+  }
+
+  /* ── Trust section ──────────────────────────────────────────────────────── */
   .trust-section {
     margin-top: var(--space-8);
   }
@@ -235,18 +298,37 @@ const FEATURED_CALCULATORS = [
   }
 
   .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 560px) {
+    .trust-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+  }
+
+  .trust-icon {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-2);
+    width: 36px;
+    height: 36px;
     display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
+    align-items: center;
+    justify-content: center;
+    background: #f0f4ff;
+    border-radius: var(--radius);
   }
 
   .trust-item h3 {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     margin-bottom: var(--space-1);
   }
 
   .trust-item p {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     color: var(--muted);
     line-height: 1.5;
     margin: 0;

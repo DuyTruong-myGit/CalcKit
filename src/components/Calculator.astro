@@ -427,11 +427,12 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     border-radius: var(--radius);
     overflow: hidden;
     width: fit-content;
+    background: #f8fafc;
   }
 
   .unit-btn {
     padding: var(--space-2) var(--space-4);
-    background: var(--page);
+    background: transparent;
     border: none;
     border-right: 1px solid var(--rule);
     cursor: pointer;
@@ -444,7 +445,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   }
 
   .unit-btn:last-child { border-right: none; }
-  .unit-btn:hover { background: #f0f4ff; color: var(--ink); }
+  .unit-btn:hover { background: #edf0f4; color: var(--ink); }
 
   .unit-btn.active {
     background: var(--action);
@@ -488,10 +489,11 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     font-family: inherit;
     color: var(--ink);
     background: var(--page);
-    border: 1px solid var(--rule);
+    border: 1.5px solid var(--rule);
     border-radius: var(--radius) 0 0 var(--radius);
     appearance: textfield;
     -moz-appearance: textfield;
+    transition: border-color 0.15s;
   }
   .field-input::-webkit-inner-spin-button,
   .field-input::-webkit-outer-spin-button { appearance: none; }
@@ -514,7 +516,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     align-items: center;
     padding: 0 var(--space-3);
     background: #f0f4f8;
-    border: 1px solid var(--rule);
+    border: 1.5px solid var(--rule);
     border-left: none;
     border-radius: 0 var(--radius) var(--radius) 0;
     font-size: 0.875rem;
@@ -531,10 +533,17 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     font-family: inherit;
     color: var(--ink);
     background: var(--page);
-    border: 1px solid var(--rule);
+    border: 1.5px solid var(--rule);
     border-radius: var(--radius);
     cursor: pointer;
     width: 100%;
+    transition: border-color 0.15s;
+  }
+
+  .field-select:focus {
+    outline: 2px solid var(--action);
+    outline-offset: -1px;
+    border-color: var(--action);
   }
 
   .field-error {
@@ -606,7 +615,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     transition: filter 0.1s;
   }
 
-  .btn-calculate:hover  { filter: brightness(1.1); }
+  .btn-calculate:hover  { filter: brightness(1.08); }
   .btn-calculate:active { filter: brightness(0.95); }
   .btn-calculate:disabled { opacity: 0.5; cursor: default; }
 
@@ -615,7 +624,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
 
   .result-panel {
     border-left: 4px solid var(--signal);
-    background: #fafcff;
+    background: #fffbf0;
     padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) - 4px);
     border-radius: 0 var(--radius) var(--radius) 0;
   }
@@ -625,11 +634,11 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     align-items: baseline;
     gap: var(--space-2);
     flex-wrap: wrap;
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
 
   .result-value {
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--ink);
     font-variant-numeric: tabular-nums;
@@ -637,7 +646,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   }
 
   .result-unit {
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: var(--muted);
   }
@@ -654,8 +663,8 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    border-top: 1px solid var(--rule);
-    padding-top: var(--space-3);
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: var(--space-4);
     font-size: 1rem;
   }
 
