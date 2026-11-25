@@ -255,7 +255,9 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
 
     isMetric = toMetric;
     applyUnitMode();
-    runCalc();
+    if (lastResult !== null) {
+      runCalc();
+    }
   }
 
   for (const btn of unitBtns) {
@@ -395,20 +397,27 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     resultsEl.innerHTML = '';
     actionsEl.hidden = true;
     lastResult = null;
-    // Re-run with defaults so the user sees an immediate answer
-    runCalc();
   });
 
-  // ── Live calculation on input ─────────────────────────────────────────────
+  // ── Input changes: clear field errors, dim previous results if present ─────
+  form.addEventListener('input', () => {
+    clearErrors();
+    if (lastResult !== null) {
+      const panel = resultsEl.querySelector<HTMLElement>('.result-panel');
+      if (panel) {
+        panel.classList.add('result-outdated');
+      }
+    }
+  });
 
-  form.addEventListener('input', runCalc);
+  // ── Form submission (Calculate button / Enter key) ─────────────────────────
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     runCalc();
+    if (window.innerWidth < 640) {
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   });
-
-  // ── Initial run with default values ──────────────────────────────────────
-  runCalc();
 }
 </script>
 
@@ -627,6 +636,11 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     background: #fffbf0;
     padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) - 4px);
     border-radius: 0 var(--radius) var(--radius) 0;
+    transition: opacity 0.2s;
+  }
+
+  .result-panel.result-outdated {
+    opacity: 0.45;
   }
 
   .result-primary {
