@@ -86,7 +86,7 @@ Use the templates in `docs/CONTENT_GUIDE.md`. Footer links to About, Contact, Pr
 
 ## 11. Open decisions (the owner fills these in)
 
-- Site name: [SITE_NAME]
-- Domain: [DOMAIN]
-- Contact email: [EMAIL]
-- Analytics choice: [none | Cloudflare Web Analytics | GA4]
+- Site name: CalcKit
+- Domain: https://calckit.site
+- Contact email: contact@calckit.site
+- Analytics choice: none

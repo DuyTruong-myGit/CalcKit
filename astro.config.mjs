@@ -28,7 +28,7 @@ const draftSlugs = getDraftSlugs();
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://calckit.site',
   output: 'static',
   integrations: [
     sitemap({

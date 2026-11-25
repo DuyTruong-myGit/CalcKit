@@ -57,7 +57,7 @@ Status: done
 - Acceptance: performance, accessibility and SEO scores at 90 or above, CLS under 0.1. Report the actual numbers.
 
 ### TASK-09: Deploy
-Status: todo
+Status: in-progress
 - Connect the repo to Cloudflare Pages, set the custom domain, HTTPS, www redirect.
 - Acceptance: the production site loads, `robots.txt` and the sitemap are reachable. Owner verifies the domain in Search Console and submits the sitemap.
 

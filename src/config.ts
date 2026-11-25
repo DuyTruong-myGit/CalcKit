@@ -9,10 +9,9 @@ export interface SiteConfig {
 }
 
 export const SITE_CONFIG: SiteConfig = {
-  // Set placeholder defaults - update when domain and branding are finalized
   siteName: 'CalcKit',
-  domain: 'https://example.com',
-  contactEmail: 'contact@example.com',
+  domain: 'https://calckit.site',
+  contactEmail: 'contact@calckit.site',
   adsEnabled: false,
   analytics: 'none',
   dateFormat: 'YYYY-MM-DD',
