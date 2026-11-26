@@ -6,7 +6,8 @@
  * Rules:
  * - Draft pages (status: "draft") get noindex, nofollow.
  * - Single H1 per page.
- * - Section order follows docs/CONTENT_GUIDE.md.
+ * - Section order follows docs/CONTENT_GUIDE.md and Brief §5.
+ * - Common mistakes rendered as callout-warning blocks (Brief §7).
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -168,17 +169,22 @@ const structuredData = [
     {def.content.commonMistakes && def.content.commonMistakes.length > 0 && (
       <section class="content-section" aria-labelledby="mistakes-heading">
         <h2 id="mistakes-heading">Common mistakes to avoid</h2>
-        <ul class="mistakes-list">
+        <div class="mistakes-list">
           {def.content.commonMistakes.map((m) => (
-            <li>{m}</li>
+            <div class="callout callout-warning">
+              <span class="callout-icon" aria-hidden="true">⚠️</span>
+              <span>{m}</span>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
     )}
 
     {def.content.faq && def.content.faq.length > 0 && (
       <FAQ items={def.content.faq} />
     )}
+
+    <AdSlot position="below-faq" />
 
     {def.related && def.related.length > 0 && (
       <RelatedLinks slugs={def.related} />
@@ -238,7 +244,7 @@ const structuredData = [
   .intro-text {
     font-size: 1.0625rem;
     color: var(--ink);
-    line-height: 1.6;
+    line-height: 1.65;
     max-width: 65ch;
   }
 
@@ -302,7 +308,7 @@ const structuredData = [
     font-size: 0.875rem;
     color: var(--muted);
     text-align: left;
-    background: #f8fafc;
+    background: var(--surface);
     border-bottom: 1px solid var(--rule);
   }
 
@@ -330,19 +336,13 @@ const structuredData = [
   }
 
   .quick-ref-table tbody tr:hover {
-    background: #f8fafc;
+    background: var(--surface);
   }
 
-  /* ── Common mistakes ────────────────────────────────────────────────────── */
+  /* ── Common mistakes (callout-warning via global.css) ───────────────────── */
   .mistakes-list {
-    margin: 0;
-    padding-left: var(--space-6);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-  }
-
-  .mistakes-list li {
-    line-height: 1.6;
   }
 </style>

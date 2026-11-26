@@ -12,6 +12,7 @@
  * - US units by default; metric toggle changes labels + converts before calc.
  * - Validation errors explain the fix; never show NaN or Infinity.
  * - No DOM mutations outside this component.
+ * - Sticky result strip on mobile (Brief §8 Option A).
  */
 
 import type { CalculatorDef } from '../lib/schema/types';
@@ -34,6 +35,7 @@ const clientConfig = {
 const configId  = `calc-cfg-${def.slug}`;
 const formId    = `calc-form-${def.slug}`;
 const resultId  = `calc-result-${def.slug}`;
+const stripId   = `calc-strip-${def.slug}`;
 
 // Which input units have a metric equivalent
 const METRIC_LABELS: Record<string, string> = {
@@ -43,7 +45,7 @@ const METRIC_LABELS: Record<string, string> = {
 
 <!-- Calculator: embeds client config + renders form structure -->
 <section class="calculator" data-config-id={configId} data-result-id={resultId}
-  aria-label={`${def.title} calculator`}>
+  data-strip-id={stripId} aria-label={`${def.title} calculator`}>
 
   <!-- Config JSON (not rendered, read by client script) -->
   <script type="application/json" id={configId} set:html={JSON.stringify(clientConfig)} />
@@ -141,12 +143,20 @@ const METRIC_LABELS: Record<string, string> = {
     <!-- Populated by client script after first calculation -->
   </div>
 
-  <!-- Action buttons — hidden until a result is available -->
+  <!-- Action buttons – hidden until a result is available -->
   <div class="result-actions" hidden>
     <button class="btn-copy" type="button">Copy result</button>
     <button class="btn-reset" type="button">Reset values</button>
   </div>
 </section>
+
+<!-- Sticky result strip (mobile only, Brief §8 Option A) -->
+<!-- Hidden until a result exists AND the result panel is scrolled out of view -->
+<div id={stripId} class="result-strip" hidden aria-hidden="true">
+  <span class="strip-label">Result:</span>
+  <span class="strip-value"></span>
+  <span class="strip-unit"></span>
+</div>
 
 <!-- ── Client-side script ─────────────────────────────────────────────────── -->
 <script>
@@ -173,6 +183,7 @@ const FROM_US: Record<string, number> = {
 for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   const configId  = section.dataset.configId!;
   const resultId  = section.dataset.resultId!;
+  const stripId   = section.dataset.stripId!;
   const configEl  = document.getElementById(configId);
   if (!configEl) continue;
 
@@ -183,6 +194,9 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   const copyBtn   = section.querySelector<HTMLButtonElement>('.btn-copy')!;
   const resetBtn  = section.querySelector<HTMLButtonElement>('.btn-reset')!;
   const unitBtns  = section.querySelectorAll<HTMLButtonElement>('.unit-btn');
+  const stripEl   = document.getElementById(stripId);
+  const stripValue = stripEl?.querySelector<HTMLElement>('.strip-value');
+  const stripUnit  = stripEl?.querySelector<HTMLElement>('.strip-unit');
 
   let isMetric = false;
   let lastResult: ReturnType<typeof calculate> | null = null;
@@ -264,6 +278,33 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     btn.addEventListener('click', () => switchUnitSystem(btn.dataset.unit === 'metric'));
   }
 
+  // ── Sticky strip visibility ───────────────────────────────────────────────
+
+  function updateStrip(): void {
+    if (!stripEl || !lastResult?.ok) {
+      if (stripEl) stripEl.hidden = true;
+      return;
+    }
+    const primary = config.outputs.find((o: { primary?: boolean }) => o.primary);
+    if (!primary) return;
+
+    const rect = resultsEl.getBoundingClientRect();
+    const isResultVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+    if (!isResultVisible && window.innerWidth < 640) {
+      if (stripValue) stripValue.textContent = lastResult.formatted[primary.id];
+      if (stripUnit)  stripUnit.textContent  = primary.unit;
+      stripEl.hidden = false;
+      stripEl.removeAttribute('aria-hidden');
+    } else {
+      stripEl.hidden = true;
+      stripEl.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  window.addEventListener('scroll', updateStrip, { passive: true });
+  window.addEventListener('resize', updateStrip, { passive: true });
+
   // ── Calculation ───────────────────────────────────────────────────────────
 
   function runCalc(): void {
@@ -301,12 +342,14 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
       }
       resultsEl.innerHTML = '';
       actionsEl.hidden = true;
+      if (stripEl) stripEl.hidden = true;
       return;
     }
 
     clearErrors();
     renderResult(result);
     actionsEl.hidden = false;
+    updateStrip();
   }
 
   function renderResult(result: Extract<ReturnType<typeof calculate>, { ok: true }>): void {
@@ -397,20 +440,19 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     resultsEl.innerHTML = '';
     actionsEl.hidden = true;
     lastResult = null;
+    if (stripEl) stripEl.hidden = true;
   });
 
-  // ── Input changes: clear field errors, dim previous results if present ─────
+  // ── Input changes: clear field errors, dim previous result if any ─────────
   form.addEventListener('input', () => {
     clearErrors();
     if (lastResult !== null) {
       const panel = resultsEl.querySelector<HTMLElement>('.result-panel');
-      if (panel) {
-        panel.classList.add('result-outdated');
-      }
+      if (panel) panel.classList.add('result-outdated');
     }
   });
 
-  // ── Form submission (Calculate button / Enter key) ─────────────────────────
+  // ── Form submission (Calculate button / Enter key) ────────────────────────
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     runCalc();
@@ -422,12 +464,12 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
 </script>
 
 <style>
-  /* ── Calculator container ────────────────────────────────────────────────── */
+  /* ── Calculator container ──────────────────────────────────────────────────── */
   .calculator {
     margin-bottom: var(--space-8);
   }
 
-  /* ── Unit toggle ─────────────────────────────────────────────────────────── */
+  /* ── Unit toggle ───────────────────────────────────────────────────────────── */
   .unit-toggle {
     display: flex;
     gap: 0;
@@ -450,7 +492,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     color: var(--muted);
     min-height: 44px;
     white-space: nowrap;
-    transition: background 0.1s, color 0.1s;
+    transition: background var(--transition-fast), color var(--transition-fast);
   }
 
   .unit-btn:last-child { border-right: none; }
@@ -459,9 +501,10 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   .unit-btn.active {
     background: var(--action);
     color: var(--page);
+    font-weight: 500;
   }
 
-  /* ── Form / Fields ───────────────────────────────────────────────────────── */
+  /* ── Form / Fields ─────────────────────────────────────────────────────────── */
   .calc-form { display: flex; flex-direction: column; gap: var(--space-6); }
 
   .fields { display: flex; flex-direction: column; gap: var(--space-5); }
@@ -483,6 +526,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     font-size: 0.8125rem;
     color: var(--muted);
     margin-top: calc(-1 * var(--space-1));
+    line-height: 1.4;
   }
 
   .input-row {
@@ -502,7 +546,8 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     border-radius: var(--radius) 0 0 var(--radius);
     appearance: textfield;
     -moz-appearance: textfield;
-    transition: border-color 0.15s;
+    transition: border-color var(--transition-fast);
+    font-variant-numeric: tabular-nums;
   }
   .field-input::-webkit-inner-spin-button,
   .field-input::-webkit-outer-spin-button { appearance: none; }
@@ -546,7 +591,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     border-radius: var(--radius);
     cursor: pointer;
     width: 100%;
-    transition: border-color 0.15s;
+    transition: border-color var(--transition-fast);
   }
 
   .field-select:focus {
@@ -562,7 +607,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     font-weight: 500;
   }
 
-  /* ── Adjust assumptions ──────────────────────────────────────────────────── */
+  /* ── Adjust assumptions ────────────────────────────────────────────────────── */
   .assumptions {
     border: 1px solid var(--rule);
     border-radius: var(--radius);
@@ -586,7 +631,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     content: '▸';
     display: inline-block;
     margin-right: var(--space-2);
-    transition: transform 0.15s;
+    transition: transform var(--transition-fast);
   }
   .assumptions[open] .assumptions-toggle::before { transform: rotate(90deg); }
 
@@ -608,7 +653,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     border-radius: var(--radius);
   }
 
-  /* ── Calculate button ────────────────────────────────────────────────────── */
+  /* ── Calculate button ──────────────────────────────────────────────────────── */
   .btn-calculate {
     width: 100%;
     height: 48px;
@@ -621,14 +666,15 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: filter 0.1s;
+    transition: filter var(--transition-fast);
+    letter-spacing: 0.01em;
   }
 
-  .btn-calculate:hover  { filter: brightness(1.08); }
-  .btn-calculate:active { filter: brightness(0.95); }
+  .btn-calculate:hover  { filter: brightness(1.1); }
+  .btn-calculate:active { filter: brightness(0.93); }
   .btn-calculate:disabled { opacity: 0.5; cursor: default; }
 
-  /* ── Results panel ───────────────────────────────────────────────────────── */
+  /* ── Results panel ─────────────────────────────────────────────────────────── */
   .calc-results { margin-top: var(--space-6); }
 
   .result-panel {
@@ -640,7 +686,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   }
 
   .result-panel.result-outdated {
-    opacity: 0.45;
+    opacity: 0.4;
   }
 
   .result-primary {
@@ -656,6 +702,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     font-weight: 700;
     color: var(--ink);
     font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
     line-height: 1;
   }
 
@@ -696,9 +743,10 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
 
   .result-secondary strong {
     font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
   }
 
-  /* ── Result action buttons ───────────────────────────────────────────────── */
+  /* ── Result action buttons ─────────────────────────────────────────────────── */
   .result-actions {
     display: flex;
     gap: var(--space-3);
@@ -715,7 +763,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     font-family: inherit;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: background 0.1s, color 0.1s;
+    transition: background var(--transition-fast), color var(--transition-fast);
   }
 
   .btn-copy {
@@ -731,4 +779,50 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     border: 1.5px solid var(--rule);
   }
   .btn-reset:hover { background: #f7f8f9; color: var(--ink); }
+
+  /* ── Sticky result strip (mobile only) ────────────────────────────────────── */
+  .result-strip {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: var(--ink);
+    color: var(--page);
+    font-size: 0.9375rem;
+    /* Only show on mobile */
+    border-top: 2px solid var(--signal);
+    /* Prevent overlap with browser navigation UI */
+    padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .result-strip .strip-label {
+    color: rgba(255 255 255 / 0.65);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+
+  .result-strip .strip-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    color: var(--signal);
+  }
+
+  .result-strip .strip-unit {
+    font-size: 0.875rem;
+    color: rgba(255 255 255 / 0.7);
+  }
+
+  /* Hide sticky strip on larger screens */
+  @media (min-width: 640px) {
+    .result-strip {
+      display: none !important;
+    }
+  }
 </style>

@@ -1,7 +1,9 @@
 ---
 /**
- * index.astro — Home page
+ * index.astro – Home page
  * Clean, practical directory of home and garden material calculators.
+ * Brief §6, §11: hero nói rõ site làm gì, card grid, trust section.
+ * No heavy images above the fold. Cards are real text links (SEO §6).
  */
 import Base from '../layouts/Base.astro';
 
@@ -10,7 +12,7 @@ const FEATURED_CALCULATORS = [
     slug: 'mulch-calculator',
     title: 'Mulch Calculator',
     badge: 'Popular',
-    desc: 'Calculate bags and cubic yards of mulch for planting beds and borders. Includes depth recommendations and waste factor.',
+    desc: 'Get bags and cubic yards of mulch for planting beds and borders, with adjustable depth and waste factor.',
   },
   {
     slug: 'gravel-calculator',
@@ -22,7 +24,7 @@ const FEATURED_CALCULATORS = [
     slug: 'topsoil-calculator',
     title: 'Topsoil Calculator',
     badge: 'Garden',
-    desc: 'Determine cubic yards and dump truck tonnage for lawn leveling, grading, and new garden beds.',
+    desc: 'Find cubic yards and dump truck tonnage for lawn leveling, grading, and new garden beds.',
   },
   {
     slug: 'sand-calculator',
@@ -40,7 +42,7 @@ const FEATURED_CALCULATORS = [
     slug: 'concrete-slab-calculator',
     title: 'Concrete Slab Calculator',
     badge: 'Masonry',
-    desc: 'Determine cubic yards and premixed 80-lb or 60-lb bag counts for patios, sidewalks, and shed foundations.',
+    desc: 'Get cubic yards and premixed 80-lb or 60-lb bag counts for patios, sidewalks, and shed foundations.',
   },
   {
     slug: 'paver-calculator',
@@ -55,23 +57,51 @@ const FEATURED_CALCULATORS = [
     desc: 'Determine structural wall blocks and finishing capstones for retaining walls and raised terraces.',
   },
 ];
+
+// Category icons as inline SVG paths (simple, no font icon dependency)
+const TRUST_ITEMS = [
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+      <path d="M4 10l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    title: 'Exact math, verified',
+    desc: 'Every formula is tested against hand-calculated results. We show the full calculation so you can trust the numbers before you buy.',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+      <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M7 10h6M10 7v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>`,
+    title: 'Phone-ready',
+    desc: 'Designed for one-hand use in your yard or at the store. Large inputs, live results, and no heavy frameworks slowing you down.',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+      <path d="M10 2.5L4 5v5c0 3.9 2.6 7.1 6 8 3.4-.9 6-4.1 6-8V5l-6-2.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>`,
+    title: 'Private by design',
+    desc: 'Everything runs in your browser. Your measurements are never sent to a server, stored, or shared with anyone.',
+  },
+];
 ---
 
 <Base
   metaTitle="Free Material Calculators for Home & Garden DIY Projects"
-  metaDescription="Free, accurate material calculators for US homeowners: mulch, gravel, concrete slabs, and more. Calculate bags, yards, and tons with clear math."
+  metaDescription="Free, accurate material calculators for US homeowners: mulch, gravel, concrete slabs, and more. Enter your dimensions and get instant bag counts, cubic yards, and tons."
 >
   <div class="home-page">
+    <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
     <header class="hero-section">
       <p class="hero-eyebrow">Free online tools — no account needed</p>
       <h1>Material calculators for home&nbsp;&amp;&nbsp;garden</h1>
       <p class="hero-lead">
-        Get instant, accurate estimates for materials before you head to the store or call
-        for delivery. Every calculator runs in your browser with full transparency
-        into&nbsp;the&nbsp;math.
+        Enter your dimensions and get instant, accurate estimates for mulch, gravel,
+        concrete, paint, flooring, roofing, and more. Every calculator runs in your
+        browser with full&nbsp;transparency&nbsp;into&nbsp;the&nbsp;math.
       </p>
     </header>
 
+    <!-- ── Featured calculators ───────────────────────────────────────────────── -->
     <section class="featured-section" aria-labelledby="featured-heading">
       <div class="section-header">
         <h2 id="featured-heading">Popular calculators</h2>
@@ -98,33 +128,47 @@ const FEATURED_CALCULATORS = [
 
     <hr class="section-divider" />
 
-    <section class="trust-section">
-      <h2>Why use our calculators?</h2>
+    <!-- ── How to use (brief guide, helps first-time visitors) ───────────────── -->
+    <section class="how-section" aria-labelledby="how-heading">
+      <h2 id="how-heading">How it works</h2>
+      <ol class="how-steps">
+        <li>
+          <div class="step-num" aria-hidden="true">1</div>
+          <div class="step-body">
+            <strong>Measure your space</strong>
+            <p>Grab a tape measure and write down length, width, and depth (or height). Most calculators need 2–4 numbers.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num" aria-hidden="true">2</div>
+          <div class="step-body">
+            <strong>Enter the numbers</strong>
+            <p>Type them into the calculator. Default values are pre-filled so you see a realistic result right away.</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num" aria-hidden="true">3</div>
+          <div class="step-body">
+            <strong>Read your result</strong>
+            <p>The calculator shows bags, cubic yards, tons, or square feet — whatever unit you need. Copy it and head to the store.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Trust section ─────────────────────────────────────────────────────── -->
+    <section class="trust-section" aria-labelledby="trust-heading">
+      <h2 id="trust-heading">Why use our calculators?</h2>
       <div class="trust-grid">
-        <div class="trust-item">
-          <div class="trust-icon" aria-hidden="true">✓</div>
-          <h3>Exact math, verified</h3>
-          <p>
-            Every formula is tested against hand-calculated standards. We show the exact
-            conversions and formulas so you can trust the numbers.
-          </p>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon" aria-hidden="true">⚡</div>
-          <h3>Fast &amp; phone-ready</h3>
-          <p>
-            Designed for mobile use in your yard with a tape measure. Live results,
-            large tap targets, and no heavy frameworks slowing you&nbsp;down.
-          </p>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon" aria-hidden="true">🔒</div>
-          <h3>Private by design</h3>
-          <p>
-            Everything runs in your browser. Your measurements are never sent to a server,
-            stored in a database, or sold to advertisers.
-          </p>
-        </div>
+        {TRUST_ITEMS.map((item) => (
+          <div class="trust-item">
+            <div class="trust-icon" set:html={item.icon} />
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   </div>
@@ -132,44 +176,50 @@ const FEATURED_CALCULATORS = [
 
 <style>
   .home-page {
-    max-width: 720px;
+    max-width: 100%;
   }
 
-  /* ── Hero ────────────────────────────────────────────────────────────────── */
+  /* ── Hero ──────────────────────────────────────────────────────────────────── */
   .hero-section {
-    margin-bottom: var(--space-8);
-    padding-bottom: var(--space-8);
+    padding: var(--space-8) 0 var(--space-6);
     border-bottom: 1px solid var(--rule);
+    margin-bottom: var(--space-8);
   }
 
   .hero-eyebrow {
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--action);
-    letter-spacing: 0.01em;
-    margin: 0 0 var(--space-2);
+    margin-bottom: var(--space-3);
+    max-width: none;
   }
 
   .hero-section h1 {
     font-size: 1.75rem;
-    line-height: 1.2;
-    margin-bottom: var(--space-4);
     letter-spacing: -0.02em;
+    margin-bottom: var(--space-4);
+    max-width: 18ch;
   }
 
   @media (min-width: 480px) {
-    .hero-section h1 { font-size: 2rem; }
+    .hero-section h1 { font-size: 2.25rem; }
   }
 
   .hero-lead {
     font-size: 1.0625rem;
     color: var(--muted);
-    line-height: 1.6;
+    line-height: 1.65;
+    max-width: 55ch;
     margin: 0;
-    max-width: 60ch;
   }
 
-  /* ── Section header ─────────────────────────────────────────────────────── */
+  /* ── Featured section ──────────────────────────────────────────────────────── */
+  .featured-section {
+    margin-bottom: var(--space-8);
+  }
+
   .section-header {
     display: flex;
     align-items: baseline;
@@ -186,16 +236,17 @@ const FEATURED_CALCULATORS = [
   .view-all-link {
     font-size: 0.875rem;
     font-weight: 600;
+    white-space: nowrap;
   }
 
-  /* ── Calculator cards grid ──────────────────────────────────────────────── */
+  /* ── Calculator cards grid ─────────────────────────────────────────────────── */
   .featured-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
 
-  @media (min-width: 560px) {
+  @media (min-width: 500px) {
     .featured-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -208,14 +259,14 @@ const FEATURED_CALCULATORS = [
     background: var(--page);
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
     display: flex;
     flex-direction: column;
   }
 
   .calc-card:hover {
     border-color: var(--action);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 1px 6px rgba(29, 83, 196, 0.08);
     text-decoration: none;
   }
 
@@ -240,12 +291,12 @@ const FEATURED_CALCULATORS = [
   .card-arrow {
     color: var(--muted);
     font-size: 1.125rem;
-    transition: transform 0.15s;
+    transition: transform var(--transition-fast), color var(--transition-fast);
   }
 
   .calc-card:hover .card-arrow {
     color: var(--action);
-    transform: translateX(2px);
+    transform: translateX(3px);
   }
 
   .calc-card h3 {
@@ -260,9 +311,10 @@ const FEATURED_CALCULATORS = [
     color: var(--muted);
     line-height: 1.5;
     flex: 1;
+    max-width: none;
   }
 
-  /* ── CTA row ────────────────────────────────────────────────────────────── */
+  /* ── CTA row ───────────────────────────────────────────────────────────────── */
   .cta-row {
     margin-top: var(--space-6);
     text-align: center;
@@ -279,7 +331,7 @@ const FEATURED_CALCULATORS = [
     font-weight: 600;
     color: var(--action);
     text-decoration: none;
-    transition: background 0.15s, color 0.15s;
+    transition: background var(--transition-fast), color var(--transition-fast);
   }
 
   .cta-link:hover {
@@ -288,9 +340,64 @@ const FEATURED_CALCULATORS = [
     text-decoration: none;
   }
 
-  /* ── Trust section ──────────────────────────────────────────────────────── */
+  /* ── How it works ──────────────────────────────────────────────────────────── */
+  .how-section {
+    margin: var(--space-8) 0;
+  }
+
+  .how-section h2 {
+    margin-bottom: var(--space-6);
+  }
+
+  .how-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .how-steps li {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--action);
+    color: var(--page);
+    font-size: 0.875rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .step-body strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: var(--space-1);
+  }
+
+  .step-body p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 55ch;
+  }
+
+  /* ── Trust section ─────────────────────────────────────────────────────────── */
   .trust-section {
-    margin-top: var(--space-8);
+    margin: var(--space-8) 0;
   }
 
   .trust-section h2 {
@@ -303,7 +410,7 @@ const FEATURED_CALCULATORS = [
     gap: var(--space-6);
   }
 
-  @media (min-width: 560px) {
+  @media (min-width: 500px) {
     .trust-grid {
       grid-template-columns: repeat(3, 1fr);
       gap: var(--space-5);
@@ -311,15 +418,15 @@ const FEATURED_CALCULATORS = [
   }
 
   .trust-icon {
-    font-size: 1.25rem;
-    margin-bottom: var(--space-2);
     width: 36px;
     height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f0f4ff;
+    background: #edf2ff;
+    color: var(--action);
     border-radius: var(--radius);
+    margin-bottom: var(--space-3);
   }
 
   .trust-item h3 {
