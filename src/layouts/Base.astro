@@ -16,6 +16,8 @@ interface Props {
   canonical?: string;
   /** Set true for draft pages (adds noindex, nofollow) */
   noindex?: boolean;
+  /** Container width mode: 'default' (760px) or 'wide' (1140px for homepage/categories) */
+  containerWidth?: 'default' | 'wide';
 }
 
 const {
@@ -23,6 +25,7 @@ const {
   metaDescription,
   canonical: canonicalProp,
   noindex = false,
+  containerWidth = 'default',
 } = Astro.props;
 
 const canonicalUrl =
@@ -78,19 +81,22 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
 
     <!-- Site header -->
     <header class="site-header">
-      <div class="container header-inner">
+      <div class={`container ${containerWidth === 'wide' ? 'container-wide' : ''} header-inner`}>
         <a href="/" class="site-logo">
-          <svg width="28" height="28" viewBox="0 0 512 512" aria-hidden="true" focusable="false" class="site-logo-icon">
+          <svg width="32" height="32" viewBox="0 0 512 512" aria-hidden="true" focusable="false" class="site-logo-icon">
             <rect width="512" height="512" rx="112" fill="#F5B700"/>
-            <path d="M318.6 337.7 A110 110 0 1 1 318.6 174.3" fill="none" stroke="#14213D" stroke-width="72" stroke-linecap="round"/>
-            <rect x="361" y="230" width="52" height="52" rx="9" fill="#14213D"/>
+            <path d="M318.6 337.7 A110 110 0 1 1 318.6 174.3" fill="none" stroke="#0f172a" stroke-width="72" stroke-linecap="round"/>
+            <rect x="361" y="230" width="52" height="52" rx="9" fill="#0f172a"/>
           </svg>
-          <span>{SITE_CONFIG.siteName}</span>
+          <div class="logo-text-group">
+            <span class="logo-name">{SITE_CONFIG.siteName}</span>
+            <span class="logo-badge">PRO TOOLS</span>
+          </div>
         </a>
 
         <nav aria-label="Site navigation">
           <ul class="nav-list">
-            <li><a href="/categories/">Calculators</a></li>
+            <li><a href="/categories/">All Calculators</a></li>
             <li><a href="/about/">About</a></li>
           </ul>
         </nav>
@@ -99,42 +105,43 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
 
     <!-- Main content -->
     <main id="main-content" class="site-main">
-      <div class="container">
+      <div class={`container ${containerWidth === 'wide' ? 'container-wide' : ''}`}>
         <slot />
       </div>
     </main>
 
     <!-- Site footer -->
     <footer class="site-footer">
-      <div class="container footer-inner">
+      <div class={`container ${containerWidth === 'wide' ? 'container-wide' : ''} footer-inner`}>
         <div class="footer-top">
           <div class="footer-brand">
             <a href="/" class="footer-logo">
-              <svg width="22" height="22" viewBox="0 0 512 512" aria-hidden="true" focusable="false" class="site-logo-icon">
+              <svg width="24" height="24" viewBox="0 0 512 512" aria-hidden="true" focusable="false" class="site-logo-icon">
                 <rect width="512" height="512" rx="112" fill="#F5B700"/>
-                <path d="M318.6 337.7 A110 110 0 1 1 318.6 174.3" fill="none" stroke="#14213D" stroke-width="72" stroke-linecap="round"/>
-                <rect x="361" y="230" width="52" height="52" rx="9" fill="#14213D"/>
+                <path d="M318.6 337.7 A110 110 0 1 1 318.6 174.3" fill="none" stroke="#0f172a" stroke-width="72" stroke-linecap="round"/>
+                <rect x="361" y="230" width="52" height="52" rx="9" fill="#0f172a"/>
               </svg>
               <span>{SITE_CONFIG.siteName}</span>
             </a>
-            <p class="footer-tagline">Free material calculators for US homeowners and DIYers.</p>
+            <p class="footer-tagline">Free, verified material calculators for US homeowners and DIY contractors.</p>
           </div>
           <nav aria-label="Footer navigation">
             <ul class="footer-links">
-              <li><a href="/categories/">Calculators</a></li>
-              <li><a href="/about/">About</a></li>
-              <li><a href="/contact/">Contact</a></li>
+              <li><a href="/categories/">All Calculators</a></li>
+              <li><a href="/about/">About Us</a></li>
+              <li><a href="/contact/">Contact & Feedback</a></li>
               <li><a href="/privacy-policy/">Privacy Policy</a></li>
-              <li><a href="/terms/">Terms</a></li>
+              <li><a href="/terms/">Terms of Use</a></li>
             </ul>
           </nav>
         </div>
+
         <div class="footer-bottom">
           <p class="footer-disclaimer">
-            Results are estimates. Confirm quantities with your supplier before you buy.
+            All calculations are estimates for planning purposes. Always verify dimensions and check with your material supplier or contractor before purchasing.
           </p>
           <p class="footer-copy">
-            &copy; {new Date().getFullYear()} {SITE_CONFIG.siteName}
+            &copy; 2026 {SITE_CONFIG.siteName}. All rights reserved. Runs entirely in your browser.
           </p>
         </div>
       </div>
@@ -143,10 +150,12 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
 </html>
 
 <style>
-  /* ── Site header ─────────────────────────────────────────────────────────── */
+  /* ── Header ───────────────────────────────────────────────────────────────── */
   .site-header {
-    background: var(--action);
-    color: var(--page);
+    background: #0f172a;
+    color: #ffffff;
+    border-bottom: 1px solid #1e293b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   .header-inner {
@@ -154,59 +163,92 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
-    min-height: 48px;
-    padding-top: var(--space-3);
-    padding-bottom: var(--space-3);
+    min-height: 56px;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
   }
 
   .site-logo {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    color: var(--page);
+    gap: var(--space-3);
+    color: #ffffff;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.125rem;
-    letter-spacing: -0.01em;
   }
 
   .site-logo-icon {
     flex-shrink: 0;
     display: block;
-    border-radius: 6px;
+    border-radius: 7px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   }
 
-  .site-logo:hover { text-decoration: underline; }
-  .site-logo:focus-visible { outline-color: var(--page); }
+  .logo-text-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-  /* ── Navigation ──────────────────────────────────────────────────────────── */
+  .logo-name {
+    font-size: 1.1875rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .logo-badge {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #0f172a;
+    background: #f59e0b;
+    padding: 1px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .site-logo:hover { text-decoration: none; }
+  .site-logo:hover .logo-name { color: #f59e0b; }
+  .site-logo:focus-visible { outline-color: #f59e0b; }
+
+  /* ── Navigation ───────────────────────────────────────────────────────────── */
   .nav-list {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: var(--space-6);
+    gap: var(--space-3);
   }
 
   .nav-list a {
-    color: rgba(255 255 255 / 0.9);
+    color: #cbd5e1;
     text-decoration: none;
     font-size: 0.9375rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    transition: background 0.15s, color 0.15s;
   }
 
-  .nav-list a:hover { color: var(--page); text-decoration: underline; }
-  .nav-list a:focus-visible { outline-color: var(--page); }
+  .nav-list a:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+  }
 
-  /* ── Main content ────────────────────────────────────────────────────────── */
+  .nav-list a:focus-visible { outline-color: #f59e0b; }
+
+  /* ── Main content ─────────────────────────────────────────────────────────── */
   .site-main {
     padding: var(--space-8) 0 var(--space-12);
   }
 
-  /* ── Footer ──────────────────────────────────────────────────────────────── */
+  /* ── Footer ───────────────────────────────────────────────────────────────── */
   .site-footer {
     border-top: 1px solid var(--rule);
-    background: #f9fafb;
-    padding: var(--space-8) 0 var(--space-6);
+    background: var(--surface);
+    padding: var(--space-10) 0 var(--space-8);
     margin-top: var(--space-12);
   }
 
@@ -222,7 +264,7 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
     gap: var(--space-5);
   }
 
-  @media (min-width: 480px) {
+  @media (min-width: 640px) {
     .footer-top {
       flex-direction: row;
       justify-content: space-between;
@@ -243,15 +285,16 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
     color: var(--ink);
     text-decoration: none;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
   .footer-logo:hover { text-decoration: underline; }
 
   .footer-tagline {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: var(--muted);
     margin: 0;
-    max-width: 32ch;
+    max-width: 36ch;
+    line-height: 1.5;
   }
 
   .footer-links {
@@ -264,12 +307,12 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
   }
 
   .footer-links a {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: var(--muted);
     text-decoration: none;
   }
 
-  .footer-links a:hover { color: var(--ink); text-decoration: underline; }
+  .footer-links a:hover { color: var(--action); text-decoration: underline; }
 
   .footer-bottom {
     display: flex;
@@ -279,7 +322,7 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
     border-top: 1px solid var(--rule);
   }
 
-  @media (min-width: 480px) {
+  @media (min-width: 640px) {
     .footer-bottom {
       flex-direction: row;
       justify-content: space-between;
@@ -291,11 +334,14 @@ const fullTitle = metaTitle.includes(SITE_CONFIG.siteName)
     font-size: 0.75rem;
     color: var(--muted);
     margin: 0;
+    max-width: 60ch;
+    line-height: 1.5;
   }
 
   .footer-copy {
     font-size: 0.75rem;
     color: var(--muted);
     margin: 0;
+    white-space: nowrap;
   }
 </style>

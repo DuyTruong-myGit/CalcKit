@@ -8,11 +8,13 @@
  * - Single H1 per page.
  * - Section order follows docs/CONTENT_GUIDE.md and Brief §5.
  * - Common mistakes rendered as callout-warning blocks (Brief §7).
+ * - Visual dimensioning diagram via CalculatorDiagram.astro.
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Calculator from '../components/Calculator.astro';
+import CalculatorDiagram from '../components/CalculatorDiagram.astro';
 import FAQ from '../components/FAQ.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import AdSlot from '../components/AdSlot.astro';
@@ -110,10 +112,15 @@ const structuredData = [
     </nav>
 
     <header class="page-header">
+      <div class="category-tag">{categoryLabel}</div>
       <h1>{def.title}</h1>
       <p class="intro-text">{def.content.intro}</p>
     </header>
 
+    <!-- Visual technical measurement diagram -->
+    <CalculatorDiagram slug={def.slug} title={def.title} />
+
+    <!-- Interactive calculator tool -->
     <Calculator def={def} />
 
     <AdSlot position="below-calculator" />
@@ -121,17 +128,22 @@ const structuredData = [
     <hr class="section-divider" />
 
     <section class="content-section" aria-labelledby="how-it-works-heading">
+      <div class="section-badge">Math & Formulas</div>
       <h2 id="how-it-works-heading">How it works</h2>
-      <p>{def.content.howItWorks}</p>
+      <p class="how-text">{def.content.howItWorks}</p>
     </section>
 
     {def.content.examples && def.content.examples.length > 0 && (
       <section class="content-section" aria-labelledby="examples-heading">
+        <div class="section-badge">Real-World Projects</div>
         <h2 id="examples-heading">Worked examples</h2>
         <div class="examples-list">
-          {def.content.examples.map((ex) => (
+          {def.content.examples.map((ex, index) => (
             <div class="example-card">
-              <h3>{ex.title}</h3>
+              <div class="example-header">
+                <span class="example-num">Example {index + 1}</span>
+                <h3>{ex.title}</h3>
+              </div>
               <p>{ex.text}</p>
             </div>
           ))}
@@ -141,6 +153,7 @@ const structuredData = [
 
     {def.content.quickReference && (
       <section class="content-section" aria-labelledby="quick-ref-heading">
+        <div class="section-badge">Cheat Sheet</div>
         <h2 id="quick-ref-heading">Quick reference table</h2>
         <div class="table-container">
           <table class="quick-ref-table">
@@ -168,6 +181,7 @@ const structuredData = [
 
     {def.content.commonMistakes && def.content.commonMistakes.length > 0 && (
       <section class="content-section" aria-labelledby="mistakes-heading">
+        <div class="section-badge badge-warning">Watch Out</div>
         <h2 id="mistakes-heading">Common mistakes to avoid</h2>
         <div class="mistakes-list">
           {def.content.commonMistakes.map((m) => (
@@ -196,18 +210,19 @@ const structuredData = [
   .calculator-page {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
   }
 
   /* ── Breadcrumb ──────────────────────────────────────────────────────────── */
   .breadcrumb {
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-4);
   }
 
   .breadcrumb ol {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-2);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -217,8 +232,8 @@ const structuredData = [
 
   .breadcrumb li:not(:last-child)::after {
     content: '›';
-    margin-left: var(--space-1);
-    color: var(--rule);
+    margin-left: var(--space-2);
+    color: #cbd5e1;
   }
 
   .breadcrumb a {
@@ -233,7 +248,7 @@ const structuredData = [
 
   .breadcrumb [aria-current="page"] {
     color: var(--ink);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   /* ── Page header ─────────────────────────────────────────────────────────── */
@@ -241,11 +256,29 @@ const structuredData = [
     margin-bottom: var(--space-6);
   }
 
+  .category-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--action);
+    background: #eff6ff;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .page-header h1 {
+    font-size: 2.125rem;
+    margin-bottom: var(--space-3);
+  }
+
   .intro-text {
     font-size: 1.0625rem;
-    color: var(--ink);
+    color: var(--muted);
     line-height: 1.65;
-    max-width: 65ch;
+    max-width: 68ch;
   }
 
   /* ── Content sections ────────────────────────────────────────────────────── */
@@ -253,12 +286,35 @@ const structuredData = [
     margin: var(--space-8) 0;
   }
 
+  .section-badge {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--action);
+    background: #eef2ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: var(--space-2);
+  }
+
+  .badge-warning {
+    color: #b45309;
+    background: #fef3c7;
+  }
+
   .content-section h2 {
     margin-bottom: var(--space-4);
   }
 
-  .content-section p {
-    line-height: 1.65;
+  .how-text {
+    line-height: 1.7;
+    color: #334155;
+    background: var(--surface);
+    padding: var(--space-5);
+    border-left: 4px solid var(--action);
+    border-radius: 0 var(--radius) var(--radius) 0;
   }
 
   /* ── Worked examples ─────────────────────────────────────────────────────── */
@@ -269,22 +325,43 @@ const structuredData = [
   }
 
   .example-card {
-    border-left: 3px solid var(--action);
-    padding: var(--space-4) var(--space-5);
-    background: #f8fafc;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--action);
+    padding: var(--space-5);
+    background: #ffffff;
     border-radius: 0 var(--radius) var(--radius) 0;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+
+  .example-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-2);
+  }
+
+  .example-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: #475569;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
   }
 
   .example-card h3 {
-    margin-bottom: var(--space-2);
-    font-size: 1rem;
-    font-weight: 600;
+    margin: 0;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--ink);
   }
 
   .example-card p {
     margin: 0;
     font-size: 0.9375rem;
-    line-height: 1.6;
+    line-height: 1.65;
+    color: #334155;
   }
 
   /* ── Quick reference table ──────────────────────────────────────────────── */
@@ -293,6 +370,7 @@ const structuredData = [
     -webkit-overflow-scrolling: touch;
     border: 1px solid var(--rule);
     border-radius: var(--radius);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   .quick-ref-table {
@@ -321,12 +399,12 @@ const structuredData = [
 
   .quick-ref-table thead th {
     background: #f1f5f9;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ink);
   }
 
   .quick-ref-table tbody th {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--ink);
   }
 
@@ -336,10 +414,10 @@ const structuredData = [
   }
 
   .quick-ref-table tbody tr:hover {
-    background: var(--surface);
+    background: #f8fafc;
   }
 
-  /* ── Common mistakes (callout-warning via global.css) ───────────────────── */
+  /* ── Common mistakes ────────────────────────────────────────────────────── */
   .mistakes-list {
     display: flex;
     flex-direction: column;

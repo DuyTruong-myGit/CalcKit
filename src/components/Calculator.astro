@@ -50,112 +50,130 @@ const METRIC_LABELS: Record<string, string> = {
   <!-- Config JSON (not rendered, read by client script) -->
   <script type="application/json" id={configId} set:html={JSON.stringify(clientConfig)} />
 
-  <!-- Unit system toggle -->
-  <div class="unit-toggle" role="group" aria-label="Unit system">
-    <button class="unit-btn active" data-unit="us"     aria-pressed="true">US (ft / in)</button>
-    <button class="unit-btn"        data-unit="metric" aria-pressed="false">Metric (m / cm)</button>
-  </div>
-
-  <!-- Calculator form -->
-  <form id={formId} class="calc-form" novalidate aria-label="Calculator inputs">
-
-    <!-- Inputs -->
-    <div class="fields">
-      {def.inputs.map((inp) => (
-        <div class="field" data-field-id={inp.id}>
-          <label for={`inp-${inp.id}`}>
-            {inp.label}
-            <span class="field-unit" data-us-unit={inp.unit}
-              data-metric-unit={METRIC_LABELS[inp.unit] ?? inp.unit}>
-              ({inp.unit})
-            </span>
-          </label>
-          {inp.help && <span class="field-help">{inp.help}</span>}
-
-          {inp.type === 'select' ? (
-            <select id={`inp-${inp.id}`} name={inp.id} class="field-select">
-              {(inp.options ?? []).map((opt) => (
-                <option value={String(opt.value)}
-                  selected={String(opt.value) === String(inp.default)}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <div class="input-row">
-              <input
-                id={`inp-${inp.id}`}
-                name={inp.id}
-                type="number"
-                inputmode="decimal"
-                step="any"
-                value={inp.default !== undefined ? String(inp.default) : ''}
-                min={inp.min !== undefined ? String(inp.min) : undefined}
-                max={inp.max !== undefined ? String(inp.max) : undefined}
-                autocomplete="off"
-                class="field-input"
-              />
-              <span class="input-unit" aria-hidden="true"
-                data-us-unit={inp.unit}
-                data-metric-unit={METRIC_LABELS[inp.unit] ?? inp.unit}>
-                {inp.unit}
-              </span>
-            </div>
-          )}
-
-          <span class="field-error" role="alert" data-error-for={inp.id}></span>
-        </div>
-      ))}
+  <div class="calculator-card">
+    <div class="calc-top-bar">
+      <span class="calc-heading-tag">Input Dimensions</span>
+      <!-- Unit system toggle -->
+      <div class="unit-toggle" role="group" aria-label="Unit system">
+        <button class="unit-btn active" data-unit="us" aria-pressed="true">US (ft / in)</button>
+        <button class="unit-btn" data-unit="metric" aria-pressed="false">Metric (m / cm)</button>
+      </div>
     </div>
 
-    <!-- Adjust assumptions (editable constants) -->
-    {def.constants.length > 0 && (
-      <details class="assumptions">
-        <summary class="assumptions-toggle">Adjust assumptions</summary>
-        <div class="assumptions-fields">
-          {def.constants.map((c) => (
-            <div class="field" data-field-id={c.id}>
-              <label for={`const-${c.id}`}>{c.label}</label>
-              <span class="field-help">{c.note}</span>
-              <input
-                id={`const-${c.id}`}
-                name={`const-${c.id}`}
-                type="number"
-                inputmode="decimal"
-                step="any"
-                value={String(c.default)}
-                autocomplete="off"
-                class="field-input"
-              />
-              <span class="field-error" role="alert" data-error-for={c.id}></span>
+    <!-- Calculator form -->
+    <form id={formId} class="calc-form" novalidate aria-label="Calculator inputs">
+      <!-- Inputs -->
+      <div class="fields">
+        {def.inputs.map((inp) => (
+          <div class="field" data-field-id={inp.id}>
+            <div class="field-label-row">
+              <label for={`inp-${inp.id}`}>
+                {inp.label}
+                <span class="field-unit" data-us-unit={inp.unit}
+                  data-metric-unit={METRIC_LABELS[inp.unit] ?? inp.unit}>
+                  ({inp.unit})
+                </span>
+              </label>
+              {inp.help && <span class="field-help">{inp.help}</span>}
             </div>
-          ))}
-        </div>
-      </details>
-    )}
 
-    <button type="submit" class="btn-calculate">Calculate</button>
-  </form>
+            {inp.type === 'select' ? (
+              <select id={`inp-${inp.id}`} name={inp.id} class="field-select">
+                {(inp.options ?? []).map((opt) => (
+                  <option value={String(opt.value)}
+                    selected={String(opt.value) === String(inp.default)}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <div class="input-row">
+                <input
+                  id={`inp-${inp.id}`}
+                  name={inp.id}
+                  type="number"
+                  inputmode="decimal"
+                  step="any"
+                  value={inp.default !== undefined ? String(inp.default) : ''}
+                  min={inp.min !== undefined ? String(inp.min) : undefined}
+                  max={inp.max !== undefined ? String(inp.max) : undefined}
+                  autocomplete="off"
+                  class="field-input"
+                />
+                <span class="input-unit" aria-hidden="true"
+                  data-us-unit={inp.unit}
+                  data-metric-unit={METRIC_LABELS[inp.unit] ?? inp.unit}>
+                  {inp.unit}
+                </span>
+              </div>
+            )}
 
-  <!-- Results (aria-live announced to screen readers) -->
-  <div id={resultId} class="calc-results" role="region"
-    aria-label="Calculation results" aria-live="polite" aria-atomic="true">
-    <!-- Populated by client script after first calculation -->
-  </div>
+            <span class="field-error" role="alert" data-error-for={inp.id}></span>
+          </div>
+        ))}
+      </div>
 
-  <!-- Action buttons – hidden until a result is available -->
-  <div class="result-actions" hidden>
-    <button class="btn-copy" type="button">Copy result</button>
-    <button class="btn-reset" type="button">Reset values</button>
+      <!-- Adjust assumptions (editable constants) -->
+      {def.constants.length > 0 && (
+        <details class="assumptions">
+          <summary class="assumptions-toggle">
+            <span>Adjust assumptions (bag yield, waste, densities)</span>
+          </summary>
+          <div class="assumptions-fields">
+            {def.constants.map((c) => (
+              <div class="field" data-field-id={c.id}>
+                <label for={`const-${c.id}`}>{c.label}</label>
+                <span class="field-help">{c.note}</span>
+                <input
+                  id={`const-${c.id}`}
+                  name={`const-${c.id}`}
+                  type="number"
+                  inputmode="decimal"
+                  step="any"
+                  value={String(c.default)}
+                  autocomplete="off"
+                  class="field-input"
+                />
+                <span class="field-error" role="alert" data-error-for={c.id}></span>
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
+
+      <button type="submit" class="btn-calculate">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
+        <span>Calculate</span>
+      </button>
+    </form>
+
+    <!-- Results (aria-live announced to screen readers) -->
+    <div id={resultId} class="calc-results" role="region"
+      aria-label="Calculation results" aria-live="polite" aria-atomic="true">
+      <!-- Populated by client script after calculation -->
+    </div>
+
+    <!-- Action buttons – hidden until a result is available -->
+    <div class="result-actions" hidden>
+      <button class="btn-copy" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>Copy result</span>
+      </button>
+      <button class="btn-reset" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        <span>Reset values</span>
+      </button>
+    </div>
   </div>
 </section>
 
 <!-- Sticky result strip (mobile only, Brief §8 Option A) -->
-<!-- Hidden until a result exists AND the result panel is scrolled out of view -->
 <div id={stripId} class="result-strip" hidden aria-hidden="true">
-  <span class="strip-label">Result:</span>
-  <span class="strip-value"></span>
-  <span class="strip-unit"></span>
+  <div class="strip-inner">
+    <span class="strip-label">Estimated:</span>
+    <span class="strip-value"></span>
+    <span class="strip-unit"></span>
+  </div>
 </div>
 
 <!-- ── Client-side script ─────────────────────────────────────────────────── -->
@@ -232,14 +250,12 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   // ── Unit toggle ───────────────────────────────────────────────────────────
 
   function applyUnitMode(): void {
-    // Update toggle button states
     for (const btn of unitBtns) {
       const active = (btn.dataset.unit === 'us') === !isMetric;
       btn.classList.toggle('active', active);
       btn.setAttribute('aria-pressed', String(active));
     }
 
-    // Update all unit labels in the form
     for (const el of section.querySelectorAll<HTMLElement>('[data-us-unit]')) {
       const usUnit = el.dataset.usUnit ?? '';
       el.textContent = isMetric
@@ -251,7 +267,6 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   function switchUnitSystem(toMetric: boolean): void {
     if (toMetric === isMetric) return;
 
-    // Convert currently entered input values
     for (const inp of config.inputs) {
       const el = getInputEl(inp.id) as HTMLInputElement | null;
       if (!el || el.tagName === 'SELECT') continue;
@@ -316,7 +331,6 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
       if (!el) continue;
       let val: unknown = el.value;
 
-      // Convert metric → US before passing to engine
       if (isMetric && el.tagName !== 'SELECT') {
         const num = parseFloat(el.value);
         if (Number.isFinite(num)) {
@@ -356,8 +370,9 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     const primary = config.outputs.find((o: { primary?: boolean }) => o.primary);
 
     let html = '<div class="result-panel">';
+    html += '<div class="result-badge-row"><span class="result-header-label">Estimated Output</span></div>';
 
-    // Primary output: large, signal-accented
+    // Primary output
     if (primary) {
       const metricNote = isMetric
         ? formatMetricOutput(primary, parseFloat(result.formatted[primary.id]))
@@ -373,18 +388,18 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     // Secondary outputs
     const secondaries = config.outputs.filter((o: { primary?: boolean }) => !o.primary);
     if (secondaries.length > 0) {
-      html += '<ul class="result-secondary">';
+      html += '<div class="result-secondary-chips">';
       for (const out of secondaries) {
         const metricNote = isMetric
           ? formatMetricOutput(out, parseFloat(result.formatted[out.id]))
           : '';
-        html += `<li>
-          <span class="result-label">${out.label}:</span>
-          <strong>${result.formatted[out.id]}&thinsp;${out.unit}</strong>
-          ${metricNote ? `<span class="result-metric">(${metricNote})</span>` : ''}
-        </li>`;
+        html += `<div class="secondary-chip">
+          <span class="chip-label">${out.label}:</span>
+          <span class="chip-value">${result.formatted[out.id]}&thinsp;${out.unit}</span>
+          ${metricNote ? `<span class="chip-metric">(${metricNote})</span>` : ''}
+        </div>`;
       }
-      html += '</ul>';
+      html += '</div>';
     }
 
     html += '</div>';
@@ -419,18 +434,21 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
         `${o.label}: ${res.formatted[o.id]} ${o.unit}`)
       .join('\n');
     navigator.clipboard.writeText(lines).then(() => {
-      copyBtn.textContent = 'Copied!';
+      const span = copyBtn.querySelector('span');
+      if (span) span.textContent = 'Copied!';
       if (copyTimer) clearTimeout(copyTimer);
-      copyTimer = setTimeout(() => { copyBtn.textContent = 'Copy result'; }, 2000);
+      copyTimer = setTimeout(() => {
+        if (span) span.textContent = 'Copy result';
+      }, 2000);
     }).catch(() => {
-      copyBtn.textContent = 'Copy result';
+      const span = copyBtn.querySelector('span');
+      if (span) span.textContent = 'Copy result';
     });
   });
 
   // ── Reset ─────────────────────────────────────────────────────────────────
 
   resetBtn.addEventListener('click', () => {
-    // Reset to US mode first so form.reset() restores US defaults
     if (isMetric) {
       isMetric = false;
       applyUnitMode();
@@ -460,6 +478,9 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
       resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   });
+
+  // Run initial calculation with default values so user sees results right away
+  runCalc();
 }
 </script>
 
@@ -469,39 +490,64 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     margin-bottom: var(--space-8);
   }
 
+  .calculator-card {
+    background: #ffffff;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.06);
+  }
+
+  .calc-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .calc-heading-tag {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+
   /* ── Unit toggle ───────────────────────────────────────────────────────────── */
   .unit-toggle {
     display: flex;
-    gap: 0;
-    margin-bottom: var(--space-6);
     border: 1px solid var(--rule);
-    border-radius: var(--radius);
+    border-radius: 9999px;
     overflow: hidden;
-    width: fit-content;
-    background: #f8fafc;
+    background: var(--surface);
+    padding: 2px;
   }
 
   .unit-btn {
-    padding: var(--space-2) var(--space-4);
+    padding: 6px 14px;
     background: transparent;
     border: none;
-    border-right: 1px solid var(--rule);
+    border-radius: 9999px;
     cursor: pointer;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
     font-family: inherit;
     color: var(--muted);
-    min-height: 44px;
+    min-height: 36px;
     white-space: nowrap;
-    transition: background var(--transition-fast), color var(--transition-fast);
+    transition: all var(--transition-fast);
   }
 
-  .unit-btn:last-child { border-right: none; }
-  .unit-btn:hover { background: #edf0f4; color: var(--ink); }
+  .unit-btn:hover { color: var(--ink); }
 
   .unit-btn.active {
     background: var(--action);
-    color: var(--page);
-    font-weight: 500;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(29, 83, 196, 0.3);
   }
 
   /* ── Form / Fields ─────────────────────────────────────────────────────────── */
@@ -509,24 +555,31 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
 
   .fields { display: flex; flex-direction: column; gap: var(--space-5); }
 
-  .field { display: flex; flex-direction: column; gap: var(--space-1); }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  .field-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
 
   .field label {
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.9375rem;
+    font-weight: 600;
     color: var(--ink);
   }
 
   .field-unit {
-    font-weight: 400;
+    font-weight: 500;
     color: var(--muted);
+    font-size: 0.875rem;
   }
 
   .field-help {
     font-size: 0.8125rem;
     color: var(--muted);
-    margin-top: calc(-1 * var(--space-1));
-    line-height: 1.4;
   }
 
   .input-row {
@@ -537,88 +590,92 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   .field-input {
     flex: 1;
     height: 48px;
-    padding: 0 var(--space-3);
-    font-size: 1rem;
+    padding: 0 var(--space-4);
+    font-size: 1.0625rem;
     font-family: inherit;
     color: var(--ink);
-    background: var(--page);
+    background: #ffffff;
     border: 1.5px solid var(--rule);
     border-radius: var(--radius) 0 0 var(--radius);
     appearance: textfield;
     -moz-appearance: textfield;
-    transition: border-color var(--transition-fast);
+    transition: all var(--transition-fast);
     font-variant-numeric: tabular-nums;
   }
   .field-input::-webkit-inner-spin-button,
   .field-input::-webkit-outer-spin-button { appearance: none; }
 
-  /* When no .input-unit suffix */
   .field-input:only-child {
     border-radius: var(--radius);
   }
 
   .field-input:focus {
-    outline: 2px solid var(--action);
-    outline-offset: -1px;
+    outline: none;
     border-color: var(--action);
+    box-shadow: 0 0 0 3px rgba(29, 83, 196, 0.12);
+    background: #ffffff;
   }
 
-  .has-error .field-input { border-color: var(--error); }
+  .has-error .field-input {
+    border-color: var(--error);
+    background: #fff8f8;
+  }
 
   .input-unit {
     display: flex;
     align-items: center;
-    padding: 0 var(--space-3);
-    background: #f0f4f8;
+    padding: 0 var(--space-4);
+    background: var(--surface);
     border: 1.5px solid var(--rule);
     border-left: none;
     border-radius: 0 var(--radius) var(--radius) 0;
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #334155;
+    font-weight: 600;
+    color: #475569;
     white-space: nowrap;
     user-select: none;
   }
 
   .field-select {
     height: 48px;
-    padding: 0 var(--space-3);
+    padding: 0 var(--space-4);
     font-size: 1rem;
     font-family: inherit;
     color: var(--ink);
-    background: var(--page);
+    background: #ffffff;
     border: 1.5px solid var(--rule);
     border-radius: var(--radius);
     cursor: pointer;
     width: 100%;
-    transition: border-color var(--transition-fast);
+    transition: all var(--transition-fast);
   }
 
   .field-select:focus {
-    outline: 2px solid var(--action);
-    outline-offset: -1px;
+    outline: none;
     border-color: var(--action);
+    box-shadow: 0 0 0 3px rgba(29, 83, 196, 0.12);
   }
 
   .field-error {
     font-size: 0.8125rem;
     color: var(--error);
     min-height: 1.2em;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   /* ── Adjust assumptions ────────────────────────────────────────────────────── */
   .assumptions {
     border: 1px solid var(--rule);
     border-radius: var(--radius);
-    padding: 0;
+    background: var(--surface);
+    overflow: hidden;
   }
 
   .assumptions-toggle {
     padding: var(--space-3) var(--space-4);
     cursor: pointer;
-    font-size: 0.9375rem;
-    font-weight: 500;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: var(--action);
     list-style: none;
     min-height: 44px;
@@ -631,119 +688,140 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     content: '▸';
     display: inline-block;
     margin-right: var(--space-2);
+    font-size: 1.1rem;
     transition: transform var(--transition-fast);
   }
   .assumptions[open] .assumptions-toggle::before { transform: rotate(90deg); }
 
   .assumptions-fields {
     padding: var(--space-4);
-    padding-top: 0;
+    background: #ffffff;
+    border-top: 1px solid var(--rule);
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
-    border-top: 1px solid var(--rule);
-    margin-top: 0;
-  }
-
-  /* Override border-radius for inputs inside assumptions */
-  .assumptions-fields .field-input {
-    border-radius: var(--radius) 0 0 var(--radius);
-  }
-  .assumptions-fields .field-input:only-child {
-    border-radius: var(--radius);
+    gap: var(--space-4);
   }
 
   /* ── Calculate button ──────────────────────────────────────────────────────── */
   .btn-calculate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     width: 100%;
-    height: 48px;
+    height: 52px;
     padding: 0 var(--space-6);
     background: var(--action);
-    color: var(--page);
-    font-size: 1rem;
-    font-weight: 600;
+    color: #ffffff;
+    font-size: 1.0625rem;
+    font-weight: 700;
     font-family: inherit;
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: filter var(--transition-fast);
-    letter-spacing: 0.01em;
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 6px rgba(29, 83, 196, 0.25);
   }
 
-  .btn-calculate:hover  { filter: brightness(1.1); }
-  .btn-calculate:active { filter: brightness(0.93); }
-  .btn-calculate:disabled { opacity: 0.5; cursor: default; }
+  .btn-calculate:hover {
+    background: var(--action-dark);
+    box-shadow: 0 4px 10px rgba(29, 83, 196, 0.35);
+  }
+  .btn-calculate:active { transform: translateY(1px); }
 
   /* ── Results panel ─────────────────────────────────────────────────────────── */
   .calc-results { margin-top: var(--space-6); }
 
   .result-panel {
-    border-left: 4px solid var(--signal);
-    background: #fffbf0;
-    padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) - 4px);
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border: 1.5px solid #fed7aa;
+    border-left: 6px solid var(--signal);
+    background: #fffdfa;
+    padding: var(--space-6);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.08);
     transition: opacity 0.2s;
   }
 
   .result-panel.result-outdated {
-    opacity: 0.4;
+    opacity: 0.45;
+  }
+
+  .result-badge-row {
+    margin-bottom: var(--space-3);
+  }
+
+  .result-header-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #b45309;
+    background: #fef3c7;
+    padding: 2px 8px;
+    border-radius: 4px;
   }
 
   .result-primary {
     display: flex;
     align-items: baseline;
-    gap: var(--space-2);
+    gap: var(--space-3);
     flex-wrap: wrap;
     margin-bottom: var(--space-4);
   }
 
   .result-value {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 2.75rem;
+    font-weight: 900;
     color: var(--ink);
     font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
     line-height: 1;
+    letter-spacing: -0.02em;
   }
 
   .result-unit {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--muted);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #475569;
   }
 
   .result-metric {
-    font-size: 0.875rem;
-    color: var(--muted);
-  }
-
-  .result-secondary {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    border-top: 1px solid rgba(0,0,0,0.08);
-    padding-top: var(--space-4);
     font-size: 1rem;
-  }
-
-  .result-secondary li {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-  }
-
-  .result-label {
     color: var(--muted);
-    font-size: 0.9375rem;
+    font-weight: 500;
   }
 
-  .result-secondary strong {
+  .result-secondary-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: var(--space-4);
+    border-top: 1px solid #fde68a;
+  }
+
+  .secondary-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #fed7aa;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+  }
+
+  .chip-label {
+    color: var(--muted);
+  }
+
+  .chip-value {
+    font-weight: 700;
+    color: var(--ink);
     font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
+  }
+
+  .chip-metric {
+    color: var(--muted);
+    font-size: 0.8125rem;
   }
 
   /* ── Result action buttons ─────────────────────────────────────────────────── */
@@ -756,29 +834,37 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
 
   .btn-copy,
   .btn-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 0 var(--space-5);
     height: 44px;
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: 600;
     font-family: inherit;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: background var(--transition-fast), color var(--transition-fast);
+    transition: all var(--transition-fast);
   }
 
   .btn-copy {
-    background: var(--page);
+    background: #ffffff;
     color: var(--action);
     border: 1.5px solid var(--action);
   }
-  .btn-copy:hover { background: #edf2ff; }
+  .btn-copy:hover {
+    background: #eff6ff;
+  }
 
   .btn-reset {
-    background: transparent;
+    background: var(--surface);
     color: var(--muted);
     border: 1.5px solid var(--rule);
   }
-  .btn-reset:hover { background: #f7f8f9; color: var(--ink); }
+  .btn-reset:hover {
+    background: #e2e8f0;
+    color: var(--ink);
+  }
 
   /* ── Sticky result strip (mobile only) ────────────────────────────────────── */
   .result-strip {
@@ -786,40 +872,43 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
+    z-index: 50;
+    background: #0f172a;
+    color: #ffffff;
     padding: var(--space-3) var(--space-4);
-    background: var(--ink);
-    color: var(--page);
-    font-size: 0.9375rem;
-    /* Only show on mobile */
-    border-top: 2px solid var(--signal);
-    /* Prevent overlap with browser navigation UI */
+    border-top: 3px solid var(--signal);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
     padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
   }
 
-  .result-strip .strip-label {
-    color: rgba(255 255 255 / 0.65);
+  .strip-inner {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .strip-label {
+    color: #94a3b8;
     font-size: 0.8125rem;
-    white-space: nowrap;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
-  .result-strip .strip-value {
-    font-size: 1.125rem;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
+  .strip-value {
+    font-size: 1.5rem;
+    font-weight: 800;
     color: var(--signal);
+    font-variant-numeric: tabular-nums;
   }
 
-  .result-strip .strip-unit {
-    font-size: 0.875rem;
-    color: rgba(255 255 255 / 0.7);
+  .strip-unit {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #cbd5e1;
   }
 
-  /* Hide sticky strip on larger screens */
   @media (min-width: 640px) {
     .result-strip {
       display: none !important;

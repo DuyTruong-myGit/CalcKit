@@ -11,6 +11,7 @@ const CATEGORIES = [
     id: 'landscaping',
     name: 'Landscaping & Garden',
     emoji: '🌿',
+    badgeClass: 'badge-landscaping',
     description: 'Calculators for bulk mulch, decorative gravel, topsoil, sand, sod, and raised bed soil.',
     items: [
       { slug: 'mulch-calculator', title: 'Mulch Calculator', available: true, desc: 'Bags and cubic yards needed for flower and garden beds.' },
@@ -26,6 +27,7 @@ const CATEGORIES = [
     id: 'concrete-masonry',
     name: 'Concrete & Masonry',
     emoji: '🧱',
+    badgeClass: 'badge-concrete-masonry',
     description: 'Calculators for concrete slabs, post holes, interlocking pavers, and retaining walls.',
     items: [
       { slug: 'concrete-slab-calculator', title: 'Concrete Slab Calculator', available: true, desc: 'Cubic yards and 80-lb or 60-lb bag estimates.' },
@@ -38,6 +40,7 @@ const CATEGORIES = [
     id: 'painting-flooring',
     name: 'Painting & Flooring',
     emoji: '🎨',
+    badgeClass: 'badge-painting-flooring',
     description: 'Calculators for interior wall paint, hardwood/laminate flooring, tile, and drywall.',
     items: [
       { slug: 'paint-calculator', title: 'Paint Calculator', available: true, desc: 'Gallons of paint accounting for doors and windows.' },
@@ -49,7 +52,8 @@ const CATEGORIES = [
   {
     id: 'structures-roofing',
     name: 'Outdoor Structures & Roofing',
-    emoji: '🏠',
+    emoji: '🏡',
+    badgeClass: 'badge-structures-roofing',
     description: 'Calculators for privacy fences, deck boards, and asphalt shingle roofing.',
     items: [
       { slug: 'fence-calculator', title: 'Fence Calculator', available: true, desc: 'Posts, rails, pickets, and gate allowances.' },
@@ -61,6 +65,7 @@ const CATEGORIES = [
     id: 'utilities',
     name: 'Measurement Utilities',
     emoji: '📐',
+    badgeClass: 'badge-utilities',
     description: 'General conversion tools for area and volume.',
     items: [
       { slug: 'cubic-yard-calculator', title: 'Cubic Yard Calculator', available: true, desc: 'Convert between feet, inches, yards, and meters.' },
@@ -75,12 +80,14 @@ const totalCount = CATEGORIES.reduce((sum, cat) => sum + cat.items.length, 0);
 <Base
   metaTitle={`Material Calculator Categories | ${SITE_CONFIG.siteName}`}
   metaDescription={`Browse ${totalCount} free material calculators by category: landscaping, concrete and masonry, painting, flooring, fencing, and roofing.`}
+  containerWidth="wide"
 >
   <div class="categories-page">
     <header class="page-header">
-      <h1>Calculator categories</h1>
+      <div class="badge-tag">Category Index</div>
+      <h1>Calculator Categories</h1>
       <p class="lead-text">
-        {totalCount} free calculators organized by project type. Pick a category or jump straight
+        {totalCount} free estimators organized by project type. Select a category below or jump straight
         to the calculator you need.
       </p>
     </header>
@@ -98,20 +105,13 @@ const totalCount = CATEGORIES.reduce((sum, cat) => sum + cat.items.length, 0);
           <ul class="calculator-list">
             {cat.items.map((item) => (
               <li class="calculator-item">
-                {item.available ? (
-                  <a href={`/${item.slug}/`} class="active-calc-link">
-                    <div>
-                      <span class="calc-name">{item.title}</span>
-                      <span class="item-desc">{item.desc}</span>
-                    </div>
-                    <span class="calc-arrow" aria-hidden="true">&rarr;</span>
-                  </a>
-                ) : (
-                  <div class="upcoming-calc">
+                <a href={`/${item.slug}/`} class="active-calc-link">
+                  <div class="calc-info">
                     <span class="calc-name">{item.title}</span>
-                    <span class="badge-upcoming">Coming soon</span>
+                    <span class="item-desc">{item.desc}</span>
                   </div>
-                )}
+                  <span class="calc-arrow" aria-hidden="true">&rarr;</span>
+                </a>
               </li>
             ))}
           </ul>
@@ -123,77 +123,108 @@ const totalCount = CATEGORIES.reduce((sum, cat) => sum + cat.items.length, 0);
 
 <style>
   .categories-page {
-    max-width: 720px;
+    width: 100%;
   }
 
   .page-header {
     margin-bottom: var(--space-8);
+    text-align: center;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .badge-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--action);
+    background: #eff6ff;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: var(--space-3);
   }
 
   .lead-text {
     font-size: 1.0625rem;
     color: var(--muted);
-    max-width: 55ch;
+    line-height: 1.6;
+    margin: 0;
   }
 
-  /* ── Category grid ──────────────────────────────────────────────────────── */
   .category-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: var(--space-6);
   }
 
+  @media (min-width: 768px) {
+    .category-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .category-card {
+    background: #ffffff;
     border: 1px solid var(--rule);
     border-radius: var(--radius);
     padding: var(--space-6);
-    background: var(--page);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
   }
 
   .category-header {
     display: flex;
-    gap: var(--space-4);
     align-items: flex-start;
+    gap: var(--space-3);
     margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--rule);
   }
 
   .category-emoji {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    line-height: 1;
+    background: var(--surface);
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    background: #f0f4ff;
-    border-radius: var(--radius);
     flex-shrink: 0;
   }
 
-  .category-card h2 {
-    margin-top: 0;
-    margin-bottom: var(--space-1);
-    font-size: 1.125rem;
+  .category-header h2 {
+    margin: 0 0 var(--space-1);
+    font-size: 1.1875rem;
     color: var(--ink);
   }
 
   .category-desc {
-    color: var(--muted);
-    font-size: 0.875rem;
     margin: 0;
+    font-size: 0.875rem;
+    color: var(--muted);
     line-height: 1.5;
   }
 
-  /* ── Calculator list ────────────────────────────────────────────────────── */
   .calculator-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
+    gap: 8px;
   }
 
   .calculator-item {
-    border-top: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
   }
 
   .active-calc-link {
@@ -201,65 +232,47 @@ const totalCount = CATEGORIES.reduce((sum, cat) => sum + cat.items.length, 0);
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-sm);
     text-decoration: none;
-    padding: var(--space-3) var(--space-2);
-    min-height: 44px;
-    border-radius: var(--radius);
-    transition: background 0.1s;
+    color: inherit;
+    transition: background var(--transition-fast), transform var(--transition-fast);
   }
 
   .active-calc-link:hover {
-    background: #f8fafc;
+    background: var(--surface);
     text-decoration: none;
   }
 
+  .calc-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
   .calc-name {
-    font-weight: 600;
-    color: var(--action);
-    display: block;
     font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .active-calc-link:hover .calc-name {
+    color: var(--action);
   }
 
   .item-desc {
-    display: block;
     font-size: 0.8125rem;
     color: var(--muted);
-    margin-top: 2px;
   }
 
   .calc-arrow {
     color: var(--muted);
-    font-size: 1rem;
-    flex-shrink: 0;
-    transition: transform 0.15s;
+    font-size: 1.125rem;
+    transition: transform var(--transition-fast), color var(--transition-fast);
   }
 
   .active-calc-link:hover .calc-arrow {
     color: var(--action);
-    transform: translateX(2px);
-  }
-
-  .upcoming-calc {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-3) var(--space-2);
-    color: var(--muted);
-  }
-
-  .upcoming-calc .calc-name {
-    color: var(--muted);
-    font-weight: 500;
-  }
-
-  .badge-upcoming {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 2px 8px;
-    background: #f1f5f9;
-    border-radius: var(--radius);
-    color: var(--muted);
+    transform: translateX(3px);
   }
 </style>
