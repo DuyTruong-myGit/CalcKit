@@ -1,0 +1,920 @@
+[
+  {
+    "slug": "concrete-post-hole-calculator",
+    "title": "Post Hole Concrete Calculator",
+    "category": "concrete-masonry",
+    "formulaId": "concrete-cylinder",
+    "status": "draft",
+    "checks": 1007,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "1 hole, 12 in diameter, 36 in deep, 0% waste",
+        "pass": true
+      },
+      {
+        "name": "4 holes, 10 in diameter, 36 in deep, 10% waste",
+        "pass": true
+      },
+      {
+        "name": "6 holes, 8 in diameter, 24 in deep, 0% waste",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A single 12-inch diameter by 36-inch deep deck pier footing",
+        "text": "For a 12-inch diameter post hole dug 36 inches deep: radius is 6 inches. Area = 3.1416 × 36 = 113.1 sq in. Volume = 113.1 × 36 = 4,071.5 cu in. In cubic feet: 4,071.5 ÷ 1,728 = 2.36 cu ft. At 0.60 cu ft per 80-lb bag: 2.36 ÷ 0.60 = 3.93, requiring 4 bags."
+      },
+      {
+        "title": "Four 10-inch diameter fence posts at 36 inches deep with 10% waste",
+        "text": "For four 10-inch holes at 36 inches deep: each hole holds 1.64 cu ft. Four holes equal 6.55 cu ft. Adding 10% waste for flared soil walls gives 7.20 cu ft. Dividing by 0.60 cu ft per 80-lb bag gives exactly 12 bags (or 16 sixty-pound bags)."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "yield80",
+        "label": "Yield per 80-lb bag (cubic feet)",
+        "default": 0.6,
+        "hasNote": true
+      },
+      {
+        "id": "yield60",
+        "label": "Yield per 60-lb bag (cubic feet)",
+        "default": 0.45,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "concrete-slab-calculator",
+    "title": "Concrete Slab Calculator",
+    "category": "concrete-masonry",
+    "formulaId": "concrete-slab",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "10 × 10 ft at 4 in, waste 0, yield 0.6",
+        "pass": true
+      },
+      {
+        "name": "12 × 12 ft at 4 in, waste 10%, yield 0.6",
+        "pass": true
+      },
+      {
+        "name": "6 × 6 ft at 6 in, waste 0, yield 0.45 (60-lb bags)",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 10 by 10 foot patio slab at 4 inches thick",
+        "text": "For a patio slab measuring 10 feet long by 10 feet wide with a standard 4-inch thickness, the volume is: 10 × 10 × (4 ÷ 12) = 33.33 cubic feet. Dividing by 27 gives 1.23 cubic yards. When using 80-pound bags (0.60 ft³ yield) with a 10% waste factor: 33.33 × 1.10 = 36.67 cubic feet. Dividing 36.67 by 0.60 gives 61.11, which rounds up to 62 bags."
+      },
+      {
+        "title": "A 12 by 12 foot shed slab at 4 inches thick",
+        "text": "For a shed floor measuring 12 feet by 12 feet at 4 inches thick, volume equals: 12 × 12 × (4 ÷ 12) = 48.00 cubic feet. In cubic yards: 48 ÷ 27 = 1.78 cubic yards. With 10% waste allowance: 48 × 1.10 = 52.80 cubic feet. Dividing 52.80 by 0.60 cubic feet per 80-pound bag yields 88 bags exactly."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "yield",
+        "label": "Bag yield (cubic feet per bag)",
+        "default": 0.6,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "cubic-yard-calculator",
+    "title": "Cubic Yard Calculator",
+    "category": "utilities",
+    "formulaId": "converter",
+    "status": "draft",
+    "checks": 1005,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "10 × 10 ft at 12 in (1 ft deep)",
+        "pass": true
+      },
+      {
+        "name": "27 × 1 ft at 12 in (exactly 1 cubic yard)",
+        "pass": true
+      },
+      {
+        "name": "20 × 15 ft at 6 in deep",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 10 by 10 foot garden plot excavated to 12 inches deep",
+        "text": "For a plot measuring 10 feet by 10 feet with a depth of 12 inches (1.0 foot): volume = 10 × 10 × 1 = 100 cubic feet. Converting to cubic yards: 100 ÷ 27 = 3.70 cubic yards. In metric units, this equals 2.83 cubic meters or approximately 2,832 liters."
+      },
+      {
+        "title": "A 20 by 15 foot driveway excavation at 6 inches deep",
+        "text": "For an area of 20 × 15 feet at 6 inches (0.5 feet) deep: volume = 300 × 0.5 = 150 cubic feet. In cubic yards: 150 ÷ 27 = 5.56 cubic yards. This represents approximately 4.25 cubic meters of excavated soil or gravel fill."
+      }
+    ],
+    "constantsAudit": []
+  },
+  {
+    "slug": "deck-board-calculator",
+    "title": "Deck Board Calculator",
+    "category": "structures-roofing",
+    "formulaId": "deck-boards",
+    "status": "draft",
+    "checks": 1008,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "16 × 12 ft deck, 0% waste, 16 ft boards (5.5 in wide, 0.25 in gap)",
+        "pass": true
+      },
+      {
+        "name": "16 × 12 ft deck, 10% waste, 16 ft boards (5.5 in wide, 0.25 in gap)",
+        "pass": true
+      },
+      {
+        "name": "20 × 16 ft deck, 10% waste, 20 ft boards (5.5 in wide, 0.25 in gap)",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 16 by 12 foot deck with 16-foot pressure-treated boards",
+        "text": "For a deck measuring 16 feet along the boards and 12 feet across: width is 12 × 12 = 144 inches. With standard 5.5-inch boards and 0.25-inch gaps (5.75 in per course): 144 ÷ 5.75 = 25.04, which rounds up to 26 courses. Total linear footage is 26 × 16 = 416 feet. Adding 10% waste: 416 × 1.10 = 457.6 linear feet. At 16 feet per board: 457.6 ÷ 16 = 28.6, requiring 29 boards."
+      },
+      {
+        "title": "A 20 by 16 foot deck with 20-foot composite planks",
+        "text": "Width is 16 × 12 = 192 inches. Dividing 192 by 5.75 inches gives 33.39, rounded up to 34 rows. Total linear footage is 34 × 20 = 680 feet. With 10% waste allowance: 680 × 1.10 = 748 linear feet. Dividing by 20-foot boards equals 37.4, rounding up to 38 boards."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "boardWidth",
+        "label": "Board width (inches)",
+        "default": 5.5,
+        "hasNote": true
+      },
+      {
+        "id": "gap",
+        "label": "Gap between boards (inches)",
+        "default": 0.25,
+        "hasNote": true
+      },
+      {
+        "id": "boardLength",
+        "label": "Nominal board length (feet)",
+        "default": 16,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "drywall-calculator",
+    "title": "Drywall Calculator",
+    "category": "painting-flooring",
+    "formulaId": "unit-count",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "400 sq ft wall surface (400 × 1 ft), 10% waste, 4 × 8 ft (32 sq ft) sheets",
+        "pass": true
+      },
+      {
+        "name": "40 × 10 ft wall surface, 0% waste, 4 × 8 ft (32 sq ft) sheets",
+        "pass": true
+      },
+      {
+        "name": "60 × 10 ft wall surface, 10% waste, 4 × 12 ft (48 sq ft) sheets",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 400-square-foot basement accent wall with 4 by 8 foot sheets",
+        "text": "For a finished wall measuring 40 feet long and 10 feet high, total surface area is 40 × 10 = 400 square feet. Adding a 10% waste factor: 400 × 1.10 = 440 square feet. Dividing 440 by 32 square feet per standard sheet yields 13.75, which rounds up to 14 sheets."
+      },
+      {
+        "title": "A 600-square-foot open garage ceiling with 4 by 12 foot sheets",
+        "text": "For a ceiling area of 600 square feet using longer 4 × 12 foot boards to minimize butt joints: with 10% waste, total coverage is 660 square feet. Dividing 660 by 48 square feet per 12-foot board gives 13.75, rounding up to 14 sheets."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "areaPerUnit",
+        "label": "Sheet size (square feet)",
+        "default": 32,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "fence-calculator",
+    "title": "Fence Calculator",
+    "category": "structures-roofing",
+    "formulaId": "fence",
+    "status": "draft",
+    "checks": 1009,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "100 ft fence, 8 ft spacing, 0 gates, 0 corners",
+        "pass": true
+      },
+      {
+        "name": "120 ft fence, 8 ft spacing, 1 gate, 2 corners",
+        "pass": true
+      },
+      {
+        "name": "48 ft fence, 8 ft spacing, 0 gates, 0 corners",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 100-foot privacy fence run with 8-foot spacing",
+        "text": "For a continuous 100-foot fence line without gates: 100 ÷ 8 = 12.5 sections, which rounds up to 13 sections. Base posts equal 13 + 1 = 14 posts. If buying pre-assembled panels, purchase 13 panels. For a custom stick-built fence with 3 rails per section, buy 13 × 3 = 39 rails and 100 × 2.25 = 225 dog-ear pickets."
+      },
+      {
+        "title": "A 120-foot perimeter fence with 1 gate and 2 corners",
+        "text": "For 120 feet: 120 ÷ 8 = 15 sections. Base post count is 15 + 1 = 16 posts. Adding 1 extra post for gate hanging and 2 corner posts totals 19 posts. Pre-built panel count is 15 panels."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "postSpacing",
+        "label": "Post spacing (feet)",
+        "default": 8,
+        "hasNote": true
+      },
+      {
+        "id": "panelWidth",
+        "label": "Pre-built panel width (feet)",
+        "default": 8,
+        "hasNote": true
+      },
+      {
+        "id": "railsPerSection",
+        "label": "Horizontal rails per section",
+        "default": 3,
+        "hasNote": true
+      },
+      {
+        "id": "picketsPerFoot",
+        "label": "Pickets per linear foot",
+        "default": 2.25,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "flooring-calculator",
+    "title": "Flooring Calculator",
+    "category": "painting-flooring",
+    "formulaId": "unit-count",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "15 × 12 ft room, 0% waste, 20 sq ft per box",
+        "pass": true
+      },
+      {
+        "name": "15 × 12 ft room, 10% waste, 20 sq ft per box",
+        "pass": true
+      },
+      {
+        "name": "20 × 15 ft room, 15% waste, 22 sq ft per box",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 15 by 12 foot living room with 20 sq ft boxes",
+        "text": "For a room measuring 15 feet long by 12 feet wide, the base floor area is 15 × 12 = 180 square feet. Adding a standard 10% waste factor for end cuts and staggered plank rows: 180 × 1.10 = 198 square feet. Dividing 198 by 20 sq ft per box yields 9.9, which rounds up to 10 boxes."
+      },
+      {
+        "title": "A 20 by 15 foot master bedroom with 22 sq ft boxes",
+        "text": "For a room measuring 20 × 15 ft (300 sq ft) with a 15% allowance for complex diagonal installation: 300 × 1.15 = 345 sq ft. Dividing 345 by 22 sq ft per carton equals 15.68, rounding up to 16 boxes."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "areaPerBox",
+        "label": "Coverage per box (sq ft)",
+        "default": 20,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "grass-seed-calculator",
+    "title": "Grass Seed Calculator",
+    "category": "landscaping",
+    "formulaId": "seed-rate",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "50 × 40 ft lawn, 4 lbs/1000 sq ft, 5 lb bags",
+        "pass": true
+      },
+      {
+        "name": "100 × 50 ft lawn, 6 lbs/1000 sq ft, 25 lb bags",
+        "pass": true
+      },
+      {
+        "name": "25 × 20 ft lawn patch, 3 lbs/1000 sq ft, 5 lb bags",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "Overseeding a 2,000 sq ft lawn with tall fescue",
+        "text": "For an existing 50 by 40 foot lawn (2,000 sq ft) needing a seasonal overseeding application at 4 pounds per 1,000 sq ft: (2,000 ÷ 1,000) × 4 = 8 pounds of seed. When purchasing standard 5-pound bags, 8 ÷ 5 = 1.6, which rounds up to two 5-lb bags."
+      },
+      {
+        "title": "Planting a brand-new 5,000 sq ft Kentucky bluegrass lawn",
+        "text": "For a 100 by 50 foot bare soil plot (5,000 sq ft) establishing a new Kentucky bluegrass lawn at a recommended rate of 3 pounds per 1,000 sq ft: (5,000 ÷ 1,000) × 3 = 15 pounds of seed. One 15-lb or 20-lb bag covers the entire property."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "bagSize",
+        "label": "Bag size (pounds)",
+        "default": 5,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "gravel-calculator",
+    "title": "Gravel Calculator",
+    "category": "landscaping",
+    "formulaId": "volume-weight",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "20 × 10 ft at 4 in, density 1.4, no waste",
+        "pass": true
+      },
+      {
+        "name": "10 × 10 ft at 3 in, density 1.4, no waste",
+        "pass": true
+      },
+      {
+        "name": "20 × 10 ft at 4 in, density 1.4, 10% waste",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 20 by 10 foot driveway pad at 4 inches deep",
+        "text": "For a driveway section measuring 20 feet long by 10 feet wide with a 4-inch compacted gravel base, the volume is: 20 × 10 × (4 ÷ 12) = 66.67 cubic feet. Dividing by 27 gives 2.47 cubic yards. With a 10% waste factor and a density of 1.4 tons per cubic yard: tons = 2.47 × 1.10 × 1.4 = 3.80 tons."
+      },
+      {
+        "title": "A 30 by 3 foot garden walkway at 3 inches deep",
+        "text": "For a walking path 30 feet long and 3 feet wide filled with 3 inches of decorative gravel, the volume is: 30 × 3 × (3 ÷ 12) = 22.50 cubic feet. Dividing by 27 yields 0.83 cubic yards. With a 10% waste allowance and standard density: tons = 0.83 × 1.10 × 1.4 = 1.28 tons."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "density",
+        "label": "Density (tons per cubic yard)",
+        "default": 1.4,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "mulch-calculator",
+    "title": "Mulch Calculator",
+    "category": "landscaping",
+    "formulaId": "volume-bags",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "10 × 10 ft at 3 in, no waste, 2 ft³ bags",
+        "pass": true
+      },
+      {
+        "name": "20 × 5 ft at 2 in, 10% waste, 2 ft³ bags",
+        "pass": true
+      },
+      {
+        "name": "Circle bed — total area 50 ft², 3 in, no waste, 3 ft³ bags",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 10 by 10 foot flower bed at 3 inches deep",
+        "text": "For a garden bed measuring 10 feet long and 10 feet wide with a recommended mulch depth of 3 inches, the total volume is calculated as: 10 × 10 × (3 ÷ 12) = 25 cubic feet. Dividing 25 by 27 gives 0.93 cubic yards. If you purchase standard 2-cubic-foot bags and include a 10% waste allowance for uneven ground: 25 × 1.10 = 27.5 cubic feet. Dividing 27.5 by 2 cubic feet per bag gives 13.75, which rounds up to 14 bags."
+      },
+      {
+        "title": "A 20 by 5 foot foundation border at 2 inches deep",
+        "text": "For a long border bed measuring 20 feet long and 5 feet wide with a 2-inch layer of mulch, the volume is: 20 × 5 × (2 ÷ 12) = 16.67 cubic feet. Dividing 16.67 by 27 equals 0.62 cubic yards. With a 10% waste factor and 2-cubic-foot bags: 16.67 × 1.10 = 18.33 cubic feet. Dividing 18.33 by 2 yields 9.17, which rounds up to 10 bags."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "bagSize",
+        "label": "Bag size (cubic feet)",
+        "default": 2,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "paint-calculator",
+    "title": "Paint Calculator",
+    "category": "painting-flooring",
+    "formulaId": "paint",
+    "status": "draft",
+    "checks": 1008,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "Room 12 × 10 ft (44 ft perimeter), 8 ft high, 1 door, 2 windows, 2 coats, 350 sq ft/gal",
+        "pass": true
+      },
+      {
+        "name": "Room 14 × 12 ft, 8 ft high, 1 door, 1 window, 2 coats, 350 sq ft/gal",
+        "pass": true
+      },
+      {
+        "name": "Room 20 × 15 ft, 9 ft high, 2 doors, 3 windows, 1 coat, 400 sq ft/gal",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A standard 14 by 12 foot bedroom with 8-foot ceilings",
+        "text": "For a bedroom measuring 14 × 12 ft with 8-foot ceilings, 1 door, and 2 windows receiving 2 coats: perimeter is 2 × (14 + 12) = 52 feet. Gross wall area is 52 × 8 = 416 sq ft. Subtracting 1 door (20 sq ft) and 2 windows (30 sq ft) leaves 366 sq ft net wall area. Applying 2 coats requires 732 sq ft of coverage. Dividing by 350 sq ft per gallon gives 2.09 gallons, meaning you should purchase 3 gallon cans."
+      },
+      {
+        "title": "A 12 by 10 foot home office with 1 door and 2 windows",
+        "text": "Perimeter is 2 × (12 + 10) = 44 feet. At 8 feet high: 44 × 8 = 352 sq ft gross. Subtracting 1 door (20 sq ft) and 2 windows (30 sq ft) yields 302 net sq ft. For 2 coats: 302 × 2 = 604 sq ft. Dividing by 350 equals 1.73 gallons, requiring 2 one-gallon cans."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "coverage",
+        "label": "Coverage per gallon (sq ft)",
+        "default": 350,
+        "hasNote": true
+      },
+      {
+        "id": "doorArea",
+        "label": "Standard door deduction (sq ft)",
+        "default": 20,
+        "hasNote": true
+      },
+      {
+        "id": "windowArea",
+        "label": "Standard window deduction (sq ft)",
+        "default": 15,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "paver-calculator",
+    "title": "Paver Calculator",
+    "category": "concrete-masonry",
+    "formulaId": "unit-count",
+    "status": "draft",
+    "checks": 1007,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "10 × 10 ft patio, 0% waste, 4 × 8 in pavers",
+        "pass": true
+      },
+      {
+        "name": "10 × 10 ft patio, 10% waste, 4 × 8 in pavers",
+        "pass": true
+      },
+      {
+        "name": "15 × 12 ft patio, 10% waste, 12 × 12 in square pavers",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 10 by 10 foot patio with standard 4 by 8 inch pavers",
+        "text": "For a 100-square-foot patio (10 × 10 ft), standard 4 × 8 inch pavers provide 0.222 sq ft each (4.5 pavers/sq ft). Base count is 100 × 4.5 = 450 pavers. With a recommended 10% cut-waste allowance for running bond layout: 450 × 1.10 = 495 pavers."
+      },
+      {
+        "title": "A 20 by 3 foot garden walkway with 12 by 12 inch stepping pavers",
+        "text": "For a walkway measuring 20 feet long and 3 feet wide, total surface area is 60 square feet. Each 12 × 12 inch square paver covers exactly 1.0 square foot. With 10% waste for border edge cuts: 60 × 1.10 = 66 pavers."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "unitLength",
+        "label": "Paver length (inches)",
+        "default": 8,
+        "hasNote": true
+      },
+      {
+        "id": "unitWidth",
+        "label": "Paver width (inches)",
+        "default": 4,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "raised-bed-soil-calculator",
+    "title": "Raised Bed Soil Calculator",
+    "category": "landscaping",
+    "formulaId": "volume-bags",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "8 × 4 ft at 12 in, 0% waste, 1.5 ft³ bags",
+        "pass": true
+      },
+      {
+        "name": "6 × 3 ft at 10 in, 10% waste, 1.5 ft³ bags",
+        "pass": true
+      },
+      {
+        "name": "4 × 4 ft at 8 in, 0% waste, 2.0 ft³ bags",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A standard 8 by 4 foot raised bed filled to 10 inches deep",
+        "text": "For a common 8 × 4 foot cedar planter box filled with 10 inches of soil (leaving a 2-inch lip at top): 8 × 4 × (10 ÷ 12) = 26.67 cubic feet. Dividing by 27 gives 0.99 cubic yards. With a 10% settling factor, the volume becomes 29.33 cubic feet. Dividing by 1.5 cubic feet per bag gives 19.55, requiring 20 bags."
+      },
+      {
+        "title": "A compact 4 by 4 foot square foot garden bed at 12 inches deep",
+        "text": "For a 4 × 4 foot bed that is 12 inches (1 foot) deep: 4 × 4 × 1 = 16 cubic feet. Dividing by 27 equals 0.59 cubic yards. With 1.5-cubic-foot bags and 5% settling allowance: 16 × 1.05 = 16.8 cubic feet. Dividing by 1.5 equals 11.2, which rounds up to 12 bags."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "bagSize",
+        "label": "Bag size (cubic feet)",
+        "default": 1.5,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "retaining-wall-block-calculator",
+    "title": "Retaining Wall Block Calculator",
+    "category": "concrete-masonry",
+    "formulaId": "unit-count",
+    "status": "draft",
+    "checks": 1007,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "20 × 3 ft wall, 0% waste, 16 × 6 in blocks",
+        "pass": true
+      },
+      {
+        "name": "30 × 2.5 ft wall, 10% waste, 16 × 6 in blocks",
+        "pass": true
+      },
+      {
+        "name": "50 × 4 ft wall, 10% waste, 12 × 4 in compact blocks",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 20-foot long by 3-foot high garden retaining wall",
+        "text": "For a 20-foot long wall that is 3 feet high (including 6 inches of buried base course), the face area is 20 × 3 = 60 square feet. Standard 16 × 6 inch blocks cover 0.667 sq ft each (1.5 blocks/sq ft). Baseline block count is 60 × 1.5 = 90 blocks. With 10% waste for stepped cuts, order 99 wall blocks. For capping, 20 feet ÷ 1.33 feet per cap equals 15 cap blocks."
+      },
+      {
+        "title": "A 30-foot terrace wall at 2.5 feet high",
+        "text": "For a 30-foot terrace retaining wall that is 2.5 feet high, total face area is 75 square feet. At 1.5 blocks per square foot: 75 × 1.5 = 112.5 blocks. Adding 10% waste equals 123.75, which rounds up to 124 blocks. Capstones require 30 feet ÷ 1.33 feet = 22.5, rounding up to 23 cap blocks."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "unitLength",
+        "label": "Block face length (inches)",
+        "default": 16,
+        "hasNote": true
+      },
+      {
+        "id": "unitWidth",
+        "label": "Block face height (inches)",
+        "default": 6,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "roofing-calculator",
+    "title": "Roofing Calculator",
+    "category": "structures-roofing",
+    "formulaId": "roofing",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "1,000 sq ft footprint (40 × 25 ft), 6:12 pitch, 0% waste",
+        "pass": true
+      },
+      {
+        "name": "1,000 sq ft footprint (40 × 25 ft), 6:12 pitch, 10% waste",
+        "pass": true
+      },
+      {
+        "name": "1,500 sq ft footprint (50 × 30 ft), 4:12 pitch, 10% waste",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 1,000 sq ft home footprint with a standard 6:12 roof pitch",
+        "text": "For a home measuring 40 by 25 feet (1,000 sq ft footprint) with a 6:12 roof pitch: the pitch factor is √(1 + 0.5²) = 1.118. Sloped roof area is 1,000 × 1.118 = 1,118 square feet (11.18 squares). With 10% waste for cut starter courses and valleys: 11.18 × 1.10 = 12.3 squares. At 3 bundles per square: 12.3 × 3 = 36.9, requiring 37 bundles."
+      },
+      {
+        "title": "A 1,500 sq ft ranch home with a low 4:12 roof pitch",
+        "text": "For a 50 × 30 foot footprint with a 4:12 slope: the pitch factor is 1.0541. Sloped area is 1,500 × 1.0541 = 1,581 square feet (15.81 squares). Adding a 10% waste allowance: 15.81 × 1.10 = 17.39 squares. Multiplying by 3 bundles per square equals 52.17, which rounds up to 53 bundles."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "bundlesPerSquare",
+        "label": "Bundles per square",
+        "default": 3,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "sand-calculator",
+    "title": "Sand Calculator",
+    "category": "landscaping",
+    "formulaId": "volume-weight",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "10 × 10 ft at 2 in, 0% waste, 1.4 tons/yd³",
+        "pass": true
+      },
+      {
+        "name": "20 × 10 ft at 4 in, 10% waste, 1.4 tons/yd³",
+        "pass": true
+      },
+      {
+        "name": "12 × 12 ft at 1 in, 0% waste, 1.45 tons/yd³",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 10 by 10 foot patio sand setting bed at 1 inch deep",
+        "text": "For a paver setting bed measuring 10 by 10 feet at the standard recommended depth of 1 inch: 10 × 10 × (1 ÷ 12) = 8.33 cubic feet. Dividing by 27 yields 0.31 cubic yards. With a 10% compaction allowance, order 0.34 cubic yards, which equates to about 0.48 tons (approx. 950 lbs or nineteen 50-lb retail bags)."
+      },
+      {
+        "title": "A 12 by 12 foot above-ground pool base at 2 inches deep",
+        "text": "For an above-ground pool sand base measuring 12 by 12 feet at 2 inches deep: 12 × 12 × (2 ÷ 12) = 24 cubic feet. Dividing by 27 gives 0.89 cubic yards. With a 10% allowance for leveling uneven subgrade: 0.89 × 1.10 = 0.98 cubic yards, weighing roughly 1.37 tons."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "density",
+        "label": "Density (tons per cubic yard)",
+        "default": 1.4,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "sod-calculator",
+    "title": "Sod Calculator",
+    "category": "landscaping",
+    "formulaId": "unit-count",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "50 × 20 ft lawn, 0% waste, 10 sq ft rolls",
+        "pass": true
+      },
+      {
+        "name": "50 × 20 ft lawn, 10% waste, 10 sq ft rolls",
+        "pass": true
+      },
+      {
+        "name": "30 × 15 ft lawn, 5% waste, 9 sq ft rolls",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 50 by 20 foot backyard lawn installation",
+        "text": "For a standard rectangular backyard measuring 50 by 20 feet, surface area is 50 × 20 = 1,000 square feet. With a 10% cutting waste allowance: 1,000 × 1.10 = 1,100 square feet. Using standard 10-sq-ft rolls: 1,100 ÷ 10 = 110 rolls. This equals approximately 2.2 to 2.4 pallets of turf."
+      },
+      {
+        "title": "A 30 by 15 foot front lawn patch with 9 sq ft sod rolls",
+        "text": "For a front lawn measuring 30 by 15 feet, area is 450 square feet. Adding a 5% waste factor: 450 × 1.05 = 472.5 square feet. If the sod farm supplies 9-sq-ft rolls (1.5 × 6 ft): 472.5 ÷ 9 = 52.5, rounding up to 53 rolls (approx 1 pallet)."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "areaPerUnit",
+        "label": "Roll size (square feet)",
+        "default": 10,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "square-footage-calculator",
+    "title": "Square Footage Calculator",
+    "category": "utilities",
+    "formulaId": "area-shapes",
+    "status": "draft",
+    "checks": 1005,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "Rectangle 20 × 10 ft",
+        "pass": true
+      },
+      {
+        "name": "Triangle base 20 ft, height 10 ft",
+        "pass": true
+      },
+      {
+        "name": "Circle diameter 20 ft (radius 10 ft)",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 20 by 10 foot rectangular patio or bedroom",
+        "text": "For a rectangle measuring 20 feet long by 10 feet wide: surface area = 20 × 10 = 200 square feet. Converting to square yards: 200 ÷ 9 = 22.22 square yards. In metric units: 200 × 0.092903 = 18.58 square meters."
+      },
+      {
+        "title": "A circular patio or fire pit area with a 20-foot diameter",
+        "text": "For a circle with a diameter of 20 feet: the radius is 10 feet. Area = 3.14159 × 10² = 314.16 square feet. In square yards: 314.16 ÷ 9 = 34.91 sq yd. In square meters: 314.16 × 0.092903 = 29.19 m²."
+      }
+    ],
+    "constantsAudit": []
+  },
+  {
+    "slug": "tile-calculator",
+    "title": "Tile Calculator",
+    "category": "painting-flooring",
+    "formulaId": "unit-count",
+    "status": "draft",
+    "checks": 1008,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "10 × 8 ft surface, 0% waste, 12 × 12 in tiles, 10 tiles/box",
+        "pass": true
+      },
+      {
+        "name": "10 × 8 ft surface, 10% waste, 12 × 12 in tiles, 10 tiles/box",
+        "pass": true
+      },
+      {
+        "name": "12 × 10 ft surface, 15% waste, 24 × 12 in tiles, 8 tiles/box",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "A 10 by 8 foot bathroom floor with 12 by 12 inch tiles",
+        "text": "For a bathroom floor measuring 10 × 8 feet, the surface area is 80 square feet. Each 12 × 12 inch tile covers exactly 1.0 square foot. Adding a 10% cutting waste allowance: 80 × 1.10 = 88 tiles. At 10 tiles per retail carton, 88 ÷ 10 = 8.8, which rounds up to 9 boxes."
+      },
+      {
+        "title": "A 12 by 10 foot kitchen floor with 12 by 24 inch large format tiles",
+        "text": "For an area measuring 120 square feet using 12 × 24 inch tiles (2.0 sq ft per tile) with a 15% waste factor for offset staggered placement: 120 × 1.15 = 138 square feet. Total tiles needed: 138 ÷ 2.0 = 69 tiles. At 8 tiles per carton: 69 ÷ 8 = 8.625, requiring 9 boxes."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "unitLength",
+        "label": "Tile length (inches)",
+        "default": 12,
+        "hasNote": true
+      },
+      {
+        "id": "unitWidth",
+        "label": "Tile width (inches)",
+        "default": 12,
+        "hasNote": true
+      },
+      {
+        "id": "boxSize",
+        "label": "Tiles per box",
+        "default": 10,
+        "hasNote": true
+      }
+    ]
+  },
+  {
+    "slug": "topsoil-calculator",
+    "title": "Topsoil Calculator",
+    "category": "landscaping",
+    "formulaId": "volume-weight",
+    "status": "draft",
+    "checks": 1006,
+    "failures": [],
+    "maxAbsError": 0,
+    "maxRelError": 0,
+    "testCaseResults": [
+      {
+        "name": "10 × 10 ft at 3 in, 0% waste, 1.1 tons/yd³",
+        "pass": true
+      },
+      {
+        "name": "20 × 15 ft at 4 in, 10% waste, 1.1 tons/yd³",
+        "pass": true
+      },
+      {
+        "name": "50 × 20 ft at 6 in, 5% waste, 1.2 tons/yd³",
+        "pass": true
+      }
+    ],
+    "exampleResults": [
+      {
+        "title": "Topdressing an existing 20 by 15 foot lawn area",
+        "text": "For a 20 by 15 foot patchy lawn section receiving a 2-inch topdressing layer, total volume is 20 × 15 × (2 ÷ 12) = 50 cubic feet. Converting to cubic yards yields 50 ÷ 27 = 1.85 cubic yards. With a 10% allowance for settling into grass thatch: 1.85 × 1.10 = 2.04 cubic yards. At standard screened density of 1.1 tons per yard, the order weighs roughly 2.24 tons."
+      },
+      {
+        "title": "Establishing a new 20 by 15 foot garden bed at 4 inches deep",
+        "text": "For a new planting bed measuring 20 feet long by 15 feet wide with 4 inches of new topsoil, the volume is 20 × 15 × (4 ÷ 12) = 100 cubic feet. Dividing 100 by 27 gives 3.70 cubic yards. Adding a 10% allowance for compaction during raking gives 4.07 cubic yards, weighing approximately 4.48 tons."
+      }
+    ],
+    "constantsAudit": [
+      {
+        "id": "density",
+        "label": "Density (tons per cubic yard)",
+        "default": 1.1,
+        "hasNote": true
+      }
+    ]
+  }
+]

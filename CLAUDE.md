@@ -70,6 +70,7 @@ tests/
 - Original wording only. Do not copy or closely paraphrase text from other websites.
 - Each calculator page has `status: "draft"` or `status: "reviewed"` in its JSON. You may write drafts only. Only the owner sets `reviewed`.
 - Draft pages must be built with `noindex`, excluded from the sitemap and excluded from index listings.
+- No calculator may be set to `reviewed` unless `docs/audit/<slug>.md` exists with verdict `PASS` or `PASS WITH CONDITIONS` and the owner has completed its verification items. The audit procedure is in `docs/AUDIT_PROMPT.md`. If you change a formula, constant or unit logic, the old audit no longer counts: mark the calculator back to `draft` and ask for a new audit.
 - Follow `docs/CONTENT_GUIDE.md` for page structure, length and tone.
 - No two pages may be near-duplicates. If two pages would share most of their text, merge them or give each real, distinct content (different examples, different reference table, different mistakes).
 
