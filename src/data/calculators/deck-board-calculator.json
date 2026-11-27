@@ -1,16 +1,39 @@
 {
   "slug": "deck-board-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "structures-roofing",
   "formulaId": "deck-boards",
   "title": "Deck Board Calculator",
   "metaTitle": "Deck Board Calculator: Boards and Linear Feet Needed",
   "metaDescription": "Calculate how many deck boards and total linear feet you need for wood or composite decking with customizable board sizes and gaps.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Deck length (along boards)", "unit": "ft", "type": "number", "default": 16, "min": 0 },
-    { "id": "width", "label": "Deck width (across boards)", "unit": "ft", "type": "number", "default": 12, "min": 0 },
-    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for straight layouts; use 15% for diagonal or herringbone patterns." }
+    {
+      "id": "length",
+      "label": "Deck length (along boards)",
+      "unit": "ft",
+      "type": "number",
+      "default": 16,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Deck width (across boards)",
+      "unit": "ft",
+      "type": "number",
+      "default": 12,
+      "min": 0
+    },
+    {
+      "id": "waste",
+      "label": "Extra for cuts and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 10% for straight layouts; use 15% for diagonal or herringbone patterns."
+    }
   ],
   "constants": [
     {
@@ -33,29 +56,91 @@
     }
   ],
   "outputs": [
-    { "id": "boards", "label": "Deck boards needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "totalLinearFeet", "label": "Total linear feet", "unit": "ft", "decimals": 1 },
-    { "id": "rows", "label": "Board courses across width", "unit": "count", "decimals": 0, "roundUp": true },
-    { "id": "area", "label": "Deck surface area", "unit": "ft2", "decimals": 1 }
+    {
+      "id": "boards",
+      "label": "Deck boards needed",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "totalLinearFeet",
+      "label": "Total linear feet",
+      "unit": "ft",
+      "decimals": 1
+    },
+    {
+      "id": "rows",
+      "label": "Board courses across width",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true
+    },
+    {
+      "id": "area",
+      "label": "Deck surface area",
+      "unit": "ft2",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "16 × 12 ft deck, 0% waste, 16 ft boards (5.5 in wide, 0.25 in gap)",
-      "inputs": { "length": 16, "width": 12, "waste": 0 },
-      "constants": { "boardWidth": 5.5, "gap": 0.25, "boardLength": 16 },
-      "expected": { "area": 192, "rows": 26, "totalLinearFeet": 416, "boards": 26 }
+      "inputs": {
+        "length": 16,
+        "width": 12,
+        "waste": 0
+      },
+      "constants": {
+        "boardWidth": 5.5,
+        "gap": 0.25,
+        "boardLength": 16
+      },
+      "expected": {
+        "area": 192,
+        "rows": 26,
+        "totalLinearFeet": 416,
+        "boards": 26
+      }
     },
     {
       "name": "16 × 12 ft deck, 10% waste, 16 ft boards (5.5 in wide, 0.25 in gap)",
-      "inputs": { "length": 16, "width": 12, "waste": 10 },
-      "constants": { "boardWidth": 5.5, "gap": 0.25, "boardLength": 16 },
-      "expected": { "area": 192, "rows": 26, "totalLinearFeet": 416, "boards": 29 }
+      "inputs": {
+        "length": 16,
+        "width": 12,
+        "waste": 10
+      },
+      "constants": {
+        "boardWidth": 5.5,
+        "gap": 0.25,
+        "boardLength": 16
+      },
+      "expected": {
+        "area": 192,
+        "rows": 26,
+        "totalLinearFeet": 416,
+        "boards": 29
+      }
     },
     {
       "name": "20 × 16 ft deck, 10% waste, 20 ft boards (5.5 in wide, 0.25 in gap)",
-      "inputs": { "length": 20, "width": 16, "waste": 10 },
-      "constants": { "boardWidth": 5.5, "gap": 0.25, "boardLength": 20 },
-      "expected": { "area": 320, "rows": 34, "totalLinearFeet": 680, "boards": 38 }
+      "inputs": {
+        "length": 20,
+        "width": 16,
+        "waste": 10
+      },
+      "constants": {
+        "boardWidth": 5.5,
+        "gap": 0.25,
+        "boardLength": 20
+      },
+      "expected": {
+        "area": 320,
+        "rows": 34,
+        "totalLinearFeet": 680,
+        "boards": 38
+      }
     }
   ],
   "content": {
@@ -73,14 +158,56 @@
     ],
     "quickReference": {
       "caption": "Deck board estimates (5.5 in wide boards with 1/4 in gap and 10% waste)",
-      "headers": ["Deck Size (L × W)", "Surface Area", "Parallel Rows", "Total Linear Feet", "16 ft Boards Needed"],
+      "headers": [
+        "Deck Size (L × W)",
+        "Surface Area",
+        "Parallel Rows",
+        "Total Linear Feet",
+        "16 ft Boards Needed"
+      ],
       "rows": [
-        ["12 × 10 ft", "120 sq ft", "21 rows", "252 lin ft", "18 boards"],
-        ["16 × 10 ft", "160 sq ft", "21 rows", "336 lin ft", "24 boards"],
-        ["16 × 12 ft", "192 sq ft", "26 rows", "416 lin ft", "29 boards"],
-        ["20 × 12 ft", "240 sq ft", "26 rows", "520 lin ft", "36 boards"],
-        ["20 × 16 ft", "320 sq ft", "34 rows", "680 lin ft", "47 boards"],
-        ["24 × 16 ft", "384 sq ft", "34 rows", "816 lin ft", "57 boards"]
+        [
+          "12 × 10 ft",
+          "120 sq ft",
+          "21 rows",
+          "252 lin ft",
+          "18 boards"
+        ],
+        [
+          "16 × 10 ft",
+          "160 sq ft",
+          "21 rows",
+          "336 lin ft",
+          "24 boards"
+        ],
+        [
+          "16 × 12 ft",
+          "192 sq ft",
+          "26 rows",
+          "416 lin ft",
+          "29 boards"
+        ],
+        [
+          "20 × 12 ft",
+          "240 sq ft",
+          "26 rows",
+          "520 lin ft",
+          "36 boards"
+        ],
+        [
+          "20 × 16 ft",
+          "320 sq ft",
+          "34 rows",
+          "680 lin ft",
+          "47 boards"
+        ],
+        [
+          "24 × 16 ft",
+          "384 sq ft",
+          "34 rows",
+          "816 lin ft",
+          "57 boards"
+        ]
       ]
     },
     "commonMistakes": [

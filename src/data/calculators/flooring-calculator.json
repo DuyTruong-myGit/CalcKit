@@ -1,16 +1,39 @@
 {
   "slug": "flooring-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "painting-flooring",
   "formulaId": "unit-count",
   "title": "Flooring Calculator",
   "metaTitle": "Flooring Calculator: Boxes of Hardwood and Vinyl Plank",
   "metaDescription": "Calculate how many boxes of laminate, hardwood, or vinyl plank flooring you need. Includes room area and cut-waste allowance.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Room length", "unit": "ft", "type": "number", "default": 15, "min": 0 },
-    { "id": "width", "label": "Room width", "unit": "ft", "type": "number", "default": 12, "min": 0 },
-    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for straight layouts; use 15% for diagonal or herringbone patterns." }
+    {
+      "id": "length",
+      "label": "Room length",
+      "unit": "ft",
+      "type": "number",
+      "default": 15,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Room width",
+      "unit": "ft",
+      "type": "number",
+      "default": 12,
+      "min": 0
+    },
+    {
+      "id": "waste",
+      "label": "Extra for cuts and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 10% for straight layouts; use 15% for diagonal or herringbone patterns."
+    }
   ],
   "constants": [
     {
@@ -21,27 +44,66 @@
     }
   ],
   "outputs": [
-    { "id": "boxes", "label": "Boxes needed", "unit": "boxes", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "area", "label": "Total room area", "unit": "sq ft", "decimals": 1 }
+    {
+      "id": "boxes",
+      "label": "Boxes needed",
+      "unit": "boxes",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "area",
+      "label": "Total room area",
+      "unit": "sq ft",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "15 × 12 ft room, 0% waste, 20 sq ft per box",
-      "inputs": { "length": 15, "width": 12, "waste": 0 },
-      "constants": { "areaPerBox": 20 },
-      "expected": { "area": 180, "boxes": 9 }
+      "inputs": {
+        "length": 15,
+        "width": 12,
+        "waste": 0
+      },
+      "constants": {
+        "areaPerBox": 20
+      },
+      "expected": {
+        "area": 180,
+        "boxes": 9
+      }
     },
     {
       "name": "15 × 12 ft room, 10% waste, 20 sq ft per box",
-      "inputs": { "length": 15, "width": 12, "waste": 10 },
-      "constants": { "areaPerBox": 20 },
-      "expected": { "area": 180, "boxes": 10 }
+      "inputs": {
+        "length": 15,
+        "width": 12,
+        "waste": 10
+      },
+      "constants": {
+        "areaPerBox": 20
+      },
+      "expected": {
+        "area": 180,
+        "boxes": 10
+      }
     },
     {
       "name": "20 × 15 ft room, 15% waste, 22 sq ft per box",
-      "inputs": { "length": 20, "width": 15, "waste": 15 },
-      "constants": { "areaPerBox": 22 },
-      "expected": { "area": 300, "boxes": 16 }
+      "inputs": {
+        "length": 20,
+        "width": 15,
+        "waste": 15
+      },
+      "constants": {
+        "areaPerBox": 22
+      },
+      "expected": {
+        "area": 300,
+        "boxes": 16
+      }
     }
   ],
   "content": {
@@ -59,14 +121,49 @@
     ],
     "quickReference": {
       "caption": "Flooring box estimates (20 sq ft per box with 10% waste)",
-      "headers": ["Room Dimensions", "Room Area", "Area with 10% Waste", "Boxes Needed"],
+      "headers": [
+        "Room Dimensions",
+        "Room Area",
+        "Area with 10% Waste",
+        "Boxes Needed"
+      ],
       "rows": [
-        ["10 × 10 ft", "100 sq ft", "110 sq ft", "6 boxes"],
-        ["12 × 12 ft", "144 sq ft", "158.4 sq ft", "8 boxes"],
-        ["15 × 12 ft", "180 sq ft", "198 sq ft", "10 boxes"],
-        ["16 × 14 ft", "224 sq ft", "246.4 sq ft", "13 boxes"],
-        ["20 × 15 ft", "300 sq ft", "330 sq ft", "17 boxes"],
-        ["24 × 18 ft", "432 sq ft", "475.2 sq ft", "24 boxes"]
+        [
+          "10 × 10 ft",
+          "100 sq ft",
+          "110 sq ft",
+          "6 boxes"
+        ],
+        [
+          "12 × 12 ft",
+          "144 sq ft",
+          "158.4 sq ft",
+          "8 boxes"
+        ],
+        [
+          "15 × 12 ft",
+          "180 sq ft",
+          "198 sq ft",
+          "10 boxes"
+        ],
+        [
+          "16 × 14 ft",
+          "224 sq ft",
+          "246.4 sq ft",
+          "13 boxes"
+        ],
+        [
+          "20 × 15 ft",
+          "300 sq ft",
+          "330 sq ft",
+          "17 boxes"
+        ],
+        [
+          "24 × 18 ft",
+          "432 sq ft",
+          "475.2 sq ft",
+          "24 boxes"
+        ]
       ]
     },
     "commonMistakes": [

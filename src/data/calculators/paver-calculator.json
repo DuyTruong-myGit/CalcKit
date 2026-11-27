@@ -1,16 +1,39 @@
 {
   "slug": "paver-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "concrete-masonry",
   "formulaId": "unit-count",
   "title": "Paver Calculator",
   "metaTitle": "Paver Calculator: Brick and Concrete Patio Pavers Needed",
   "metaDescription": "Calculate how many pavers you need for a patio, walkway, or driveway. Includes unit size adjustments and cut-waste allowance.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Patio / walkway length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "width", "label": "Patio / walkway width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for running bond or stack patterns; use 15% for herringbone or curved edges." }
+    {
+      "id": "length",
+      "label": "Patio / walkway length",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Patio / walkway width",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "waste",
+      "label": "Extra for cuts and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 10% for running bond or stack patterns; use 15% for herringbone or curved edges."
+    }
   ],
   "constants": [
     {
@@ -27,27 +50,69 @@
     }
   ],
   "outputs": [
-    { "id": "pavers", "label": "Pavers needed", "unit": "pavers", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "area", "label": "Total surface area", "unit": "sq ft", "decimals": 1 }
+    {
+      "id": "pavers",
+      "label": "Pavers needed",
+      "unit": "pavers",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "area",
+      "label": "Total surface area",
+      "unit": "sq ft",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "10 × 10 ft patio, 0% waste, 4 × 8 in pavers",
-      "inputs": { "length": 10, "width": 10, "waste": 0 },
-      "constants": { "unitLength": 8, "unitWidth": 4 },
-      "expected": { "area": 100, "pavers": 450 }
+      "inputs": {
+        "length": 10,
+        "width": 10,
+        "waste": 0
+      },
+      "constants": {
+        "unitLength": 8,
+        "unitWidth": 4
+      },
+      "expected": {
+        "area": 100,
+        "pavers": 450
+      }
     },
     {
       "name": "10 × 10 ft patio, 10% waste, 4 × 8 in pavers",
-      "inputs": { "length": 10, "width": 10, "waste": 10 },
-      "constants": { "unitLength": 8, "unitWidth": 4 },
-      "expected": { "area": 100, "pavers": 495 }
+      "inputs": {
+        "length": 10,
+        "width": 10,
+        "waste": 10
+      },
+      "constants": {
+        "unitLength": 8,
+        "unitWidth": 4
+      },
+      "expected": {
+        "area": 100,
+        "pavers": 495
+      }
     },
     {
       "name": "15 × 12 ft patio, 10% waste, 12 × 12 in square pavers",
-      "inputs": { "length": 15, "width": 12, "waste": 10 },
-      "constants": { "unitLength": 12, "unitWidth": 12 },
-      "expected": { "area": 180, "pavers": 198 }
+      "inputs": {
+        "length": 15,
+        "width": 12,
+        "waste": 10
+      },
+      "constants": {
+        "unitLength": 12,
+        "unitWidth": 12
+      },
+      "expected": {
+        "area": 180,
+        "pavers": 198
+      }
     }
   ],
   "content": {
@@ -65,14 +130,49 @@
     ],
     "quickReference": {
       "caption": "Paver quantities by patio area (4 × 8 in pavers with 10% cut-waste factor)",
-      "headers": ["Project Area", "Square Footage", "Paver Coverage", "Total Units Needed"],
+      "headers": [
+        "Project Area",
+        "Square Footage",
+        "Paver Coverage",
+        "Total Units Needed"
+      ],
       "rows": [
-        ["8 × 8 ft", "64 sq ft", "4.5 pavers / sq ft", "317 pavers"],
-        ["10 × 10 ft", "100 sq ft", "4.5 pavers / sq ft", "495 pavers"],
-        ["12 × 12 ft", "144 sq ft", "4.5 pavers / sq ft", "713 pavers"],
-        ["16 × 12 ft", "192 sq ft", "4.5 pavers / sq ft", "951 pavers"],
-        ["20 × 10 ft", "200 sq ft", "4.5 pavers / sq ft", "990 pavers"],
-        ["20 × 15 ft", "300 sq ft", "4.5 pavers / sq ft", "1,485 pavers"]
+        [
+          "8 × 8 ft",
+          "64 sq ft",
+          "4.5 pavers / sq ft",
+          "317 pavers"
+        ],
+        [
+          "10 × 10 ft",
+          "100 sq ft",
+          "4.5 pavers / sq ft",
+          "495 pavers"
+        ],
+        [
+          "12 × 12 ft",
+          "144 sq ft",
+          "4.5 pavers / sq ft",
+          "713 pavers"
+        ],
+        [
+          "16 × 12 ft",
+          "192 sq ft",
+          "4.5 pavers / sq ft",
+          "951 pavers"
+        ],
+        [
+          "20 × 10 ft",
+          "200 sq ft",
+          "4.5 pavers / sq ft",
+          "990 pavers"
+        ],
+        [
+          "20 × 15 ft",
+          "300 sq ft",
+          "4.5 pavers / sq ft",
+          "1,485 pavers"
+        ]
       ]
     },
     "commonMistakes": [

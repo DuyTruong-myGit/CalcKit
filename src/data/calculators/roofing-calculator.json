@@ -1,17 +1,49 @@
 {
   "slug": "roofing-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "structures-roofing",
   "formulaId": "roofing",
   "title": "Roofing Calculator",
   "metaTitle": "Roofing Calculator: Shingle Bundles and Squares Needed",
   "metaDescription": "Calculate how many roofing squares and shingle bundles you need. Accounts for roof pitch multipliers, ground footprint, and waste.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Building footprint length", "unit": "ft", "type": "number", "default": 40, "min": 0 },
-    { "id": "width", "label": "Building footprint width", "unit": "ft", "type": "number", "default": 25, "min": 0 },
-    { "id": "rise", "label": "Roof pitch (rise per 12-inch run)", "unit": "in", "type": "number", "default": 6, "min": 1, "max": 24, "help": "E.g., enter 4 for a 4:12 pitch or 6 for a 6:12 pitch. Common residential pitch is 4:12 to 8:12." },
-    { "id": "waste", "label": "Extra for hips, valleys, and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for simple gable roofs; use 15% to 20% for complex hip roofs with valleys and dormers." }
+    {
+      "id": "length",
+      "label": "Building footprint length",
+      "unit": "ft",
+      "type": "number",
+      "default": 40,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Building footprint width",
+      "unit": "ft",
+      "type": "number",
+      "default": 25,
+      "min": 0
+    },
+    {
+      "id": "rise",
+      "label": "Roof pitch (rise per 12-inch run)",
+      "unit": "in",
+      "type": "number",
+      "default": 6,
+      "min": 1,
+      "max": 24,
+      "help": "E.g., enter 4 for a 4:12 pitch or 6 for a 6:12 pitch. Common residential pitch is 4:12 to 8:12."
+    },
+    {
+      "id": "waste",
+      "label": "Extra for hips, valleys, and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 10% for simple gable roofs; use 15% to 20% for complex hip roofs with valleys and dormers."
+    }
   ],
   "constants": [
     {
@@ -22,31 +54,89 @@
     }
   ],
   "outputs": [
-    { "id": "bundles", "label": "Shingle bundles needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "squares", "label": "Roofing squares (100 sq ft)", "unit": "count", "decimals": 2 },
-    { "id": "roofArea", "label": "True sloped roof area", "unit": "ft2", "decimals": 1 },
-    { "id": "pitchFactor", "label": "Pitch slope multiplier", "unit": "none", "decimals": 4 }
+    {
+      "id": "bundles",
+      "label": "Shingle bundles needed",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "squares",
+      "label": "Roofing squares (100 sq ft)",
+      "unit": "count",
+      "decimals": 2
+    },
+    {
+      "id": "roofArea",
+      "label": "True sloped roof area",
+      "unit": "ft2",
+      "decimals": 1
+    },
+    {
+      "id": "pitchFactor",
+      "label": "Pitch slope multiplier",
+      "unit": "none",
+      "decimals": 4
+    }
   ],
   "testCases": [
     {
       "name": "1,000 sq ft footprint (40 × 25 ft), 6:12 pitch, 0% waste",
-      "inputs": { "length": 40, "width": 25, "rise": 6, "waste": 0 },
-      "constants": { "bundlesPerSquare": 3 },
-      "expected": { "pitchFactor": 1.1180, "roofArea": 1118.03, "squares": 11.18, "bundles": 34 },
+      "inputs": {
+        "length": 40,
+        "width": 25,
+        "rise": 6,
+        "waste": 0
+      },
+      "constants": {
+        "bundlesPerSquare": 3
+      },
+      "expected": {
+        "pitchFactor": 1.118,
+        "roofArea": 1118.03,
+        "squares": 11.18,
+        "bundles": 34
+      },
       "tolerance": 0.01
     },
     {
       "name": "1,000 sq ft footprint (40 × 25 ft), 6:12 pitch, 10% waste",
-      "inputs": { "length": 40, "width": 25, "rise": 6, "waste": 10 },
-      "constants": { "bundlesPerSquare": 3 },
-      "expected": { "pitchFactor": 1.1180, "roofArea": 1118.03, "squares": 11.18, "bundles": 37 },
+      "inputs": {
+        "length": 40,
+        "width": 25,
+        "rise": 6,
+        "waste": 10
+      },
+      "constants": {
+        "bundlesPerSquare": 3
+      },
+      "expected": {
+        "pitchFactor": 1.118,
+        "roofArea": 1118.03,
+        "squares": 11.18,
+        "bundles": 37
+      },
       "tolerance": 0.01
     },
     {
       "name": "1,500 sq ft footprint (50 × 30 ft), 4:12 pitch, 10% waste",
-      "inputs": { "length": 50, "width": 30, "rise": 4, "waste": 10 },
-      "constants": { "bundlesPerSquare": 3 },
-      "expected": { "pitchFactor": 1.0541, "roofArea": 1581.14, "squares": 15.81, "bundles": 53 },
+      "inputs": {
+        "length": 50,
+        "width": 30,
+        "rise": 4,
+        "waste": 10
+      },
+      "constants": {
+        "bundlesPerSquare": 3
+      },
+      "expected": {
+        "pitchFactor": 1.0541,
+        "roofArea": 1581.14,
+        "squares": 15.81,
+        "bundles": 53
+      },
       "tolerance": 0.01
     }
   ],
@@ -65,14 +155,56 @@
     ],
     "quickReference": {
       "caption": "Roof pitch multipliers and shingle bundle estimates (1,000 sq ft footprint, 10% waste)",
-      "headers": ["Roof Pitch", "Slope Multiplier", "Sloped Roof Area", "Roofing Squares", "Bundles to Buy"],
+      "headers": [
+        "Roof Pitch",
+        "Slope Multiplier",
+        "Sloped Roof Area",
+        "Roofing Squares",
+        "Bundles to Buy"
+      ],
       "rows": [
-        ["3:12 (Low slope)", "1.0308", "1,031 sq ft", "10.3 squares", "34 bundles"],
-        ["4:12 (Standard ranch)", "1.0541", "1,054 sq ft", "10.5 squares", "35 bundles"],
-        ["6:12 (Common gable)", "1.1180", "1,118 sq ft", "11.2 squares", "37 bundles"],
-        ["8:12 (Moderate slope)", "1.2019", "1,202 sq ft", "12.0 squares", "40 bundles"],
-        ["10:12 (Steep colonial)", "1.3017", "1,302 sq ft", "13.0 squares", "43 bundles"],
-        ["12:12 (45° steep pitch)", "1.4142", "1,414 sq ft", "14.1 squares", "47 bundles"]
+        [
+          "3:12 (Low slope)",
+          "1.0308",
+          "1,031 sq ft",
+          "10.3 squares",
+          "34 bundles"
+        ],
+        [
+          "4:12 (Standard ranch)",
+          "1.0541",
+          "1,054 sq ft",
+          "10.5 squares",
+          "35 bundles"
+        ],
+        [
+          "6:12 (Common gable)",
+          "1.1180",
+          "1,118 sq ft",
+          "11.2 squares",
+          "37 bundles"
+        ],
+        [
+          "8:12 (Moderate slope)",
+          "1.2019",
+          "1,202 sq ft",
+          "12.0 squares",
+          "40 bundles"
+        ],
+        [
+          "10:12 (Steep colonial)",
+          "1.3017",
+          "1,302 sq ft",
+          "13.0 squares",
+          "43 bundles"
+        ],
+        [
+          "12:12 (45° steep pitch)",
+          "1.4142",
+          "1,414 sq ft",
+          "14.1 squares",
+          "47 bundles"
+        ]
       ]
     },
     "commonMistakes": [

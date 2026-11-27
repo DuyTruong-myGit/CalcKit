@@ -1,12 +1,12 @@
 {
   "slug": "square-footage-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "utilities",
   "formulaId": "area-shapes",
   "title": "Square Footage Calculator",
   "metaTitle": "Square Footage Calculator: Calculate Area for Any Shape",
   "metaDescription": "Calculate square footage for rectangular rooms, triangular areas, and circular plots. Converts instantly between square feet, yards, and meters.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
     {
       "id": "shape",
@@ -15,37 +15,100 @@
       "type": "select",
       "default": 1,
       "options": [
-        { "value": "1", "label": "Rectangle (Length × Width)" },
-        { "value": "2", "label": "Triangle (½ × Base × Height)" },
-        { "value": "3", "label": "Circle (Diameter)" }
+        {
+          "value": "1",
+          "label": "Rectangle (Length × Width)"
+        },
+        {
+          "value": "2",
+          "label": "Triangle (½ × Base × Height)"
+        },
+        {
+          "value": "3",
+          "label": "Circle (Diameter)"
+        }
       ]
     },
-    { "id": "length", "label": "Length / Base / Diameter", "unit": "ft", "type": "number", "default": 20, "min": 0 },
-    { "id": "width", "label": "Width / Height (ignored for circles)", "unit": "ft", "type": "number", "default": 10, "min": 0 }
+    {
+      "id": "length",
+      "label": "Length / Base / Diameter",
+      "unit": "ft",
+      "type": "number",
+      "default": 20,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Width / Height (ignored for circles)",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    }
   ],
   "constants": [],
   "outputs": [
-    { "id": "squareFeet", "label": "Square footage", "unit": "sq ft", "decimals": 1, "primary": true },
-    { "id": "squareYards", "label": "Square yards", "unit": "sq yd", "decimals": 2 },
-    { "id": "squareMeters", "label": "Square meters", "unit": "m²", "decimals": 2 }
+    {
+      "id": "squareFeet",
+      "label": "Square footage",
+      "unit": "sq ft",
+      "decimals": 1,
+      "primary": true
+    },
+    {
+      "id": "squareYards",
+      "label": "Square yards",
+      "unit": "sq yd",
+      "decimals": 2
+    },
+    {
+      "id": "squareMeters",
+      "label": "Square meters",
+      "unit": "m²",
+      "decimals": 2
+    }
   ],
   "testCases": [
     {
       "name": "Rectangle 20 × 10 ft",
-      "inputs": { "shape": 1, "length": 20, "width": 10 },
-      "expected": { "squareFeet": 200, "squareYards": 22.22, "squareMeters": 18.58 },
+      "inputs": {
+        "shape": 1,
+        "length": 20,
+        "width": 10
+      },
+      "expected": {
+        "squareFeet": 200,
+        "squareYards": 22.22,
+        "squareMeters": 18.58
+      },
       "tolerance": 0.05
     },
     {
       "name": "Triangle base 20 ft, height 10 ft",
-      "inputs": { "shape": 2, "length": 20, "width": 10 },
-      "expected": { "squareFeet": 100, "squareYards": 11.11, "squareMeters": 9.29 },
+      "inputs": {
+        "shape": 2,
+        "length": 20,
+        "width": 10
+      },
+      "expected": {
+        "squareFeet": 100,
+        "squareYards": 11.11,
+        "squareMeters": 9.29
+      },
       "tolerance": 0.05
     },
     {
       "name": "Circle diameter 20 ft (radius 10 ft)",
-      "inputs": { "shape": 3, "length": 20, "width": 0 },
-      "expected": { "squareFeet": 314.16, "squareYards": 34.91, "squareMeters": 29.19 },
+      "inputs": {
+        "shape": 3,
+        "length": 20,
+        "width": 0
+      },
+      "expected": {
+        "squareFeet": 314.16,
+        "squareYards": 34.91,
+        "squareMeters": 29.19
+      },
       "tolerance": 0.05
     }
   ],
@@ -64,14 +127,49 @@
     ],
     "quickReference": {
       "caption": "Square footage to square yards and square meters conversion reference",
-      "headers": ["Dimensions / Shape", "Square Feet (sq ft)", "Square Yards (sq yd)", "Square Meters (m²)"],
+      "headers": [
+        "Dimensions / Shape",
+        "Square Feet (sq ft)",
+        "Square Yards (sq yd)",
+        "Square Meters (m²)"
+      ],
       "rows": [
-        ["10 × 10 ft (Rectangle)", "100 sq ft", "11.11 sq yd", "9.29 m²"],
-        ["12 × 12 ft (Rectangle)", "144 sq ft", "16.00 sq yd", "13.38 m²"],
-        ["15 × 20 ft (Rectangle)", "300 sq ft", "33.33 sq yd", "27.87 m²"],
-        ["10 ft base × 8 ft height (Triangle)", "40 sq ft", "4.44 sq yd", "3.72 m²"],
-        ["12 ft diameter (Circle)", "113.1 sq ft", "12.57 sq yd", "10.51 m²"],
-        ["20 ft diameter (Circle)", "314.2 sq ft", "34.91 sq yd", "29.19 m²"]
+        [
+          "10 × 10 ft (Rectangle)",
+          "100 sq ft",
+          "11.11 sq yd",
+          "9.29 m²"
+        ],
+        [
+          "12 × 12 ft (Rectangle)",
+          "144 sq ft",
+          "16.00 sq yd",
+          "13.38 m²"
+        ],
+        [
+          "15 × 20 ft (Rectangle)",
+          "300 sq ft",
+          "33.33 sq yd",
+          "27.87 m²"
+        ],
+        [
+          "10 ft base × 8 ft height (Triangle)",
+          "40 sq ft",
+          "4.44 sq yd",
+          "3.72 m²"
+        ],
+        [
+          "12 ft diameter (Circle)",
+          "113.1 sq ft",
+          "12.57 sq yd",
+          "10.51 m²"
+        ],
+        [
+          "20 ft diameter (Circle)",
+          "314.2 sq ft",
+          "34.91 sq yd",
+          "29.19 m²"
+        ]
       ]
     },
     "commonMistakes": [

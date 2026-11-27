@@ -1,17 +1,47 @@
 {
   "slug": "mulch-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "landscaping",
   "formulaId": "volume-bags",
   "title": "Mulch Calculator",
   "metaTitle": "Mulch Calculator: Bags and Cubic Yards Needed",
   "metaDescription": "Calculate how many bags or cubic yards of mulch you need for your garden beds. Enter bed size and depth with an adjustable waste allowance.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "depth", "label": "Depth", "unit": "in", "type": "number", "default": 3, "min": 0, "help": "Most beds use 2 to 3 inches." },
-    { "id": "waste", "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+    {
+      "id": "length",
+      "label": "Length",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Width",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "depth",
+      "label": "Depth",
+      "unit": "in",
+      "type": "number",
+      "default": 3,
+      "min": 0,
+      "help": "Most beds use 2 to 3 inches."
+    },
+    {
+      "id": "waste",
+      "label": "Extra for waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50
+    }
   ],
   "constants": [
     {
@@ -22,29 +52,79 @@
     }
   ],
   "outputs": [
-    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
-    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
-    { "id": "bags", "label": "Bags needed", "unit": "bags", "decimals": 0, "roundUp": true }
+    {
+      "id": "cubicYards",
+      "label": "Cubic yards",
+      "unit": "yd³",
+      "decimals": 2,
+      "primary": true
+    },
+    {
+      "id": "cubicFeet",
+      "label": "Cubic feet",
+      "unit": "ft³",
+      "decimals": 1
+    },
+    {
+      "id": "bags",
+      "label": "Bags needed",
+      "unit": "bags",
+      "decimals": 0,
+      "roundUp": true
+    }
   ],
   "testCases": [
     {
       "name": "10 × 10 ft at 3 in, no waste, 2 ft³ bags",
-      "inputs": { "length": 10, "width": 10, "depth": 3, "waste": 0 },
-      "constants": { "bagSize": 2 },
-      "expected": { "cubicFeet": 25, "cubicYards": 0.9259, "bags": 13 }
+      "inputs": {
+        "length": 10,
+        "width": 10,
+        "depth": 3,
+        "waste": 0
+      },
+      "constants": {
+        "bagSize": 2
+      },
+      "expected": {
+        "cubicFeet": 25,
+        "cubicYards": 0.9259,
+        "bags": 13
+      }
     },
     {
       "name": "20 × 5 ft at 2 in, 10% waste, 2 ft³ bags",
-      "inputs": { "length": 20, "width": 5, "depth": 2, "waste": 10 },
-      "constants": { "bagSize": 2 },
-      "expected": { "cubicFeet": 16.667, "cubicYards": 0.6173, "bags": 10 },
+      "inputs": {
+        "length": 20,
+        "width": 5,
+        "depth": 2,
+        "waste": 10
+      },
+      "constants": {
+        "bagSize": 2
+      },
+      "expected": {
+        "cubicFeet": 16.667,
+        "cubicYards": 0.6173,
+        "bags": 10
+      },
       "tolerance": 0.01
     },
     {
       "name": "Circle bed — total area 50 ft², 3 in, no waste, 3 ft³ bags",
-      "inputs": { "length": 50, "width": 1, "depth": 3, "waste": 0 },
-      "constants": { "bagSize": 3 },
-      "expected": { "cubicFeet": 12.5, "cubicYards": 0.4630, "bags": 5 }
+      "inputs": {
+        "length": 50,
+        "width": 1,
+        "depth": 3,
+        "waste": 0
+      },
+      "constants": {
+        "bagSize": 3
+      },
+      "expected": {
+        "cubicFeet": 12.5,
+        "cubicYards": 0.463,
+        "bags": 5
+      }
     }
   ],
   "content": {
@@ -62,15 +142,63 @@
     ],
     "quickReference": {
       "caption": "Mulch coverage by area and depth (using 2-cubic-foot bags with 10% waste)",
-      "headers": ["Bed Area", "Depth", "Cubic Feet", "Cubic Yards", "2 ft³ Bags"],
+      "headers": [
+        "Bed Area",
+        "Depth",
+        "Cubic Feet",
+        "Cubic Yards",
+        "2 ft³ Bags"
+      ],
       "rows": [
-        ["50 sq ft", "2 in", "8.3", "0.31", "5 bags"],
-        ["50 sq ft", "3 in", "12.5", "0.46", "7 bags"],
-        ["100 sq ft", "2 in", "16.7", "0.62", "10 bags"],
-        ["100 sq ft", "3 in", "25.0", "0.93", "14 bags"],
-        ["200 sq ft", "2 in", "33.3", "1.23", "19 bags"],
-        ["200 sq ft", "3 in", "50.0", "1.85", "28 bags"],
-        ["500 sq ft", "3 in", "125.0", "4.63", "69 bags"]
+        [
+          "50 sq ft",
+          "2 in",
+          "8.3",
+          "0.31",
+          "5 bags"
+        ],
+        [
+          "50 sq ft",
+          "3 in",
+          "12.5",
+          "0.46",
+          "7 bags"
+        ],
+        [
+          "100 sq ft",
+          "2 in",
+          "16.7",
+          "0.62",
+          "10 bags"
+        ],
+        [
+          "100 sq ft",
+          "3 in",
+          "25.0",
+          "0.93",
+          "14 bags"
+        ],
+        [
+          "200 sq ft",
+          "2 in",
+          "33.3",
+          "1.23",
+          "19 bags"
+        ],
+        [
+          "200 sq ft",
+          "3 in",
+          "50.0",
+          "1.85",
+          "28 bags"
+        ],
+        [
+          "500 sq ft",
+          "3 in",
+          "125.0",
+          "4.63",
+          "69 bags"
+        ]
       ]
     },
     "commonMistakes": [

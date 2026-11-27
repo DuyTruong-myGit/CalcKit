@@ -1,16 +1,39 @@
 {
   "slug": "tile-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "painting-flooring",
   "formulaId": "unit-count",
   "title": "Tile Calculator",
   "metaTitle": "Tile Calculator: Floor and Wall Tiles and Box Counts",
   "metaDescription": "Calculate how many tiles and boxes you need for bathroom floors, showers, and kitchen backsplashes with custom tile sizes and waste.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Surface length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "width", "label": "Surface width / height", "unit": "ft", "type": "number", "default": 8, "min": 0 },
-    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for straight grid layouts; use 15% for diagonal, herringbone, or complex borders." }
+    {
+      "id": "length",
+      "label": "Surface length",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Surface width / height",
+      "unit": "ft",
+      "type": "number",
+      "default": 8,
+      "min": 0
+    },
+    {
+      "id": "waste",
+      "label": "Extra for cuts and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 10% for straight grid layouts; use 15% for diagonal, herringbone, or complex borders."
+    }
   ],
   "constants": [
     {
@@ -33,28 +56,82 @@
     }
   ],
   "outputs": [
-    { "id": "tiles", "label": "Tiles needed", "unit": "tiles", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "boxes", "label": "Boxes to purchase", "unit": "boxes", "decimals": 0, "roundUp": true },
-    { "id": "area", "label": "Total surface area", "unit": "sq ft", "decimals": 1 }
+    {
+      "id": "tiles",
+      "label": "Tiles needed",
+      "unit": "tiles",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "boxes",
+      "label": "Boxes to purchase",
+      "unit": "boxes",
+      "decimals": 0,
+      "roundUp": true
+    },
+    {
+      "id": "area",
+      "label": "Total surface area",
+      "unit": "sq ft",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "10 × 8 ft surface, 0% waste, 12 × 12 in tiles, 10 tiles/box",
-      "inputs": { "length": 10, "width": 8, "waste": 0 },
-      "constants": { "unitLength": 12, "unitWidth": 12, "boxSize": 10 },
-      "expected": { "area": 80, "tiles": 80, "boxes": 8 }
+      "inputs": {
+        "length": 10,
+        "width": 8,
+        "waste": 0
+      },
+      "constants": {
+        "unitLength": 12,
+        "unitWidth": 12,
+        "boxSize": 10
+      },
+      "expected": {
+        "area": 80,
+        "tiles": 80,
+        "boxes": 8
+      }
     },
     {
       "name": "10 × 8 ft surface, 10% waste, 12 × 12 in tiles, 10 tiles/box",
-      "inputs": { "length": 10, "width": 8, "waste": 10 },
-      "constants": { "unitLength": 12, "unitWidth": 12, "boxSize": 10 },
-      "expected": { "area": 80, "tiles": 88, "boxes": 9 }
+      "inputs": {
+        "length": 10,
+        "width": 8,
+        "waste": 10
+      },
+      "constants": {
+        "unitLength": 12,
+        "unitWidth": 12,
+        "boxSize": 10
+      },
+      "expected": {
+        "area": 80,
+        "tiles": 88,
+        "boxes": 9
+      }
     },
     {
       "name": "12 × 10 ft surface, 15% waste, 24 × 12 in tiles, 8 tiles/box",
-      "inputs": { "length": 12, "width": 10, "waste": 15 },
-      "constants": { "unitLength": 24, "unitWidth": 12, "boxSize": 8 },
-      "expected": { "area": 120, "tiles": 69, "boxes": 9 }
+      "inputs": {
+        "length": 12,
+        "width": 10,
+        "waste": 15
+      },
+      "constants": {
+        "unitLength": 24,
+        "unitWidth": 12,
+        "boxSize": 8
+      },
+      "expected": {
+        "area": 120,
+        "tiles": 69,
+        "boxes": 9
+      }
     }
   ],
   "content": {
@@ -72,14 +149,49 @@
     ],
     "quickReference": {
       "caption": "Tile counts by surface area (12 × 12 in tiles with 10% waste)",
-      "headers": ["Surface Dimensions", "Area (sq ft)", "Tiles Needed (12 × 12 in)", "Boxes (10/box)"],
+      "headers": [
+        "Surface Dimensions",
+        "Area (sq ft)",
+        "Tiles Needed (12 × 12 in)",
+        "Boxes (10/box)"
+      ],
       "rows": [
-        ["6 × 5 ft (Small bath floor)", "30 sq ft", "33 tiles", "4 boxes"],
-        ["8 × 6 ft (Full bathroom)", "48 sq ft", "53 tiles", "6 boxes"],
-        ["10 × 8 ft (Master bath floor)", "80 sq ft", "88 tiles", "9 boxes"],
-        ["12 × 10 ft (Kitchen floor)", "120 sq ft", "132 tiles", "14 boxes"],
-        ["15 × 12 ft (Large kitchen / dining)", "180 sq ft", "198 tiles", "20 boxes"],
-        ["20 × 15 ft (Basement rec floor)", "300 sq ft", "330 tiles", "33 boxes"]
+        [
+          "6 × 5 ft (Small bath floor)",
+          "30 sq ft",
+          "33 tiles",
+          "4 boxes"
+        ],
+        [
+          "8 × 6 ft (Full bathroom)",
+          "48 sq ft",
+          "53 tiles",
+          "6 boxes"
+        ],
+        [
+          "10 × 8 ft (Master bath floor)",
+          "80 sq ft",
+          "88 tiles",
+          "9 boxes"
+        ],
+        [
+          "12 × 10 ft (Kitchen floor)",
+          "120 sq ft",
+          "132 tiles",
+          "14 boxes"
+        ],
+        [
+          "15 × 12 ft (Large kitchen / dining)",
+          "180 sq ft",
+          "198 tiles",
+          "20 boxes"
+        ],
+        [
+          "20 × 15 ft (Basement rec floor)",
+          "300 sq ft",
+          "330 tiles",
+          "33 boxes"
+        ]
       ]
     },
     "commonMistakes": [

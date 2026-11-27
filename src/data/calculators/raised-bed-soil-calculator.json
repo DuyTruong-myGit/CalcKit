@@ -1,17 +1,47 @@
 {
   "slug": "raised-bed-soil-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "landscaping",
   "formulaId": "volume-bags",
   "title": "Raised Bed Soil Calculator",
   "metaTitle": "Raised Bed Soil Calculator: Soil Bags and Cubic Yards Needed",
   "metaDescription": "Calculate how many bags or cubic yards of soil you need to fill your raised garden beds. Enter bed length, width, and depth.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Bed length", "unit": "ft", "type": "number", "default": 8, "min": 0 },
-    { "id": "width", "label": "Bed width", "unit": "ft", "type": "number", "default": 4, "min": 0 },
-    { "id": "depth", "label": "Bed depth", "unit": "in", "type": "number", "default": 12, "min": 0, "help": "Measure the inside soil depth, usually 1 to 2 inches below the top edge of the frame." },
-    { "id": "waste", "label": "Extra for settling and compaction", "unit": "pct", "type": "number", "default": 5, "min": 0, "max": 50 }
+    {
+      "id": "length",
+      "label": "Bed length",
+      "unit": "ft",
+      "type": "number",
+      "default": 8,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Bed width",
+      "unit": "ft",
+      "type": "number",
+      "default": 4,
+      "min": 0
+    },
+    {
+      "id": "depth",
+      "label": "Bed depth",
+      "unit": "in",
+      "type": "number",
+      "default": 12,
+      "min": 0,
+      "help": "Measure the inside soil depth, usually 1 to 2 inches below the top edge of the frame."
+    },
+    {
+      "id": "waste",
+      "label": "Extra for settling and compaction",
+      "unit": "pct",
+      "type": "number",
+      "default": 5,
+      "min": 0,
+      "max": 50
+    }
   ],
   "constants": [
     {
@@ -22,30 +52,80 @@
     }
   ],
   "outputs": [
-    { "id": "bags", "label": "Bags needed", "unit": "bags", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
-    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2 }
+    {
+      "id": "bags",
+      "label": "Bags needed",
+      "unit": "bags",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "cubicFeet",
+      "label": "Cubic feet",
+      "unit": "ft³",
+      "decimals": 1
+    },
+    {
+      "id": "cubicYards",
+      "label": "Cubic yards",
+      "unit": "yd³",
+      "decimals": 2
+    }
   ],
   "testCases": [
     {
       "name": "8 × 4 ft at 12 in, 0% waste, 1.5 ft³ bags",
-      "inputs": { "length": 8, "width": 4, "depth": 12, "waste": 0 },
-      "constants": { "bagSize": 1.5 },
-      "expected": { "cubicFeet": 32, "cubicYards": 1.1852, "bags": 22 },
+      "inputs": {
+        "length": 8,
+        "width": 4,
+        "depth": 12,
+        "waste": 0
+      },
+      "constants": {
+        "bagSize": 1.5
+      },
+      "expected": {
+        "cubicFeet": 32,
+        "cubicYards": 1.1852,
+        "bags": 22
+      },
       "tolerance": 0.01
     },
     {
       "name": "6 × 3 ft at 10 in, 10% waste, 1.5 ft³ bags",
-      "inputs": { "length": 6, "width": 3, "depth": 10, "waste": 10 },
-      "constants": { "bagSize": 1.5 },
-      "expected": { "cubicFeet": 15, "cubicYards": 0.5556, "bags": 11 },
+      "inputs": {
+        "length": 6,
+        "width": 3,
+        "depth": 10,
+        "waste": 10
+      },
+      "constants": {
+        "bagSize": 1.5
+      },
+      "expected": {
+        "cubicFeet": 15,
+        "cubicYards": 0.5556,
+        "bags": 11
+      },
       "tolerance": 0.01
     },
     {
       "name": "4 × 4 ft at 8 in, 0% waste, 2.0 ft³ bags",
-      "inputs": { "length": 4, "width": 4, "depth": 8, "waste": 0 },
-      "constants": { "bagSize": 2.0 },
-      "expected": { "cubicFeet": 10.6667, "cubicYards": 0.3951, "bags": 6 },
+      "inputs": {
+        "length": 4,
+        "width": 4,
+        "depth": 8,
+        "waste": 0
+      },
+      "constants": {
+        "bagSize": 2
+      },
+      "expected": {
+        "cubicFeet": 10.6667,
+        "cubicYards": 0.3951,
+        "bags": 6
+      },
       "tolerance": 0.01
     }
   ],
@@ -64,14 +144,56 @@
     ],
     "quickReference": {
       "caption": "Raised bed soil volume and 1.5 ft³ bag estimates with 5% settling buffer",
-      "headers": ["Bed Dimensions", "Soil Depth", "Cubic Feet", "Cubic Yards", "1.5 ft³ Bags"],
+      "headers": [
+        "Bed Dimensions",
+        "Soil Depth",
+        "Cubic Feet",
+        "Cubic Yards",
+        "1.5 ft³ Bags"
+      ],
       "rows": [
-        ["4 × 4 ft", "8 in", "10.7", "0.40", "8 bags"],
-        ["4 × 4 ft", "12 in", "16.0", "0.59", "12 bags"],
-        ["6 × 3 ft", "10 in", "15.0", "0.56", "11 bags"],
-        ["8 × 3 ft", "12 in", "24.0", "0.89", "17 bags"],
-        ["8 × 4 ft", "10 in", "26.7", "0.99", "19 bags"],
-        ["8 × 4 ft", "12 in", "32.0", "1.19", "23 bags"]
+        [
+          "4 × 4 ft",
+          "8 in",
+          "10.7",
+          "0.40",
+          "8 bags"
+        ],
+        [
+          "4 × 4 ft",
+          "12 in",
+          "16.0",
+          "0.59",
+          "12 bags"
+        ],
+        [
+          "6 × 3 ft",
+          "10 in",
+          "15.0",
+          "0.56",
+          "11 bags"
+        ],
+        [
+          "8 × 3 ft",
+          "12 in",
+          "24.0",
+          "0.89",
+          "17 bags"
+        ],
+        [
+          "8 × 4 ft",
+          "10 in",
+          "26.7",
+          "0.99",
+          "19 bags"
+        ],
+        [
+          "8 × 4 ft",
+          "12 in",
+          "32.0",
+          "1.19",
+          "23 bags"
+        ]
       ]
     },
     "commonMistakes": [

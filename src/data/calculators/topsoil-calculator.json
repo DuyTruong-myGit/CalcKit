@@ -1,17 +1,47 @@
 {
   "slug": "topsoil-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "landscaping",
   "formulaId": "volume-weight",
   "title": "Topsoil Calculator",
   "metaTitle": "Topsoil Calculator: Cubic Yards, Tons, and Depth Needed",
   "metaDescription": "Calculate how many cubic yards and tons of topsoil you need for lawns, gardens, and leveling. Enter area dimensions and target soil depth.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 20, "min": 0 },
-    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 15, "min": 0 },
-    { "id": "depth", "label": "Depth", "unit": "in", "type": "number", "default": 4, "min": 0, "help": "Use 2 to 4 inches for lawn topdressing or 6 to 8 inches for new garden beds." },
-    { "id": "waste", "label": "Extra for compaction and settling", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+    {
+      "id": "length",
+      "label": "Length",
+      "unit": "ft",
+      "type": "number",
+      "default": 20,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Width",
+      "unit": "ft",
+      "type": "number",
+      "default": 15,
+      "min": 0
+    },
+    {
+      "id": "depth",
+      "label": "Depth",
+      "unit": "in",
+      "type": "number",
+      "default": 4,
+      "min": 0,
+      "help": "Use 2 to 4 inches for lawn topdressing or 6 to 8 inches for new garden beds."
+    },
+    {
+      "id": "waste",
+      "label": "Extra for compaction and settling",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50
+    }
   ],
   "constants": [
     {
@@ -22,30 +52,79 @@
     }
   ],
   "outputs": [
-    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
-    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
-    { "id": "tons", "label": "Estimated tons", "unit": "tons", "decimals": 2 }
+    {
+      "id": "cubicYards",
+      "label": "Cubic yards",
+      "unit": "yd³",
+      "decimals": 2,
+      "primary": true
+    },
+    {
+      "id": "cubicFeet",
+      "label": "Cubic feet",
+      "unit": "ft³",
+      "decimals": 1
+    },
+    {
+      "id": "tons",
+      "label": "Estimated tons",
+      "unit": "tons",
+      "decimals": 2
+    }
   ],
   "testCases": [
     {
       "name": "10 × 10 ft at 3 in, 0% waste, 1.1 tons/yd³",
-      "inputs": { "length": 10, "width": 10, "depth": 3, "waste": 0 },
-      "constants": { "density": 1.1 },
-      "expected": { "cubicFeet": 25, "cubicYards": 0.9259, "tons": 1.0185 },
+      "inputs": {
+        "length": 10,
+        "width": 10,
+        "depth": 3,
+        "waste": 0
+      },
+      "constants": {
+        "density": 1.1
+      },
+      "expected": {
+        "cubicFeet": 25,
+        "cubicYards": 0.9259,
+        "tons": 1.0185
+      },
       "tolerance": 0.01
     },
     {
       "name": "20 × 15 ft at 4 in, 10% waste, 1.1 tons/yd³",
-      "inputs": { "length": 20, "width": 15, "depth": 4, "waste": 10 },
-      "constants": { "density": 1.1 },
-      "expected": { "cubicFeet": 100, "cubicYards": 3.7037, "tons": 4.4815 },
+      "inputs": {
+        "length": 20,
+        "width": 15,
+        "depth": 4,
+        "waste": 10
+      },
+      "constants": {
+        "density": 1.1
+      },
+      "expected": {
+        "cubicFeet": 100,
+        "cubicYards": 3.7037,
+        "tons": 4.4815
+      },
       "tolerance": 0.01
     },
     {
       "name": "50 × 20 ft at 6 in, 5% waste, 1.2 tons/yd³",
-      "inputs": { "length": 50, "width": 20, "depth": 6, "waste": 5 },
-      "constants": { "density": 1.2 },
-      "expected": { "cubicFeet": 500, "cubicYards": 18.5185, "tons": 23.3333 },
+      "inputs": {
+        "length": 50,
+        "width": 20,
+        "depth": 6,
+        "waste": 5
+      },
+      "constants": {
+        "density": 1.2
+      },
+      "expected": {
+        "cubicFeet": 500,
+        "cubicYards": 18.5185,
+        "tons": 23.3333
+      },
       "tolerance": 0.01
     }
   ],
@@ -64,14 +143,56 @@
     ],
     "quickReference": {
       "caption": "Topsoil coverage and estimated tons at 1.1 tons per cubic yard with 10% waste",
-      "headers": ["Area", "Depth", "Cubic Feet", "Cubic Yards", "Tons Needed"],
+      "headers": [
+        "Area",
+        "Depth",
+        "Cubic Feet",
+        "Cubic Yards",
+        "Tons Needed"
+      ],
       "rows": [
-        ["100 sq ft", "2 in", "16.7", "0.62", "0.75 tons"],
-        ["100 sq ft", "4 in", "33.3", "1.23", "1.49 tons"],
-        ["200 sq ft", "3 in", "50.0", "1.85", "2.24 tons"],
-        ["300 sq ft", "4 in", "100.0", "3.70", "4.48 tons"],
-        ["500 sq ft", "4 in", "166.7", "6.17", "7.47 tons"],
-        ["1,000 sq ft", "4 in", "333.3", "12.35", "14.94 tons"]
+        [
+          "100 sq ft",
+          "2 in",
+          "16.7",
+          "0.62",
+          "0.75 tons"
+        ],
+        [
+          "100 sq ft",
+          "4 in",
+          "33.3",
+          "1.23",
+          "1.49 tons"
+        ],
+        [
+          "200 sq ft",
+          "3 in",
+          "50.0",
+          "1.85",
+          "2.24 tons"
+        ],
+        [
+          "300 sq ft",
+          "4 in",
+          "100.0",
+          "3.70",
+          "4.48 tons"
+        ],
+        [
+          "500 sq ft",
+          "4 in",
+          "166.7",
+          "6.17",
+          "7.47 tons"
+        ],
+        [
+          "1,000 sq ft",
+          "4 in",
+          "333.3",
+          "12.35",
+          "14.94 tons"
+        ]
       ]
     },
     "commonMistakes": [

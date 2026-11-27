@@ -1,41 +1,111 @@
 {
   "slug": "cubic-yard-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "utilities",
   "formulaId": "converter",
   "title": "Cubic Yard Calculator",
   "metaTitle": "Cubic Yard Calculator: Convert Yards, Feet, and Meters",
   "metaDescription": "Convert between cubic yards, cubic feet, cubic meters, and liters. Calculate rectangular volume for bulk landscaping and construction materials.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "depth", "label": "Depth / thickness", "unit": "in", "type": "number", "default": 12, "min": 0, "help": "Enter depth in inches (e.g. 12 inches for 1 foot, 3 inches for mulch)." }
+    {
+      "id": "length",
+      "label": "Length",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Width",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "depth",
+      "label": "Depth / thickness",
+      "unit": "in",
+      "type": "number",
+      "default": 12,
+      "min": 0,
+      "help": "Enter depth in inches (e.g. 12 inches for 1 foot, 3 inches for mulch)."
+    }
   ],
   "constants": [],
   "outputs": [
-    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
-    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
-    { "id": "cubicMeters", "label": "Cubic meters", "unit": "m³", "decimals": 2 },
-    { "id": "liters", "label": "Liters", "unit": "L", "decimals": 0 }
+    {
+      "id": "cubicYards",
+      "label": "Cubic yards",
+      "unit": "yd³",
+      "decimals": 2,
+      "primary": true
+    },
+    {
+      "id": "cubicFeet",
+      "label": "Cubic feet",
+      "unit": "ft³",
+      "decimals": 1
+    },
+    {
+      "id": "cubicMeters",
+      "label": "Cubic meters",
+      "unit": "m³",
+      "decimals": 2
+    },
+    {
+      "id": "liters",
+      "label": "Liters",
+      "unit": "L",
+      "decimals": 0
+    }
   ],
   "testCases": [
     {
       "name": "10 × 10 ft at 12 in (1 ft deep)",
-      "inputs": { "length": 10, "width": 10, "depth": 12 },
-      "expected": { "cubicFeet": 100, "cubicYards": 3.7037, "cubicMeters": 2.8317, "liters": 2832 },
+      "inputs": {
+        "length": 10,
+        "width": 10,
+        "depth": 12
+      },
+      "expected": {
+        "cubicFeet": 100,
+        "cubicYards": 3.7037,
+        "cubicMeters": 2.8317,
+        "liters": 2832
+      },
       "tolerance": 1
     },
     {
       "name": "27 × 1 ft at 12 in (exactly 1 cubic yard)",
-      "inputs": { "length": 27, "width": 1, "depth": 12 },
-      "expected": { "cubicFeet": 27, "cubicYards": 1.0, "cubicMeters": 0.7646, "liters": 765 },
+      "inputs": {
+        "length": 27,
+        "width": 1,
+        "depth": 12
+      },
+      "expected": {
+        "cubicFeet": 27,
+        "cubicYards": 1,
+        "cubicMeters": 0.7646,
+        "liters": 765
+      },
       "tolerance": 1
     },
     {
       "name": "20 × 15 ft at 6 in deep",
-      "inputs": { "length": 20, "width": 15, "depth": 6 },
-      "expected": { "cubicFeet": 150, "cubicYards": 5.5556, "cubicMeters": 4.2475, "liters": 4248 },
+      "inputs": {
+        "length": 20,
+        "width": 15,
+        "depth": 6
+      },
+      "expected": {
+        "cubicFeet": 150,
+        "cubicYards": 5.5556,
+        "cubicMeters": 4.2475,
+        "liters": 4248
+      },
       "tolerance": 1
     }
   ],
@@ -54,14 +124,56 @@
     ],
     "quickReference": {
       "caption": "Cubic yards and cubic feet conversions by surface area and depth",
-      "headers": ["Area (sq ft)", "Depth (in)", "Cubic Feet (ft³)", "Cubic Yards (yd³)", "Cubic Meters (m³)"],
+      "headers": [
+        "Area (sq ft)",
+        "Depth (in)",
+        "Cubic Feet (ft³)",
+        "Cubic Yards (yd³)",
+        "Cubic Meters (m³)"
+      ],
       "rows": [
-        ["100 sq ft", "2 inches", "16.7 ft³", "0.62 yd³", "0.47 m³"],
-        ["100 sq ft", "3 inches", "25.0 ft³", "0.93 yd³", "0.71 m³"],
-        ["100 sq ft", "4 inches", "33.3 ft³", "1.23 yd³", "0.94 m³"],
-        ["200 sq ft", "3 inches", "50.0 ft³", "1.85 yd³", "1.42 m³"],
-        ["500 sq ft", "3 inches", "125.0 ft³", "4.63 yd³", "3.54 m³"],
-        ["1,000 sq ft", "4 inches", "333.3 ft³", "12.35 yd³", "9.44 m³"]
+        [
+          "100 sq ft",
+          "2 inches",
+          "16.7 ft³",
+          "0.62 yd³",
+          "0.47 m³"
+        ],
+        [
+          "100 sq ft",
+          "3 inches",
+          "25.0 ft³",
+          "0.93 yd³",
+          "0.71 m³"
+        ],
+        [
+          "100 sq ft",
+          "4 inches",
+          "33.3 ft³",
+          "1.23 yd³",
+          "0.94 m³"
+        ],
+        [
+          "200 sq ft",
+          "3 inches",
+          "50.0 ft³",
+          "1.85 yd³",
+          "1.42 m³"
+        ],
+        [
+          "500 sq ft",
+          "3 inches",
+          "125.0 ft³",
+          "4.63 yd³",
+          "3.54 m³"
+        ],
+        [
+          "1,000 sq ft",
+          "4 inches",
+          "333.3 ft³",
+          "12.35 yd³",
+          "9.44 m³"
+        ]
       ]
     },
     "commonMistakes": [

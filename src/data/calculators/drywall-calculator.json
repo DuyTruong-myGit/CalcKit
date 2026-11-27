@@ -1,16 +1,39 @@
 {
   "slug": "drywall-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "painting-flooring",
   "formulaId": "unit-count",
   "title": "Drywall Calculator",
   "metaTitle": "Drywall Calculator: Sheets of Sheetrock Needed",
   "metaDescription": "Calculate how many sheets of 4x8 or 4x12 drywall you need for walls and ceilings with custom sheet sizes and waste.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Surface length / perimeter", "unit": "ft", "type": "number", "default": 40, "min": 0 },
-    { "id": "width", "label": "Wall height / surface width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 10% for standard rooms; use 15% for rooms with multiple doorways, windows, and closets." }
+    {
+      "id": "length",
+      "label": "Surface length / perimeter",
+      "unit": "ft",
+      "type": "number",
+      "default": 40,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Wall height / surface width",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "waste",
+      "label": "Extra for cuts and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 10% for standard rooms; use 15% for rooms with multiple doorways, windows, and closets."
+    }
   ],
   "constants": [
     {
@@ -21,27 +44,66 @@
     }
   ],
   "outputs": [
-    { "id": "sheets", "label": "Drywall sheets needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "area", "label": "Total surface area", "unit": "ft2", "decimals": 1 }
+    {
+      "id": "sheets",
+      "label": "Drywall sheets needed",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "area",
+      "label": "Total surface area",
+      "unit": "ft2",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "400 sq ft wall surface (400 × 1 ft), 10% waste, 4 × 8 ft (32 sq ft) sheets",
-      "inputs": { "length": 400, "width": 1, "waste": 10 },
-      "constants": { "areaPerUnit": 32 },
-      "expected": { "area": 400, "sheets": 14 }
+      "inputs": {
+        "length": 400,
+        "width": 1,
+        "waste": 10
+      },
+      "constants": {
+        "areaPerUnit": 32
+      },
+      "expected": {
+        "area": 400,
+        "sheets": 14
+      }
     },
     {
       "name": "40 × 10 ft wall surface, 0% waste, 4 × 8 ft (32 sq ft) sheets",
-      "inputs": { "length": 40, "width": 10, "waste": 0 },
-      "constants": { "areaPerUnit": 32 },
-      "expected": { "area": 400, "sheets": 13 }
+      "inputs": {
+        "length": 40,
+        "width": 10,
+        "waste": 0
+      },
+      "constants": {
+        "areaPerUnit": 32
+      },
+      "expected": {
+        "area": 400,
+        "sheets": 13
+      }
     },
     {
       "name": "60 × 10 ft wall surface, 10% waste, 4 × 12 ft (48 sq ft) sheets",
-      "inputs": { "length": 60, "width": 10, "waste": 10 },
-      "constants": { "areaPerUnit": 48 },
-      "expected": { "area": 600, "sheets": 14 }
+      "inputs": {
+        "length": 60,
+        "width": 10,
+        "waste": 10
+      },
+      "constants": {
+        "areaPerUnit": 48
+      },
+      "expected": {
+        "area": 600,
+        "sheets": 14
+      }
     }
   ],
   "content": {
@@ -59,14 +121,49 @@
     ],
     "quickReference": {
       "caption": "Drywall sheet counts by wall area (using 4 × 8 ft sheets with 10% waste)",
-      "headers": ["Surface Area", "Area with 10% Waste", "4 × 8 ft Sheets (32 sq ft)", "4 × 12 ft Sheets (48 sq ft)"],
+      "headers": [
+        "Surface Area",
+        "Area with 10% Waste",
+        "4 × 8 ft Sheets (32 sq ft)",
+        "4 × 12 ft Sheets (48 sq ft)"
+      ],
       "rows": [
-        ["200 sq ft", "220 sq ft", "7 sheets", "5 sheets"],
-        ["300 sq ft", "330 sq ft", "11 sheets", "7 sheets"],
-        ["400 sq ft", "440 sq ft", "14 sheets", "10 sheets"],
-        ["600 sq ft", "660 sq ft", "21 sheets", "14 sheets"],
-        ["800 sq ft", "880 sq ft", "28 sheets", "19 sheets"],
-        ["1,000 sq ft", "1,100 sq ft", "35 sheets", "23 sheets"]
+        [
+          "200 sq ft",
+          "220 sq ft",
+          "7 sheets",
+          "5 sheets"
+        ],
+        [
+          "300 sq ft",
+          "330 sq ft",
+          "11 sheets",
+          "7 sheets"
+        ],
+        [
+          "400 sq ft",
+          "440 sq ft",
+          "14 sheets",
+          "10 sheets"
+        ],
+        [
+          "600 sq ft",
+          "660 sq ft",
+          "21 sheets",
+          "14 sheets"
+        ],
+        [
+          "800 sq ft",
+          "880 sq ft",
+          "28 sheets",
+          "19 sheets"
+        ],
+        [
+          "1,000 sq ft",
+          "1,100 sq ft",
+          "35 sheets",
+          "23 sheets"
+        ]
       ]
     },
     "commonMistakes": [

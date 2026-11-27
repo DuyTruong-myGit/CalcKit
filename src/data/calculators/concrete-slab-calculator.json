@@ -1,17 +1,47 @@
 {
   "slug": "concrete-slab-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "concrete-masonry",
   "formulaId": "concrete-slab",
   "title": "Concrete Slab Calculator",
   "metaTitle": "Concrete Slab Calculator: Bags and Cubic Yards",
   "metaDescription": "Calculate how many bags or cubic yards of concrete you need for slabs, patios, and footings. Supports 60-lb and 80-lb bags with waste allowance.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Length", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "width", "label": "Width", "unit": "ft", "type": "number", "default": 10, "min": 0 },
-    { "id": "depth", "label": "Depth / Thickness", "unit": "in", "type": "number", "default": 4, "min": 0, "help": "Most patios and walkways are 4 inches thick." },
-    { "id": "waste", "label": "Extra for waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+    {
+      "id": "length",
+      "label": "Length",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Width",
+      "unit": "ft",
+      "type": "number",
+      "default": 10,
+      "min": 0
+    },
+    {
+      "id": "depth",
+      "label": "Depth / Thickness",
+      "unit": "in",
+      "type": "number",
+      "default": 4,
+      "min": 0,
+      "help": "Most patios and walkways are 4 inches thick."
+    },
+    {
+      "id": "waste",
+      "label": "Extra for waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50
+    }
   ],
   "constants": [
     {
@@ -22,28 +52,78 @@
     }
   ],
   "outputs": [
-    { "id": "cubicYards", "label": "Cubic yards", "unit": "yd³", "decimals": 2, "primary": true },
-    { "id": "cubicFeet", "label": "Cubic feet", "unit": "ft³", "decimals": 1 },
-    { "id": "bags", "label": "Bags needed", "unit": "bags", "decimals": 0, "roundUp": true }
+    {
+      "id": "cubicYards",
+      "label": "Cubic yards",
+      "unit": "yd³",
+      "decimals": 2,
+      "primary": true
+    },
+    {
+      "id": "cubicFeet",
+      "label": "Cubic feet",
+      "unit": "ft³",
+      "decimals": 1
+    },
+    {
+      "id": "bags",
+      "label": "Bags needed",
+      "unit": "bags",
+      "decimals": 0,
+      "roundUp": true
+    }
   ],
   "testCases": [
     {
       "name": "10 × 10 ft at 4 in, waste 0, yield 0.6",
-      "inputs": { "length": 10, "width": 10, "depth": 4, "waste": 0 },
-      "constants": { "yield": 0.6 },
-      "expected": { "cubicFeet": 33.333, "cubicYards": 1.2346, "bags": 56 }
+      "inputs": {
+        "length": 10,
+        "width": 10,
+        "depth": 4,
+        "waste": 0
+      },
+      "constants": {
+        "yield": 0.6
+      },
+      "expected": {
+        "cubicFeet": 33.333,
+        "cubicYards": 1.2346,
+        "bags": 56
+      }
     },
     {
       "name": "12 × 12 ft at 4 in, waste 10%, yield 0.6",
-      "inputs": { "length": 12, "width": 12, "depth": 4, "waste": 10 },
-      "constants": { "yield": 0.6 },
-      "expected": { "cubicFeet": 48, "cubicYards": 1.7778, "bags": 88 }
+      "inputs": {
+        "length": 12,
+        "width": 12,
+        "depth": 4,
+        "waste": 10
+      },
+      "constants": {
+        "yield": 0.6
+      },
+      "expected": {
+        "cubicFeet": 48,
+        "cubicYards": 1.7778,
+        "bags": 88
+      }
     },
     {
       "name": "6 × 6 ft at 6 in, waste 0, yield 0.45 (60-lb bags)",
-      "inputs": { "length": 6, "width": 6, "depth": 6, "waste": 0 },
-      "constants": { "yield": 0.45 },
-      "expected": { "cubicFeet": 18, "cubicYards": 0.6667, "bags": 40 }
+      "inputs": {
+        "length": 6,
+        "width": 6,
+        "depth": 6,
+        "waste": 0
+      },
+      "constants": {
+        "yield": 0.45
+      },
+      "expected": {
+        "cubicFeet": 18,
+        "cubicYards": 0.6667,
+        "bags": 40
+      }
     }
   ],
   "content": {
@@ -61,15 +141,63 @@
     ],
     "quickReference": {
       "caption": "Concrete slab volume and 80-lb bag requirements at 4 inches thick with 10% waste",
-      "headers": ["Slab Size", "Thickness", "Cubic Feet", "Cubic Yards", "80-lb Bags (0.6 ft³)"],
+      "headers": [
+        "Slab Size",
+        "Thickness",
+        "Cubic Feet",
+        "Cubic Yards",
+        "80-lb Bags (0.6 ft³)"
+      ],
       "rows": [
-        ["6 × 6 ft", "4 in", "12.0", "0.44", "22 bags"],
-        ["8 × 8 ft", "4 in", "21.3", "0.79", "40 bags"],
-        ["10 × 10 ft", "4 in", "33.3", "1.23", "62 bags"],
-        ["12 × 12 ft", "4 in", "48.0", "1.78", "88 bags"],
-        ["10 × 20 ft", "4 in", "66.7", "2.47", "123 bags"],
-        ["12 × 20 ft", "4 in", "80.0", "2.96", "147 bags"],
-        ["10 × 10 ft", "6 in", "50.0", "1.85", "92 bags"]
+        [
+          "6 × 6 ft",
+          "4 in",
+          "12.0",
+          "0.44",
+          "22 bags"
+        ],
+        [
+          "8 × 8 ft",
+          "4 in",
+          "21.3",
+          "0.79",
+          "40 bags"
+        ],
+        [
+          "10 × 10 ft",
+          "4 in",
+          "33.3",
+          "1.23",
+          "62 bags"
+        ],
+        [
+          "12 × 12 ft",
+          "4 in",
+          "48.0",
+          "1.78",
+          "88 bags"
+        ],
+        [
+          "10 × 20 ft",
+          "4 in",
+          "66.7",
+          "2.47",
+          "123 bags"
+        ],
+        [
+          "12 × 20 ft",
+          "4 in",
+          "80.0",
+          "2.96",
+          "147 bags"
+        ],
+        [
+          "10 × 10 ft",
+          "6 in",
+          "50.0",
+          "1.85",
+          "92 bags"
+        ]
       ]
     },
     "commonMistakes": [

@@ -1,16 +1,39 @@
 {
   "slug": "sod-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "landscaping",
   "formulaId": "unit-count",
   "title": "Sod Calculator",
   "metaTitle": "Sod Calculator: Lawn Rolls and Pallets Needed",
   "metaDescription": "Calculate how many rolls and pallets of sod you need for your new lawn. Includes cut-waste allowances and pallet estimations.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Lawn length", "unit": "ft", "type": "number", "default": 50, "min": 0 },
-    { "id": "width", "label": "Lawn width", "unit": "ft", "type": "number", "default": 20, "min": 0 },
-    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 5% to 10% for rectangular lawns; use 10% to 15% for curved borders." }
+    {
+      "id": "length",
+      "label": "Lawn length",
+      "unit": "ft",
+      "type": "number",
+      "default": 50,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Lawn width",
+      "unit": "ft",
+      "type": "number",
+      "default": 20,
+      "min": 0
+    },
+    {
+      "id": "waste",
+      "label": "Extra for cuts and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 5% to 10% for rectangular lawns; use 10% to 15% for curved borders."
+    }
   ],
   "constants": [
     {
@@ -21,27 +44,66 @@
     }
   ],
   "outputs": [
-    { "id": "rolls", "label": "Sod rolls needed", "unit": "rolls", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "area", "label": "Total lawn area", "unit": "sq ft", "decimals": 1 }
+    {
+      "id": "rolls",
+      "label": "Sod rolls needed",
+      "unit": "rolls",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "area",
+      "label": "Total lawn area",
+      "unit": "sq ft",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "50 × 20 ft lawn, 0% waste, 10 sq ft rolls",
-      "inputs": { "length": 50, "width": 20, "waste": 0 },
-      "constants": { "areaPerUnit": 10 },
-      "expected": { "area": 1000, "rolls": 100 }
+      "inputs": {
+        "length": 50,
+        "width": 20,
+        "waste": 0
+      },
+      "constants": {
+        "areaPerUnit": 10
+      },
+      "expected": {
+        "area": 1000,
+        "rolls": 100
+      }
     },
     {
       "name": "50 × 20 ft lawn, 10% waste, 10 sq ft rolls",
-      "inputs": { "length": 50, "width": 20, "waste": 10 },
-      "constants": { "areaPerUnit": 10 },
-      "expected": { "area": 1000, "rolls": 110 }
+      "inputs": {
+        "length": 50,
+        "width": 20,
+        "waste": 10
+      },
+      "constants": {
+        "areaPerUnit": 10
+      },
+      "expected": {
+        "area": 1000,
+        "rolls": 110
+      }
     },
     {
       "name": "30 × 15 ft lawn, 5% waste, 9 sq ft rolls",
-      "inputs": { "length": 30, "width": 15, "waste": 5 },
-      "constants": { "areaPerUnit": 9 },
-      "expected": { "area": 450, "rolls": 53 }
+      "inputs": {
+        "length": 30,
+        "width": 15,
+        "waste": 5
+      },
+      "constants": {
+        "areaPerUnit": 9
+      },
+      "expected": {
+        "area": 450,
+        "rolls": 53
+      }
     }
   ],
   "content": {
@@ -59,14 +121,49 @@
     ],
     "quickReference": {
       "caption": "Sod roll and pallet estimates with 10% cutting allowance",
-      "headers": ["Lawn Dimensions", "Lawn Area", "10 sq ft Rolls", "Estimated Pallets (500 sq ft)"],
+      "headers": [
+        "Lawn Dimensions",
+        "Lawn Area",
+        "10 sq ft Rolls",
+        "Estimated Pallets (500 sq ft)"
+      ],
       "rows": [
-        ["20 × 25 ft", "500 sq ft", "55 rolls", "1.1 pallets"],
-        ["40 × 25 ft", "1,000 sq ft", "110 rolls", "2.2 pallets"],
-        ["50 × 30 ft", "1,500 sq ft", "165 rolls", "3.3 pallets"],
-        ["50 × 40 ft", "2,000 sq ft", "220 rolls", "4.4 pallets"],
-        ["60 × 50 ft", "3,000 sq ft", "330 rolls", "6.6 pallets"],
-        ["100 × 50 ft", "5,000 sq ft", "550 rolls", "11 pallets"]
+        [
+          "20 × 25 ft",
+          "500 sq ft",
+          "55 rolls",
+          "1.1 pallets"
+        ],
+        [
+          "40 × 25 ft",
+          "1,000 sq ft",
+          "110 rolls",
+          "2.2 pallets"
+        ],
+        [
+          "50 × 30 ft",
+          "1,500 sq ft",
+          "165 rolls",
+          "3.3 pallets"
+        ],
+        [
+          "50 × 40 ft",
+          "2,000 sq ft",
+          "220 rolls",
+          "4.4 pallets"
+        ],
+        [
+          "60 × 50 ft",
+          "3,000 sq ft",
+          "330 rolls",
+          "6.6 pallets"
+        ],
+        [
+          "100 × 50 ft",
+          "5,000 sq ft",
+          "550 rolls",
+          "11 pallets"
+        ]
       ]
     },
     "commonMistakes": [

@@ -1,17 +1,47 @@
 {
   "slug": "concrete-post-hole-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "concrete-masonry",
   "formulaId": "concrete-cylinder",
   "title": "Post Hole Concrete Calculator",
   "metaTitle": "Post Hole Concrete Calculator: Bags Needed per Footing",
   "metaDescription": "Calculate how many bags of concrete you need for fence post holes and deck footings. Enter hole diameter, depth, and post count.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "diameter", "label": "Hole diameter", "unit": "in", "type": "number", "default": 10, "min": 4 },
-    { "id": "depth", "label": "Hole depth", "unit": "in", "type": "number", "default": 36, "min": 6, "help": "Hole depth must extend below your local frost line (commonly 30 to 48 inches)." },
-    { "id": "holes", "label": "Number of holes", "unit": "count", "type": "number", "default": 4, "min": 1 },
-    { "id": "waste", "label": "Extra for spillage and irregular soil", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50 }
+    {
+      "id": "diameter",
+      "label": "Hole diameter",
+      "unit": "in",
+      "type": "number",
+      "default": 10,
+      "min": 4
+    },
+    {
+      "id": "depth",
+      "label": "Hole depth",
+      "unit": "in",
+      "type": "number",
+      "default": 36,
+      "min": 6,
+      "help": "Hole depth must extend below your local frost line (commonly 30 to 48 inches)."
+    },
+    {
+      "id": "holes",
+      "label": "Number of holes",
+      "unit": "count",
+      "type": "number",
+      "default": 4,
+      "min": 1
+    },
+    {
+      "id": "waste",
+      "label": "Extra for spillage and irregular soil",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50
+    }
   ],
   "constants": [
     {
@@ -28,31 +58,89 @@
     }
   ],
   "outputs": [
-    { "id": "bags", "label": "80-lb bags needed", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "bags60", "label": "60-lb bags needed", "unit": "count", "decimals": 0, "roundUp": true },
-    { "id": "cubicFeet", "label": "Total cubic feet", "unit": "ft", "decimals": 2 },
-    { "id": "cubicYards", "label": "Total cubic yards", "unit": "yd", "decimals": 2 }
+    {
+      "id": "bags",
+      "label": "80-lb bags needed",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "bags60",
+      "label": "60-lb bags needed",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true
+    },
+    {
+      "id": "cubicFeet",
+      "label": "Total cubic feet",
+      "unit": "ft",
+      "decimals": 2
+    },
+    {
+      "id": "cubicYards",
+      "label": "Total cubic yards",
+      "unit": "yd",
+      "decimals": 2
+    }
   ],
   "testCases": [
     {
       "name": "1 hole, 12 in diameter, 36 in deep, 0% waste",
-      "inputs": { "diameter": 12, "depth": 36, "holes": 1, "waste": 0 },
-      "constants": { "yield80": 0.6, "yield60": 0.45 },
-      "expected": { "cubicFeet": 2.3562, "bags": 4, "bags60": 6 },
+      "inputs": {
+        "diameter": 12,
+        "depth": 36,
+        "holes": 1,
+        "waste": 0
+      },
+      "constants": {
+        "yield80": 0.6,
+        "yield60": 0.45
+      },
+      "expected": {
+        "cubicFeet": 2.3562,
+        "bags": 4,
+        "bags60": 6
+      },
       "tolerance": 0.01
     },
     {
       "name": "4 holes, 10 in diameter, 36 in deep, 10% waste",
-      "inputs": { "diameter": 10, "depth": 36, "holes": 4, "waste": 10 },
-      "constants": { "yield80": 0.6, "yield60": 0.45 },
-      "expected": { "cubicFeet": 6.545, "bags": 12, "bags60": 16 },
+      "inputs": {
+        "diameter": 10,
+        "depth": 36,
+        "holes": 4,
+        "waste": 10
+      },
+      "constants": {
+        "yield80": 0.6,
+        "yield60": 0.45
+      },
+      "expected": {
+        "cubicFeet": 6.545,
+        "bags": 12,
+        "bags60": 16
+      },
       "tolerance": 0.01
     },
     {
       "name": "6 holes, 8 in diameter, 24 in deep, 0% waste",
-      "inputs": { "diameter": 8, "depth": 24, "holes": 6, "waste": 0 },
-      "constants": { "yield80": 0.6, "yield60": 0.45 },
-      "expected": { "cubicFeet": 4.1888, "bags": 7 },
+      "inputs": {
+        "diameter": 8,
+        "depth": 24,
+        "holes": 6,
+        "waste": 0
+      },
+      "constants": {
+        "yield80": 0.6,
+        "yield60": 0.45
+      },
+      "expected": {
+        "cubicFeet": 4.1888,
+        "bags": 7
+      },
       "tolerance": 0.01
     }
   ],
@@ -71,12 +159,37 @@
     ],
     "quickReference": {
       "caption": "80-lb concrete bag estimates per single post hole (10% waste)",
-      "headers": ["Hole Diameter", "Hole Depth (24 in)", "Hole Depth (36 in)", "Hole Depth (48 in)"],
+      "headers": [
+        "Hole Diameter",
+        "Hole Depth (24 in)",
+        "Hole Depth (36 in)",
+        "Hole Depth (48 in)"
+      ],
       "rows": [
-        ["8 inches", "1.5 bags (order 2)", "2.2 bags (order 3)", "2.9 bags (order 3)"],
-        ["10 inches", "2.3 bags (order 3)", "3.4 bags (order 4)", "4.5 bags (order 5)"],
-        ["12 inches", "3.2 bags (order 4)", "4.8 bags (order 5)", "6.4 bags (order 7)"],
-        ["14 inches", "4.4 bags (order 5)", "6.5 bags (order 7)", "8.7 bags (order 9)"]
+        [
+          "8 inches",
+          "1.5 bags (order 2)",
+          "2.2 bags (order 3)",
+          "2.9 bags (order 3)"
+        ],
+        [
+          "10 inches",
+          "2.3 bags (order 3)",
+          "3.4 bags (order 4)",
+          "4.5 bags (order 5)"
+        ],
+        [
+          "12 inches",
+          "3.2 bags (order 4)",
+          "4.8 bags (order 5)",
+          "6.4 bags (order 7)"
+        ],
+        [
+          "14 inches",
+          "4.4 bags (order 5)",
+          "6.5 bags (order 7)",
+          "8.7 bags (order 9)"
+        ]
       ]
     },
     "commonMistakes": [

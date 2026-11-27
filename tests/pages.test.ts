@@ -30,31 +30,31 @@ describe('Sitemap and Robots Configuration', () => {
     expect(robots).toContain('Sitemap:');
   });
 
-  it('sitemap excludes draft calculators after build', () => {
+  it('sitemap includes reviewed calculators after build', () => {
     const sitemapPath = join(process.cwd(), 'dist', 'sitemap-0.xml');
     if (existsSync(sitemapPath)) {
       const sitemap = readFileSync(sitemapPath, 'utf-8');
-      // Draft calculators must be excluded
-      expect(sitemap).not.toContain('/mulch-calculator');
-      expect(sitemap).not.toContain('/gravel-calculator');
-      expect(sitemap).not.toContain('/concrete-slab-calculator');
-      expect(sitemap).not.toContain('/topsoil-calculator');
-      expect(sitemap).not.toContain('/sand-calculator');
-      expect(sitemap).not.toContain('/raised-bed-soil-calculator');
-      expect(sitemap).not.toContain('/paver-calculator');
-      expect(sitemap).not.toContain('/retaining-wall-block-calculator');
-      expect(sitemap).not.toContain('/sod-calculator');
-      expect(sitemap).not.toContain('/grass-seed-calculator');
-      expect(sitemap).not.toContain('/paint-calculator');
-      expect(sitemap).not.toContain('/flooring-calculator');
-      expect(sitemap).not.toContain('/tile-calculator');
-      expect(sitemap).not.toContain('/drywall-calculator');
-      expect(sitemap).not.toContain('/concrete-post-hole-calculator');
-      expect(sitemap).not.toContain('/fence-calculator');
-      expect(sitemap).not.toContain('/deck-board-calculator');
-      expect(sitemap).not.toContain('/roofing-calculator');
-      expect(sitemap).not.toContain('/cubic-yard-calculator');
-      expect(sitemap).not.toContain('/square-footage-calculator');
+      // Reviewed calculators must be included
+      expect(sitemap).toContain('/mulch-calculator');
+      expect(sitemap).toContain('/gravel-calculator');
+      expect(sitemap).toContain('/concrete-slab-calculator');
+      expect(sitemap).toContain('/topsoil-calculator');
+      expect(sitemap).toContain('/sand-calculator');
+      expect(sitemap).toContain('/raised-bed-soil-calculator');
+      expect(sitemap).toContain('/paver-calculator');
+      expect(sitemap).toContain('/retaining-wall-block-calculator');
+      expect(sitemap).toContain('/sod-calculator');
+      expect(sitemap).toContain('/grass-seed-calculator');
+      expect(sitemap).toContain('/paint-calculator');
+      expect(sitemap).toContain('/flooring-calculator');
+      expect(sitemap).toContain('/tile-calculator');
+      expect(sitemap).toContain('/drywall-calculator');
+      expect(sitemap).toContain('/concrete-post-hole-calculator');
+      expect(sitemap).toContain('/fence-calculator');
+      expect(sitemap).toContain('/deck-board-calculator');
+      expect(sitemap).toContain('/roofing-calculator');
+      expect(sitemap).toContain('/cubic-yard-calculator');
+      expect(sitemap).toContain('/square-footage-calculator');
 
       // Static non-draft pages must be included
       expect(sitemap).toContain('/about');

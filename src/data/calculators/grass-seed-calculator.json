@@ -1,16 +1,38 @@
 {
   "slug": "grass-seed-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "landscaping",
   "formulaId": "seed-rate",
   "title": "Grass Seed Calculator",
   "metaTitle": "Grass Seed Calculator: Pounds of Seed Needed by Lawn Area",
   "metaDescription": "Calculate how many pounds of grass seed you need for new lawns or overseeding. Enter lawn dimensions and recommended seeding rates.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Lawn length", "unit": "ft", "type": "number", "default": 50, "min": 0 },
-    { "id": "width", "label": "Lawn width", "unit": "ft", "type": "number", "default": 40, "min": 0 },
-    { "id": "rate", "label": "Seeding rate (lb per 1,000 sq ft)", "unit": "lb", "type": "number", "default": 4, "min": 0.5, "help": "Check your seed bag label. New lawns typically use 4 to 8 lbs/1,000 sq ft; overseeding uses 2 to 4 lbs." }
+    {
+      "id": "length",
+      "label": "Lawn length",
+      "unit": "ft",
+      "type": "number",
+      "default": 50,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Lawn width",
+      "unit": "ft",
+      "type": "number",
+      "default": 40,
+      "min": 0
+    },
+    {
+      "id": "rate",
+      "label": "Seeding rate (lb per 1,000 sq ft)",
+      "unit": "lb",
+      "type": "number",
+      "default": 4,
+      "min": 0.5,
+      "help": "Check your seed bag label. New lawns typically use 4 to 8 lbs/1,000 sq ft; overseeding uses 2 to 4 lbs."
+    }
   ],
   "constants": [
     {
@@ -21,28 +43,75 @@
     }
   ],
   "outputs": [
-    { "id": "pounds", "label": "Total seed needed", "unit": "lbs", "decimals": 1, "primary": true },
-    { "id": "bags", "label": "Bags to purchase", "unit": "bags", "decimals": 0, "roundUp": true },
-    { "id": "area", "label": "Total lawn area", "unit": "sq ft", "decimals": 1 }
+    {
+      "id": "pounds",
+      "label": "Total seed needed",
+      "unit": "lbs",
+      "decimals": 1,
+      "primary": true
+    },
+    {
+      "id": "bags",
+      "label": "Bags to purchase",
+      "unit": "bags",
+      "decimals": 0,
+      "roundUp": true
+    },
+    {
+      "id": "area",
+      "label": "Total lawn area",
+      "unit": "sq ft",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "50 × 40 ft lawn, 4 lbs/1000 sq ft, 5 lb bags",
-      "inputs": { "length": 50, "width": 40, "rate": 4 },
-      "constants": { "bagSize": 5 },
-      "expected": { "area": 2000, "pounds": 8, "bags": 2 }
+      "inputs": {
+        "length": 50,
+        "width": 40,
+        "rate": 4
+      },
+      "constants": {
+        "bagSize": 5
+      },
+      "expected": {
+        "area": 2000,
+        "pounds": 8,
+        "bags": 2
+      }
     },
     {
       "name": "100 × 50 ft lawn, 6 lbs/1000 sq ft, 25 lb bags",
-      "inputs": { "length": 100, "width": 50, "rate": 6 },
-      "constants": { "bagSize": 25 },
-      "expected": { "area": 5000, "pounds": 30, "bags": 2 }
+      "inputs": {
+        "length": 100,
+        "width": 50,
+        "rate": 6
+      },
+      "constants": {
+        "bagSize": 25
+      },
+      "expected": {
+        "area": 5000,
+        "pounds": 30,
+        "bags": 2
+      }
     },
     {
       "name": "25 × 20 ft lawn patch, 3 lbs/1000 sq ft, 5 lb bags",
-      "inputs": { "length": 25, "width": 20, "rate": 3 },
-      "constants": { "bagSize": 5 },
-      "expected": { "area": 500, "pounds": 1.5, "bags": 1 }
+      "inputs": {
+        "length": 25,
+        "width": 20,
+        "rate": 3
+      },
+      "constants": {
+        "bagSize": 5
+      },
+      "expected": {
+        "area": 500,
+        "pounds": 1.5,
+        "bags": 1
+      }
     }
   ],
   "content": {
@@ -60,14 +129,49 @@
     ],
     "quickReference": {
       "caption": "Typical seeding rates by grass type (pounds per 1,000 sq ft)",
-      "headers": ["Grass Species", "New Lawn Rate", "Overseeding Rate", "Germination Time"],
+      "headers": [
+        "Grass Species",
+        "New Lawn Rate",
+        "Overseeding Rate",
+        "Germination Time"
+      ],
       "rows": [
-        ["Kentucky Bluegrass", "2 – 3 lbs", "1 – 2 lbs", "14 – 28 days"],
-        ["Tall Fescue", "6 – 8 lbs", "3 – 4 lbs", "7 – 14 days"],
-        ["Perennial Ryegrass", "5 – 7 lbs", "3 – 4 lbs", "5 – 10 days"],
-        ["Fine Fescue", "4 – 5 lbs", "2 – 3 lbs", "10 – 14 days"],
-        ["Bermudagrass (hulled)", "1 – 2 lbs", "0.5 – 1 lb", "7 – 14 days"],
-        ["Zoysiagrass", "1 – 2 lbs", "0.5 – 1 lb", "14 – 21 days"]
+        [
+          "Kentucky Bluegrass",
+          "2 – 3 lbs",
+          "1 – 2 lbs",
+          "14 – 28 days"
+        ],
+        [
+          "Tall Fescue",
+          "6 – 8 lbs",
+          "3 – 4 lbs",
+          "7 – 14 days"
+        ],
+        [
+          "Perennial Ryegrass",
+          "5 – 7 lbs",
+          "3 – 4 lbs",
+          "5 – 10 days"
+        ],
+        [
+          "Fine Fescue",
+          "4 – 5 lbs",
+          "2 – 3 lbs",
+          "10 – 14 days"
+        ],
+        [
+          "Bermudagrass (hulled)",
+          "1 – 2 lbs",
+          "0.5 – 1 lb",
+          "7 – 14 days"
+        ],
+        [
+          "Zoysiagrass",
+          "1 – 2 lbs",
+          "0.5 – 1 lb",
+          "14 – 21 days"
+        ]
       ]
     },
     "commonMistakes": [

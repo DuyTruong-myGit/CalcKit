@@ -1,16 +1,37 @@
 {
   "slug": "fence-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "structures-roofing",
   "formulaId": "fence",
   "title": "Fence Calculator",
   "metaTitle": "Fence Calculator: Posts, Rails, and Pickets Needed",
   "metaDescription": "Calculate how many fence posts, rails, and pickets you need for wood privacy fences or pre-built panels with gate and corner allowances.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Total fence length", "unit": "ft", "type": "number", "default": 100, "min": 0 },
-    { "id": "gates", "label": "Number of gates", "unit": "count", "type": "number", "default": 1, "min": 0 },
-    { "id": "corners", "label": "Number of corner posts", "unit": "count", "type": "number", "default": 2, "min": 0 }
+    {
+      "id": "length",
+      "label": "Total fence length",
+      "unit": "ft",
+      "type": "number",
+      "default": 100,
+      "min": 0
+    },
+    {
+      "id": "gates",
+      "label": "Number of gates",
+      "unit": "count",
+      "type": "number",
+      "default": 1,
+      "min": 0
+    },
+    {
+      "id": "corners",
+      "label": "Number of corner posts",
+      "unit": "count",
+      "type": "number",
+      "default": 2,
+      "min": 0
+    }
   ],
   "constants": [
     {
@@ -39,29 +60,96 @@
     }
   ],
   "outputs": [
-    { "id": "posts", "label": "Total fence posts", "unit": "count", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "panels", "label": "Pre-built panels", "unit": "count", "decimals": 0, "roundUp": true },
-    { "id": "rails", "label": "Horizontal 2×4 rails", "unit": "count", "decimals": 0, "roundUp": true },
-    { "id": "pickets", "label": "Individual pickets", "unit": "count", "decimals": 0, "roundUp": true }
+    {
+      "id": "posts",
+      "label": "Total fence posts",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "panels",
+      "label": "Pre-built panels",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true
+    },
+    {
+      "id": "rails",
+      "label": "Horizontal 2×4 rails",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true
+    },
+    {
+      "id": "pickets",
+      "label": "Individual pickets",
+      "unit": "count",
+      "decimals": 0,
+      "roundUp": true
+    }
   ],
   "testCases": [
     {
       "name": "100 ft fence, 8 ft spacing, 0 gates, 0 corners",
-      "inputs": { "length": 100, "gates": 0, "corners": 0 },
-      "constants": { "postSpacing": 8, "panelWidth": 8, "railsPerSection": 3, "picketsPerFoot": 2.25 },
-      "expected": { "posts": 14, "panels": 13, "rails": 39, "pickets": 225 }
+      "inputs": {
+        "length": 100,
+        "gates": 0,
+        "corners": 0
+      },
+      "constants": {
+        "postSpacing": 8,
+        "panelWidth": 8,
+        "railsPerSection": 3,
+        "picketsPerFoot": 2.25
+      },
+      "expected": {
+        "posts": 14,
+        "panels": 13,
+        "rails": 39,
+        "pickets": 225
+      }
     },
     {
       "name": "120 ft fence, 8 ft spacing, 1 gate, 2 corners",
-      "inputs": { "length": 120, "gates": 1, "corners": 2 },
-      "constants": { "postSpacing": 8, "panelWidth": 8, "railsPerSection": 3, "picketsPerFoot": 2.25 },
-      "expected": { "posts": 19, "panels": 15, "rails": 45, "pickets": 270 }
+      "inputs": {
+        "length": 120,
+        "gates": 1,
+        "corners": 2
+      },
+      "constants": {
+        "postSpacing": 8,
+        "panelWidth": 8,
+        "railsPerSection": 3,
+        "picketsPerFoot": 2.25
+      },
+      "expected": {
+        "posts": 19,
+        "panels": 15,
+        "rails": 45,
+        "pickets": 270
+      }
     },
     {
       "name": "48 ft fence, 8 ft spacing, 0 gates, 0 corners",
-      "inputs": { "length": 48, "gates": 0, "corners": 0 },
-      "constants": { "postSpacing": 8, "panelWidth": 8, "railsPerSection": 3, "picketsPerFoot": 2.25 },
-      "expected": { "posts": 7, "panels": 6, "rails": 18, "pickets": 108 }
+      "inputs": {
+        "length": 48,
+        "gates": 0,
+        "corners": 0
+      },
+      "constants": {
+        "postSpacing": 8,
+        "panelWidth": 8,
+        "railsPerSection": 3,
+        "picketsPerFoot": 2.25
+      },
+      "expected": {
+        "posts": 7,
+        "panels": 6,
+        "rails": 18,
+        "pickets": 108
+      }
     }
   ],
   "content": {
@@ -79,14 +167,56 @@
     ],
     "quickReference": {
       "caption": "Fence material estimates by total run length (8-foot spacing, 3 rails)",
-      "headers": ["Total Run Length", "Posts (Straight Run)", "Pre-Built Panels (8 ft)", "Horizontal 2×4 Rails", "Pickets (5.5 in)"],
+      "headers": [
+        "Total Run Length",
+        "Posts (Straight Run)",
+        "Pre-Built Panels (8 ft)",
+        "Horizontal 2×4 Rails",
+        "Pickets (5.5 in)"
+      ],
       "rows": [
-        ["50 feet", "8 posts", "7 panels", "21 rails", "113 pickets"],
-        ["75 feet", "11 posts", "10 panels", "30 rails", "169 pickets"],
-        ["100 feet", "14 posts", "13 panels", "39 rails", "225 pickets"],
-        ["150 feet", "20 posts", "19 panels", "57 rails", "338 pickets"],
-        ["200 feet", "26 posts", "25 panels", "75 rails", "450 pickets"],
-        ["300 feet", "39 posts", "38 panels", "114 rails", "675 pickets"]
+        [
+          "50 feet",
+          "8 posts",
+          "7 panels",
+          "21 rails",
+          "113 pickets"
+        ],
+        [
+          "75 feet",
+          "11 posts",
+          "10 panels",
+          "30 rails",
+          "169 pickets"
+        ],
+        [
+          "100 feet",
+          "14 posts",
+          "13 panels",
+          "39 rails",
+          "225 pickets"
+        ],
+        [
+          "150 feet",
+          "20 posts",
+          "19 panels",
+          "57 rails",
+          "338 pickets"
+        ],
+        [
+          "200 feet",
+          "26 posts",
+          "25 panels",
+          "75 rails",
+          "450 pickets"
+        ],
+        [
+          "300 feet",
+          "39 posts",
+          "38 panels",
+          "114 rails",
+          "675 pickets"
+        ]
       ]
     },
     "commonMistakes": [

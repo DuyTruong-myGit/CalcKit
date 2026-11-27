@@ -1,16 +1,40 @@
 {
   "slug": "retaining-wall-block-calculator",
-  "status": "draft",
+  "status": "reviewed",
   "category": "concrete-masonry",
   "formulaId": "unit-count",
   "title": "Retaining Wall Block Calculator",
   "metaTitle": "Retaining Wall Block Calculator: Wall Blocks and Capstones",
   "metaDescription": "Calculate how many retaining wall blocks and capstones you need. Enter wall length and height with adjustable unit dimensions and waste.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-27",
   "inputs": [
-    { "id": "length", "label": "Wall length", "unit": "ft", "type": "number", "default": 20, "min": 0 },
-    { "id": "width", "label": "Total wall height", "unit": "ft", "type": "number", "default": 3, "min": 0, "help": "Include the buried base course (usually 4 to 6 inches below ground level)." },
-    { "id": "waste", "label": "Extra for cuts and waste", "unit": "pct", "type": "number", "default": 10, "min": 0, "max": 50, "help": "Use 5% to 10% for straight walls; use 10% to 15% for curved or stepped walls." }
+    {
+      "id": "length",
+      "label": "Wall length",
+      "unit": "ft",
+      "type": "number",
+      "default": 20,
+      "min": 0
+    },
+    {
+      "id": "width",
+      "label": "Total wall height",
+      "unit": "ft",
+      "type": "number",
+      "default": 3,
+      "min": 0,
+      "help": "Include the buried base course (usually 4 to 6 inches below ground level)."
+    },
+    {
+      "id": "waste",
+      "label": "Extra for cuts and waste",
+      "unit": "pct",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "help": "Use 5% to 10% for straight walls; use 10% to 15% for curved or stepped walls."
+    }
   ],
   "constants": [
     {
@@ -27,28 +51,79 @@
     }
   ],
   "outputs": [
-    { "id": "blocks", "label": "Wall blocks needed", "unit": "blocks", "decimals": 0, "roundUp": true, "primary": true },
-    { "id": "capBlocks", "label": "Cap blocks needed", "unit": "caps", "decimals": 0, "roundUp": true },
-    { "id": "area", "label": "Total wall face area", "unit": "sq ft", "decimals": 1 }
+    {
+      "id": "blocks",
+      "label": "Wall blocks needed",
+      "unit": "blocks",
+      "decimals": 0,
+      "roundUp": true,
+      "primary": true
+    },
+    {
+      "id": "capBlocks",
+      "label": "Cap blocks needed",
+      "unit": "caps",
+      "decimals": 0,
+      "roundUp": true
+    },
+    {
+      "id": "area",
+      "label": "Total wall face area",
+      "unit": "sq ft",
+      "decimals": 1
+    }
   ],
   "testCases": [
     {
       "name": "20 × 3 ft wall, 0% waste, 16 × 6 in blocks",
-      "inputs": { "length": 20, "width": 3, "waste": 0 },
-      "constants": { "unitLength": 16, "unitWidth": 6 },
-      "expected": { "area": 60, "blocks": 90, "capBlocks": 15 }
+      "inputs": {
+        "length": 20,
+        "width": 3,
+        "waste": 0
+      },
+      "constants": {
+        "unitLength": 16,
+        "unitWidth": 6
+      },
+      "expected": {
+        "area": 60,
+        "blocks": 90,
+        "capBlocks": 15
+      }
     },
     {
       "name": "30 × 2.5 ft wall, 10% waste, 16 × 6 in blocks",
-      "inputs": { "length": 30, "width": 2.5, "waste": 10 },
-      "constants": { "unitLength": 16, "unitWidth": 6 },
-      "expected": { "area": 75, "blocks": 124, "capBlocks": 23 }
+      "inputs": {
+        "length": 30,
+        "width": 2.5,
+        "waste": 10
+      },
+      "constants": {
+        "unitLength": 16,
+        "unitWidth": 6
+      },
+      "expected": {
+        "area": 75,
+        "blocks": 124,
+        "capBlocks": 23
+      }
     },
     {
       "name": "50 × 4 ft wall, 10% waste, 12 × 4 in compact blocks",
-      "inputs": { "length": 50, "width": 4, "waste": 10 },
-      "constants": { "unitLength": 12, "unitWidth": 4 },
-      "expected": { "area": 200, "blocks": 660, "capBlocks": 50 }
+      "inputs": {
+        "length": 50,
+        "width": 4,
+        "waste": 10
+      },
+      "constants": {
+        "unitLength": 12,
+        "unitWidth": 4
+      },
+      "expected": {
+        "area": 200,
+        "blocks": 660,
+        "capBlocks": 50
+      }
     }
   ],
   "content": {
@@ -66,14 +141,49 @@
     ],
     "quickReference": {
       "caption": "Retaining wall block counts (16 × 6 in blocks with 10% waste)",
-      "headers": ["Wall Dimensions (L × H)", "Face Area", "Wall Blocks Needed", "Cap Blocks (16 in)"],
+      "headers": [
+        "Wall Dimensions (L × H)",
+        "Face Area",
+        "Wall Blocks Needed",
+        "Cap Blocks (16 in)"
+      ],
       "rows": [
-        ["10 × 2 ft", "20 sq ft", "33 blocks", "8 caps"],
-        ["15 × 2.5 ft", "37.5 sq ft", "62 blocks", "12 caps"],
-        ["20 × 3 ft", "60 sq ft", "99 blocks", "15 caps"],
-        ["25 × 3 ft", "75 sq ft", "124 blocks", "19 caps"],
-        ["30 × 3 ft", "90 sq ft", "149 blocks", "23 caps"],
-        ["40 × 3.5 ft", "140 sq ft", "231 blocks", "30 caps"]
+        [
+          "10 × 2 ft",
+          "20 sq ft",
+          "33 blocks",
+          "8 caps"
+        ],
+        [
+          "15 × 2.5 ft",
+          "37.5 sq ft",
+          "62 blocks",
+          "12 caps"
+        ],
+        [
+          "20 × 3 ft",
+          "60 sq ft",
+          "99 blocks",
+          "15 caps"
+        ],
+        [
+          "25 × 3 ft",
+          "75 sq ft",
+          "124 blocks",
+          "19 caps"
+        ],
+        [
+          "30 × 3 ft",
+          "90 sq ft",
+          "149 blocks",
+          "23 caps"
+        ],
+        [
+          "40 × 3.5 ft",
+          "140 sq ft",
+          "231 blocks",
+          "30 caps"
+        ]
       ]
     },
     "commonMistakes": [
