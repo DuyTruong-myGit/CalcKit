@@ -180,15 +180,7 @@ const METRIC_LABELS: Record<string, string> = {
 <script>
 import { calculate } from '../lib/calc/engine.js';
 
-// Metric conversion: US value = metric_input * toUSFactor
-const TO_US: Record<string, number> = {
-  ft:  3.28084,   // m → ft
-  in:  0.393701,  // cm → in
-  yd:  1.09361,   // m → yd
-  ft2: 10.7639,   // m² → ft²
-  lb:  2.20462,   // kg → lb
-};
-// US value → metric display: metric = us / toUSFactor
+// US value → metric display: metric = us * factor; metric → US: us = metric / factor
 const FROM_US: Record<string, number> = {
   ft:  0.3048,
   in:  2.54,
@@ -277,7 +269,7 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
         const factor = FROM_US[inp.unit];
         if (factor) el.value = String(parseFloat((val * factor).toPrecision(6)));
       } else {
-        const factor = TO_US[inp.unit];
+        const factor = FROM_US[inp.unit];
         if (factor) el.value = String(parseFloat((val / factor).toPrecision(6)));
       }
     }
@@ -334,8 +326,8 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
       if (isMetric && el.tagName !== 'SELECT') {
         const num = parseFloat(el.value);
         if (Number.isFinite(num)) {
-          const factor = TO_US[inp.unit as string];
-          val = factor ? String(num * factor) : el.value;
+          const factor = FROM_US[inp.unit as string];
+          val = factor ? String(num / factor) : el.value;
         }
       }
       rawInputs[inp.id] = val;
@@ -400,6 +392,20 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
         </div>`;
       }
       html += '</div>';
+    }
+
+    const wasteInp = config.inputs.find((i: { id: string }) => i.id === 'waste');
+    const wasteEl = wasteInp ? (getInputEl('waste') as HTMLInputElement | null) : null;
+    const wasteVal = wasteEl ? parseFloat(wasteEl.value) : 0;
+    const hasCubicYards = config.outputs.some((o: { id: string }) => o.id === 'cubicYards');
+    const hasTonsOrBags = config.outputs.some((o: { id: string }) => o.id === 'tons' || o.id === 'bags');
+
+    if (Number.isFinite(wasteVal) && wasteVal > 0) {
+      if (hasCubicYards && hasTonsOrBags) {
+        html += `<div class="result-waste-strip">Includes ${wasteVal}% waste allowance on order quantities (bags/tons). Cubic yards represents neat in-place volume.</div>`;
+      } else {
+        html += `<div class="result-waste-strip">Includes ${wasteVal}% extra allowance for cut waste and settling.</div>`;
+      }
     }
 
     html += '</div>';
@@ -822,6 +828,15 @@ for (const section of document.querySelectorAll<HTMLElement>('.calculator')) {
   .chip-metric {
     color: var(--muted);
     font-size: 0.8125rem;
+  }
+
+  .result-waste-strip {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px dashed #fde68a;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    font-weight: 500;
   }
 
   /* ── Result action buttons ─────────────────────────────────────────────────── */

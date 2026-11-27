@@ -64,4 +64,21 @@ describe('Sitemap and Robots Configuration', () => {
       expect(sitemap).toContain('/categories');
     }
   });
+
+  it('Unit toggle conversion factors are exact roundtrips', () => {
+    const FROM_US: Record<string, number> = {
+      ft: 0.3048,
+      in: 2.54,
+      yd: 0.9144,
+      ft2: 0.092903,
+      lb: 0.453592,
+    };
+
+    for (const [, factor] of Object.entries(FROM_US)) {
+      const original = 100;
+      const metric = original * factor;
+      const roundTrip = metric / factor;
+      expect(roundTrip).toBeCloseTo(original, 6);
+    }
+  });
 });

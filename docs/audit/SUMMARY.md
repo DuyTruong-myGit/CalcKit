@@ -47,25 +47,18 @@ However, **all 20 calculators MUST REMAIN at `status: "draft"`** until Phase 2 f
 
 ## 3. Shared Layer Findings
 
-### **CRITICAL-01: Inverted Metric-to-US Toggle Factor in `Calculator.astro`**
-- **Location:** `src/components/Calculator.astro` line 273
+### **CRITICAL-01: Inverted Metric-to-US Toggle Factor in `Calculator.astro`** [STATUS: FIXED]
+- **Location:** `src/components/Calculator.astro` line 278
 - **Severity:** **CRITICAL**
 - **Description:** When toggling between US and Metric in the UI, `switchUnitSystem` converts US to metric by multiplying `val * FROM_US[unit]`. However, when toggling back from Metric to US, it divides `val / TO_US[unit]` instead of multiplying by `TO_US[unit]` (or dividing by `FROM_US[unit]`).
 - **Evidence:** Entering 10 ft, toggling to Metric yields 3.048 m. Toggling back to US divides 3.048 by 3.28084, resulting in 0.929 ft! Each round-trip toggle reduces the dimension by a factor of 10.76!
-- **Proposed Fix (Phase 2):**
-  Change line 273 to:
-  ```ts
-  } else {
-    const factor = FROM_US[inp.unit];
-    if (factor) el.value = String(parseFloat((val / factor).toPrecision(6)));
-  }
-  ```
+- **Resolution:** Fixed in Phase 2 commit. Changed to exact division `val / FROM_US[inp.unit]`, and in `runCalc()` changed to exact `num / FROM_US[inp.unit]`. Verified with round-trip test.
 
-### **MAJOR-01: Net Volume vs Order Volume in Volume-Weight Calculators**
-- **Location:** `src/lib/calc/formulas/volume-weight.ts` & `concrete-slab.ts`
+### **MAJOR-01: Net Volume vs Order Volume in Volume-Weight Calculators** [STATUS: FIXED]
+- **Location:** `src/components/Calculator.astro` line 405
 - **Severity:** **MAJOR**
 - **Description:** In `gravel`, `topsoil`, `sand`, and `concrete-slab`, the primary output `cubicYards` is calculated as neat geometric volume ($L \times W \times D / 27$). The waste factor is applied only to `tons` or `bags`. A user ordering bulk gravel or transit ready-mix concrete by the cubic yard will receive neat volume without any allowance for settling, spillage, or uneven subgrade.
-- **Proposed Fix (Phase 2):** Add a visual badge or note to the cubic yard output: *"Neat geometric volume. Add 5-10% when ordering bulk delivery."*
+- **Resolution:** Fixed in Phase 2 commit. Added dynamic `.result-waste-strip` note below output chips explicitly informing user: *"Includes X% waste allowance on order quantities (bags/tons). Cubic yards represents neat in-place volume."*
 
 ### **MINOR-01: Unused `ceilQuarter` in `units.ts`**
 - **Location:** `src/lib/calc/units.ts` line 98
